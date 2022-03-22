@@ -102,7 +102,7 @@ export const DefaultLayoutConfigPortal = {
     "display": true,
     "displayDesc": true,
     "displayDaterangepicker": true,
-    "layoutVersion": "v1",
+    "layoutVersion": "v6",
     "fixed": true,
     "width": "fixed",
     "clear": false,
@@ -148,7 +148,7 @@ export const DefaultLayoutConfigPortal = {
   },
   "footer": {
     "display": true,
-    "width": "fluid",
+    "width": "fixed",
     "fixed": true
   },
   "extras": {
