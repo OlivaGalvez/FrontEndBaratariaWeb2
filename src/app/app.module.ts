@@ -13,7 +13,7 @@ import { AuthService } from './modules/auth/_services/auth.service';
 import { environment } from 'src/environments/environment';
 // Highlight JS
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
-import { SplashScreenModule } from './_metronic/partials/layout/splash-screen/splash-screen.module';
+import { SplashScreenModule } from './_metronic_portal/partials/layout/splash-screen/splash-screen.module';
 // #fake-start#
 import { FakeAPIService } from './_fake/fake-api.service';
 import { InicioComponent } from './portal/inicio/inicio/inicio.component';

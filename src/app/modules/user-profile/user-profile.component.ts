@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SubheaderService } from '../../_metronic/partials/layout';
+import { SubheaderService } from '../../_metronic_portal/partials/layout';
 
 @Component({
   selector: 'app-user-profile',

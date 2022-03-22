@@ -1,4 +1,4 @@
-import { ITableState } from '../../_metronic/shared/crud-table';
+import { ITableState } from '../../_metronic_portal/shared/crud-table';
 
 export function baseFilter(entities: any[], requestObj: ITableState) {
   // Filtration
