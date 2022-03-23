@@ -109,7 +109,7 @@ export const DefaultLayoutConfigPortal = {
     "style": "solid"
   },
   "content": {
-    "width": "fluid"
+    "width": "fixed"
   },
   "brand": {
     "self": {
@@ -149,7 +149,7 @@ export const DefaultLayoutConfigPortal = {
   "footer": {
     "display": true,
     "width": "fixed",
-    "fixed": true
+    "fixed": false
   },
   "extras": {
     "search": {

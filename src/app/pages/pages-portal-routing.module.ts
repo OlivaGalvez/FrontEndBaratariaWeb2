@@ -10,6 +10,11 @@ const routes: Routes = [
     children: [
       { path: 'inicio', component: InicioComponent },
       {
+        path: 'normativa',
+        loadChildren: () =>
+          import('../portal/normativa/normativa.module').then((m) => m.NormativaModule),
+      },
+      {
         path: 'dashboard',
         loadChildren: () =>
           import('./dashboard/dashboard.module').then((m) => m.DashboardModule),

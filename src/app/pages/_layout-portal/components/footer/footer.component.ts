@@ -9,12 +9,9 @@ import KTLayoutFooter from '../../../../../assets/js/layout/base/footer';
 })
 export class FooterComponent implements OnInit, AfterViewInit {
   footerContainerCSSClasses: string;
-  currentYear: string;
+  currentDateStr: string = "2022";
 
-  constructor(private layout: LayoutService) {
-    const currentDate = new Date();
-    this.currentYear = currentDate.getFullYear().toString();
-  }
+  constructor(private layout: LayoutService) {}
 
   ngOnInit(): void {
     this.footerContainerCSSClasses = this.layout.getStringCSSClasses(
