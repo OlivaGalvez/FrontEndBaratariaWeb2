@@ -5,4 +5,7 @@ export class Actividad {
     titulo: string;
     fechaAlta:  moment.Moment;
     fechaBaja?:  moment.Moment;
+    mostrar?: boolean;
+    texto: string;
+    file?: File;
 }
