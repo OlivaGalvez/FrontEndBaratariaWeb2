@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { Actividad } from 'src/app/models/Actividad';
 import { ActividadesService } from 'src/app/services/actividad.service';
@@ -48,16 +49,19 @@ export class NuevaComponent implements OnInit {
 
   aniadirTarjeta ()
   {
+    const current = new Date();
+    const timestamp = current.getTime();
     const actividad: Actividad = {
       titulo: this.form.get('titulo')?.value,
-      fechaAlta: this.form.get('fechaAlta')?.value,
-      fechaBaja: this.form.get('fechaBaja')?.value,
+      fechaAlta: moment.utc(this.form.get('fechaAlta')?.value),
+      fechaBaja: moment.utc(this.form.get('fechaBaja')?.value),
     };
 
+
     console.log(actividad);
-  /*   this.actividadService.aniadirActividad(actividad).subscribe(data => {
+    this.actividadService.aniadirActividad(actividad).subscribe(data => {
       this.form.reset();
-    }); */
+    }); 
   }
 
 }
