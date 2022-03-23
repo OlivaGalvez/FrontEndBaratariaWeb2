@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
-import { WidgetsModule } from "src/app/_metronic_gestion/partials/content/widgets/widgets.module";
 import { ListadoComponent } from "./listado/listado/listado.component";
 import { NuevaComponent } from "./nueva/nueva/nueva.component";
 
@@ -19,7 +19,10 @@ import { NuevaComponent } from "./nueva/nueva/nueva.component";
           component: ListadoComponent,
         }
       ]),
-      WidgetsModule,
+      CommonModule,
+
+      FormsModule,
+      ReactiveFormsModule,
     ],
   })
   export class ActividadesModule {}

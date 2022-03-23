@@ -14,7 +14,7 @@ const routes: Routes = [
         loadChildren: () =>
           import('../gestion/actividades/actividades.module').then((m) => m.ActividadesModule),
       },
-
+/* 
       {
         path: 'dashboard',
         loadChildren: () =>
@@ -66,7 +66,7 @@ const routes: Routes = [
           import('../modules/material/material.module').then(
             (m) => m.MaterialModule
           ),
-      },
+      }, */
       {
         path: '',
         redirectTo: '/admin/inicio',

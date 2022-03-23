@@ -1,1 +1,26 @@
-<p>nueva works!</p>
+<div class="card card-custom gutter-b">
+  <form [formGroup]="form" (ngSubmit) = "aniadirTarjeta()" class="form" id="kt_form">
+    <div class="card-header">
+      <div class="card-title mb-0 text-right">
+          <button class="btn btn-success " type="submit">
+              <i class="fa fa-database"></i>  Guardar
+          </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+
+        <div class="form-group">
+          <label>Título</label>
+          <input type="text" class="form-control"  formControlName="titulo" placeholder="Título de la actividad"/>
+        </div>
+
+       
+
+      </div>
+    </div>
+  </form>
+</div>
+
+
+

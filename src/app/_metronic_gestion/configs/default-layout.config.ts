@@ -149,7 +149,7 @@ export const DefaultLayoutConfigGestion = {
   "footer": {
     "display": true,
     "width": "fixed",
-    "fixed": true
+    "fixed": false
   },
   "extras": {
     "search": {
