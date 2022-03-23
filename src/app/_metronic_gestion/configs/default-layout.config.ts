@@ -109,7 +109,7 @@ export const DefaultLayoutConfigGestion = {
     "style": "solid"
   },
   "content": {
-    "width": "fluid"
+    "width": "fixed"
   },
   "brand": {
     "self": {

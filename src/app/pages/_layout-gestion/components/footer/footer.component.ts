@@ -10,6 +10,7 @@ import KTLayoutFooter from '../../../../../assets/js/layout/base/footer';
 export class FooterComponent implements OnInit, AfterViewInit {
   footerContainerCSSClasses: string;
   currentYear: string;
+  currentDateStr: string = new Date().getFullYear().toString();
 
   constructor(private layout: LayoutService) {
     const currentDate = new Date();
