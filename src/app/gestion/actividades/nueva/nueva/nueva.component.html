@@ -76,7 +76,7 @@
             </div>
           </div> -->
 
-          <div class="row" style="margin-bottom:15px;">
+          <!-- <div class="row" style="margin-bottom:15px;">
             <div class="col-md-3">
               <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)">
               <button type="button" class="btn btn-success" (click)="file.click()">Upload File</button>
@@ -89,6 +89,28 @@
                 {{message}}
               </span>
             </div>
+          </div> -->
+
+          <div class="text-center">
+              <input class="form-control" type="file" 
+                      (change)="onChange($event)">
+            
+              <button (click)="onUpload()" 
+                  class="btn btn-success">
+                  Upload
+              </button>
+          </div>
+            
+          <!-- Shareable short link of  uoloaded file -->
+          <div class="container text-center jumbotron"
+              *ngIf="shortLink">
+              <h2> Visit Here</h2>
+              <a href="{{shortLink}}">{{shortLink}}</a>
+          </div>
+            
+          <!--Flag variable is used here-->
+          <div class="container" *ngIf="loading">
+              <h3>Loading ...</h3>
           </div>
 
         </div>

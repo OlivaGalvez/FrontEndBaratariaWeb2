@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { Actividad } from 'src/app/models/Actividad';
 import { ActividadesService } from 'src/app/services/actividad.service';
+import { UploadService } from 'src/app/services/upload.service';
 
 
 @Component({
@@ -21,13 +22,17 @@ export class NuevaComponent implements OnInit {
 
   currentDate = new Date();
 
-  filename = '';
+  shortLink: string = "";
+  loading: boolean = false; // Flag variable
+  file: File = null; // Variable to store file
+
+  /* filename = '';
   public progress: number;
   public message: string;
-  @Output() public onUploadFinished = new EventEmitter();
+  @Output() public onUploadFinished = new EventEmitter(); */
 
   constructor(private formBuilder: FormBuilder, private actividadService: ActividadesService,
-    private http: HttpClient) 
+    private uploadService: UploadService) 
   { 
     this.form = this.formBuilder.group({
       id: 0,
@@ -73,39 +78,35 @@ export class NuevaComponent implements OnInit {
     }); */
   }
 
-  onFileSelected(event) {
+  
+  onChange(event) {
+    this.file = event.target.files[0];
+  }
 
-    const file:File = event.target.files[0];
+  onUpload() {
+    this.loading = !this.loading;
+    console.log(this.file);
+    this.uploadService.uploadTemporal(this.file).subscribe(
+        (event: any) => {
+            if (typeof (event) === 'object') {
 
-    if (file) {
+                // Short link via api response
+                this.shortLink = event.link;
 
-        this.filename = file.name;
-
-        const formData = new FormData();
-
-        formData.append("thumbnail", file);
-
-        /*if (event.target.files.length > 0) {
-          const file = event.target.files[0];
-          this.form.patchValue({
-            fileSource: file
-          });
-        }*/
-
-        /*const upload$ = this.http.post("/api/thumbnail-upload", formData);
-
-        upload$.subscribe();*/
-    }
+                this.loading = false; // Flag variable 
+            }
+        }
+    );
 }
 
-public uploadFile = (files) => {
+/*public uploadFile = (files) => {
   if (files.length === 0) {
     return;
   }
   let fileToUpload = <File>files[0];
   const formData = new FormData();
   formData.append('file', fileToUpload, fileToUpload.name);
-  this.http.post('https://localhost:44334/api/upload', formData, {reportProgress: true, observe: 'events'})
+  this.http.post('https://localhost:44334/api/Upload?temp=true', formData, {reportProgress: true, observe: 'events'})
     .subscribe(event => {
       if (event.type === HttpEventType.UploadProgress)
         this.progress = Math.round(100 * event.loaded / event.total);
@@ -114,6 +115,6 @@ public uploadFile = (files) => {
         this.onUploadFinished.emit(event.body);
       }
     });
-}
+}*/
 
 }
