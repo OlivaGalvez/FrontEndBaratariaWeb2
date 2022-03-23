@@ -10,6 +10,12 @@ const routes: Routes = [
     children: [
       { path: 'inicio', component: InicioComponent },
       {
+        path: 'actividad',
+        loadChildren: () =>
+          import('../gestion/actividades/actividades.module').then((m) => m.ActividadesModule),
+      },
+
+      {
         path: 'dashboard',
         loadChildren: () =>
           import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
