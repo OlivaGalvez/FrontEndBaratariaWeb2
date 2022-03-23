@@ -12,21 +12,36 @@
 
         <div class="row">
 
-          <div class="col-xl-6">
+          <div class="col-md-6">
             <div class="form-group">
               <label>Título</label>
-              <input type="text" class="form-control"  formControlName="titulo" placeholder="Título de la actividad"/>
+              <input type="text" class="form-control" formControlName="titulo" placeholder="Título de la actividad"/>
             </div>
           </div>
 
-          <div class="col-xl-3">
+          <div class="col-md-3">
             <div class="form-group">
               <label>Fecha Alta</label>
               <div class="input-group">
-                <input class="form-control" placeholder="dd-mm-yyyy" name="dp" [(ngModel)]="model" ngbDatepicker 
-                  #d="ngbDatepicker">
+                <input class="form-control" placeholder="dd-mm-yyyy" name="dp" ngbDatepicker 
+                  formControlName="fechaAlta" #d="ngbDatepicker">
                 <div class="input-group-append">
                   <button class="btn btn-primary" (click)="d.toggle()" type="button">
+                    <i class="fa fa-calendar"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>Fecha Baja</label>
+              <div class="input-group">
+                <input class="form-control" placeholder="dd-mm-yyyy" name="dp" ngbDatepicker 
+                  formControlName="fechaBaja" #e="ngbDatepicker">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" (click)="e.toggle()" type="button">
                     <i class="fa fa-calendar"></i>
                   </button>
                 </div>

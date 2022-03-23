@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { Actividad } from 'src/app/models/Actividad';
 import { ActividadesService } from 'src/app/services/actividad.service';
@@ -17,21 +17,26 @@ export class NuevaComponent implements OnInit {
   actividad: Actividad;
   idActividad: number;
 
-  model: NgbDateStruct;
+  currentDate = new Date();
 
   constructor(private formBuilder: FormBuilder, private actividadService: ActividadesService) 
   { 
     this.form = this.formBuilder.group({
       id: 0,
-      titulo: ['', [Validators.required]]
+      titulo: ['', [Validators.required]],
+      fechaAlta: ['', [Validators.required]],
+      fechaBaja: null,
     })
   }
 
   ngOnInit(): void {
     this.suscription = this.actividadService.obtenerActividades$().subscribe(data =>{
       this.actividad = data;
+      const objBeginDate = { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth()+ 1, 
+        day: this.currentDate.getDate() };
       this.form.patchValue({
         titulo: this.actividad.titulo,
+        fechaAlta: objBeginDate
       });
       this.idActividad = this.actividad.id! as number;
     });
@@ -44,11 +49,15 @@ export class NuevaComponent implements OnInit {
   aniadirTarjeta ()
   {
     const actividad: Actividad = {
-      titulo: this.form.get('titulo')?.value
+      titulo: this.form.get('titulo')?.value,
+      fechaAlta: this.form.get('fechaAlta')?.value,
+      fechaBaja: this.form.get('fechaBaja')?.value,
     };
-    this.actividadService.aniadirActividad(actividad).subscribe(data => {
+
+    console.log(actividad);
+  /*   this.actividadService.aniadirActividad(actividad).subscribe(data => {
       this.form.reset();
-    });
+    }); */
   }
 
 }
