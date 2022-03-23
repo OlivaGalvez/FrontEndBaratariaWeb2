@@ -90,17 +90,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private getLogoURL(): string {
-    let result = 'logo-light.png';
-
-    if (this.headerSelfTheme && this.headerSelfTheme === 'light') {
-      result = 'logo-dark.png';
-    }
-
-    if (this.headerSelfTheme && this.headerSelfTheme === 'dark') {
-      result = 'logo-dark.png';
-    }
-
-    return `./assets/media/logos/${result}`;
+    let result = 'logo-barataria.gif';
+    return `./assets/media/barataria/${result}`;
   }
 
   ngAfterViewInit(): void {

@@ -14,15 +14,13 @@
   <ng-container *ngIf="headerMenuSelfDisplay">
     <!--begin::Header Menu Wrapper-->
     <div
-      class="header-menu-wrapper header-menu-wrapper-left"
+      class="header-menu-wrapper header-menu-wrapper-left bg-barataria"
       id="kt_header_menu_wrapper"
     >
       <ng-container *ngIf="!asideSelfDisplay">
         <!--begin::Header Logo-->
         <div class="header-logo">
-          <a routerLink="/">
-            <img alt="Logo" [attr.src]="headerLogo" />
-          </a>
+          <a routerLink="/"><img class="w-50" alt="Logo" [attr.src]="headerLogo" /></a>
         </div>
         <!--end::Header Logo-->
       </ng-container>
