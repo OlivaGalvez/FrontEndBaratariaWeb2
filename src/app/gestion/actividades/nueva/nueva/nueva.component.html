@@ -2,7 +2,7 @@
   <form [formGroup]="form" (ngSubmit) = "aniadirTarjeta()" class="form" id="kt_form">
     <div class="card-header">
       <div class="card-title mb-0 text-right">
-          <button class="btn btn-success " type="submit">
+          <button class="btn btn-success " type="submit" [disabled]="form.invalid">
               <i class="fa fa-database"></i>  Guardar
           </button>
       </div>
@@ -10,11 +10,31 @@
     <div class="card-body">
       <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
 
-        <div class="form-group">
-          <label>Título</label>
-          <input type="text" class="form-control"  formControlName="titulo" placeholder="Título de la actividad"/>
-        </div>
+        <div class="row">
 
+          <div class="col-xl-6">
+            <div class="form-group">
+              <label>Título</label>
+              <input type="text" class="form-control"  formControlName="titulo" placeholder="Título de la actividad"/>
+            </div>
+          </div>
+
+          <div class="col-xl-3">
+            <div class="form-group">
+              <label>Fecha Alta</label>
+              <div class="input-group">
+                <input class="form-control" placeholder="dd-mm-yyyy" name="dp" [(ngModel)]="model" ngbDatepicker 
+                  #d="ngbDatepicker">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" (click)="d.toggle()" type="button">
+                    <i class="fa fa-calendar"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
        
 
       </div>

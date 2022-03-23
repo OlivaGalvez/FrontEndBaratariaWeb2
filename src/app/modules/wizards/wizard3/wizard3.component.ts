@@ -44,9 +44,9 @@ export class Wizard3Component implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     // Initialize form wizard
-    this.wizard = new KTWizard(this.el.nativeElement, {
+  /*  this.wizard = new KTWizard(this.el.nativeElement, {
       startStep: 1
-    });
+    });*/
 
     // Validation before going to next page
     this.wizard.on('beforeNext', (wizardObj) => {

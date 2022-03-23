@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { Actividad } from 'src/app/models/Actividad';
 import { ActividadesService } from 'src/app/services/actividad.service';
+
 
 @Component({
   selector: 'app-nueva',
@@ -14,6 +16,8 @@ export class NuevaComponent implements OnInit {
   suscription: Subscription;
   actividad: Actividad;
   idActividad: number;
+
+  model: NgbDateStruct;
 
   constructor(private formBuilder: FormBuilder, private actividadService: ActividadesService) 
   { 
@@ -31,6 +35,10 @@ export class NuevaComponent implements OnInit {
       });
       this.idActividad = this.actividad.id! as number;
     });
+  }
+
+  ngOnDestroy() {
+    this.suscription.unsubscribe();
   }
 
   aniadirTarjeta ()
