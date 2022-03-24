@@ -8,4 +8,6 @@ export class Actividad {
     mostrar?: boolean;
     texto: string;
     file?: File;
+
+    imagenServidor?: string;
 }

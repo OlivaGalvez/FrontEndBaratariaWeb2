@@ -17,12 +17,10 @@ export class UploadService {
           
         formData.append("file", file, file.name);
 
-        return this.http
-        .post(this.baseApiUrl + "?temp=true", formData, {
+        return this.http.post(this.baseApiUrl, formData, {
           reportProgress: true,
           observe: 'events',
-        })
-        .pipe(catchError(this.errorMgmt));
+        }).pipe(catchError(this.errorMgmt));
     } 
 
     errorMgmt(error: HttpErrorResponse) {

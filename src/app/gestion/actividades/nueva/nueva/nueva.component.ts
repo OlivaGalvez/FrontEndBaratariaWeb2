@@ -36,7 +36,8 @@ export class NuevaComponent implements OnInit {
       fechaBaja: [null],
       mostrar: [null],
       texto: ['', [Validators.required]],
-      file: [Validators.required]
+      file: [Validators.required],
+      imagenServidor: [null],
     })
   }
 
@@ -64,7 +65,8 @@ export class NuevaComponent implements OnInit {
       fechaBaja: this.form.get('fechaBaja') != null ? moment.utc(this.form.get('fechaBaja').value) : null,
       mostrar: this.form.get('mostrar') != null ? this.form.get('mostrar').value : false,
       texto: this.form.get('texto')?.value,
-      file: this.form.get('file').value
+      file: this.form.get('file').value,
+      imagenServidor: this.form.get('imagenServidor').value
     };
 
     console.log(actividad);
@@ -96,6 +98,11 @@ export class NuevaComponent implements OnInit {
           var reader = new FileReader();
           reader.onload =this._handleReaderLoaded.bind(this);
           reader.readAsBinaryString(this.form.value.file);
+
+          this.form.patchValue({
+            imagenServidor: event.body.fileName
+          });
+          this.form.get('imagenServidor').updateValueAndValidity();
 
           //setTimeout(() => {this.progress = 0; }, 1500);
       }
