@@ -1,5 +1,5 @@
 import { HttpEvent, HttpEventType } from '@angular/common/http';
-import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
@@ -25,6 +25,9 @@ export class NuevaComponent implements OnInit {
   base64textString:String="";
   imagePath:String="";
   mostrarImagen: boolean = false;
+
+  @ViewChild('fileInput')
+  myInputVariable: ElementRef;
  
 
   constructor(private formBuilder: FormBuilder, private actividadService: ActividadesService,
@@ -43,14 +46,10 @@ export class NuevaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.suscription = this.actividadService.obtenerActividades$().subscribe(data =>{
-      this.actividad = data;
-      const objBeginDate = { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth()+ 1, 
-        day: this.currentDate.getDate() };
-      this.form.patchValue({
-        fechaAlta: objBeginDate
-      });
-      this.idActividad = this.actividad.id! as number;
+    const objBeginDate = { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth()+ 1, 
+      day: this.currentDate.getDate() };
+    this.form.patchValue({
+      fechaAlta: objBeginDate
     });
   }
 
@@ -60,6 +59,7 @@ export class NuevaComponent implements OnInit {
 
   aniadirTarjeta ()
   {
+    let validar = true;
     const actividad: Actividad = {
       titulo: this.form.get('titulo')?.value,
       fechaAlta: moment.utc(this.form.get('fechaAlta')?.value),
@@ -71,10 +71,31 @@ export class NuevaComponent implements OnInit {
     };
 
     console.log(actividad);
-    this.actividadService.aniadirActividad(actividad).subscribe(data => {
-      this.toastr.success('Actividad guardada', 'Actividad');
-      this.form.reset();
-    }); 
+
+    if (actividad.fechaBaja != null && actividad.fechaAlta >= actividad.fechaBaja)  
+    {
+      this.toastr.error('La fecha de baja no puede ser igual o anterior a la fecha de alta', 'Error');
+      validar = false;
+    }
+
+    if (actividad.file == null)
+    {
+      this.toastr.error('Debes seleccionar una imagen', 'Error');
+      validar = false;
+    }
+
+    if (validar)
+    {
+      this.actividadService.aniadirActividad(actividad).subscribe(data => {
+        this.toastr.success('Actividad guardada', 'Actividad');
+        this.myInputVariable.nativeElement.value = "";
+        this.mostrarImagen = false;
+        this.ref.detectChanges();
+        
+        this.form.reset();
+        this.ngOnInit();
+      }); 
+    }
   }
 
   onUpload(event) {
