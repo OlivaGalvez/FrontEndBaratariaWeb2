@@ -1,7 +1,6 @@
-import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { Actividad } from 'src/app/models/Actividad';
@@ -24,6 +23,8 @@ export class NuevaComponent implements OnInit {
   progress: number = 0;
   base64textString:String="";
   imagePath:String="";
+  mostrarImagen: boolean = false;
+ 
 
   constructor(private formBuilder: FormBuilder, private actividadService: ActividadesService,
     private uploadService: UploadService, private ref: ChangeDetectorRef) 
@@ -35,7 +36,7 @@ export class NuevaComponent implements OnInit {
       fechaBaja: [null],
       mostrar: [null],
       texto: ['', [Validators.required]],
-      file: [null]
+      file: [Validators.required]
     })
   }
 
@@ -106,7 +107,16 @@ export class NuevaComponent implements OnInit {
     var binaryString = readerEvt.target.result;
     this.base64textString= btoa(binaryString);
     this.imagePath = "data:image/png;base64," + this.base64textString;
+    this.mostrarImagen = true;
     this.ref.detectChanges();
    }
+
+  reset(element) {
+    this.mostrarImagen = false;
+    this.form.patchValue({
+      file: null
+    });
+    element.value = "";
+  }
 
 }

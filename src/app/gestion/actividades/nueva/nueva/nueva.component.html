@@ -73,12 +73,13 @@
           <div class="row">
             <div class="col-12">
               <div class="form-group">
-                <input type="file" (change)="onUpload($event)">
+                <input #fileInput type="file" (change)="onUpload($event)">
               </div>
             </div>
             <div class="col-12">
-              <div>
-                <img  [src]="imagePath" />
+              <div class="img-wraps"  [className]="mostrarImagen ? 'mostrarImagenArea' : 'ocultarImagenArea'">
+                <img id="imagen-subida" [src]="imagePath" class="img-responsive">
+                <a class="btn btn-eliminar-img" (click)="reset(fileInput)"><i class="fa fa-trash"></i></a>
               </div>
             </div>
           </div>
