@@ -70,49 +70,20 @@
     </div>
       <div class="card-body">
         <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
-         <!--  <div class="row">
-            <div class="col-md-12">
-              <input type="file" formControlName="file" class="file-upload"  (change)="onFileSelected($event)" #fileUpload>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <input type="file" (change)="onUpload($event)">
+              </div>
             </div>
-          </div> -->
-
-          <!-- <div class="row" style="margin-bottom:15px;">
-            <div class="col-md-3">
-              <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)">
-              <button type="button" class="btn btn-success" (click)="file.click()">Upload File</button>
+            <div class="col-12">
+              <!-- Progress Bar -->
+              <div class="progress form-group" *ngIf="progress > 0">
+                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="progress">
+                </div>
+              </div>
             </div>
-            <div class="col-md-4">
-              <span class="upload" *ngIf="progress > 0">
-                {{progress}}%
-              </span>
-              <span class="upload" *ngIf="message">
-                {{message}}
-              </span>
-            </div>
-          </div> -->
-
-          <div class="text-center">
-              <input class="form-control" type="file" 
-                      (change)="onChange($event)">
-            
-              <button (click)="onUpload()" 
-                  class="btn btn-success">
-                  Upload
-              </button>
           </div>
-            
-          <!-- Shareable short link of  uoloaded file -->
-          <div class="container text-center jumbotron"
-              *ngIf="shortLink">
-              <h2> Visit Here</h2>
-              <a href="{{shortLink}}">{{shortLink}}</a>
-          </div>
-            
-          <!--Flag variable is used here-->
-          <div class="container" *ngIf="loading">
-              <h3>Loading ...</h3>
-          </div>
-
         </div>
       </div>
   </div>

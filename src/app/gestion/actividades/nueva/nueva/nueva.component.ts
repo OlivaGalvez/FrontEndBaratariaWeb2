@@ -1,4 +1,4 @@
-import { HttpClient, HttpEventType } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
@@ -24,7 +24,9 @@ export class NuevaComponent implements OnInit {
 
   shortLink: string = "";
   loading: boolean = false; // Flag variable
-  file: File = null; // Variable to store file
+  //file: File = null; // Variable to store file
+
+  progress: number = 0;
 
   /* filename = '';
   public progress: number;
@@ -38,10 +40,10 @@ export class NuevaComponent implements OnInit {
       id: 0,
       titulo: ['', [Validators.required]],
       fechaAlta: ['', [Validators.required]],
-      fechaBaja: null,
-      mostrar: null,
+      fechaBaja: [null],
+      mostrar: [null],
       texto: ['', [Validators.required]],
-      file: null
+      file: [null]
     })
   }
 
@@ -80,11 +82,12 @@ export class NuevaComponent implements OnInit {
 
   
   onChange(event) {
-    this.file = event.target.files[0];
+   // this.file = event.target.files[0];
   }
 
-  onUpload() {
-    this.loading = !this.loading;
+  onUpload(event) {
+
+    /*this.loading = !this.loading;
     console.log(this.file);
     this.uploadService.uploadTemporal(this.file).subscribe(
         (event: any) => {
@@ -96,7 +99,33 @@ export class NuevaComponent implements OnInit {
                 this.loading = false; // Flag variable 
             }
         }
-    );
+    );*/
+
+    const file = (event.target as HTMLInputElement).files[0];
+    this.form.patchValue({
+      file: file
+    });
+    this.form.get('file').updateValueAndValidity();
+
+    this.uploadService.uploadTemporal(this.form.value.file).subscribe((event: HttpEvent<any>) => {
+      switch (event.type) {
+        case HttpEventType.Sent:
+          console.log('Request has been made!');
+          break;
+        case HttpEventType.ResponseHeader:
+          console.log('Response header has been received!');
+          break;
+        case HttpEventType.UploadProgress:
+          this.progress = Math.round(event.loaded / event.total * 100);
+          console.log(`Uploaded! ${this.progress}%`);
+          break;
+        case HttpEventType.Response:
+          console.log('User successfully created!', event.body);
+          setTimeout(() => {
+            this.progress = 0;
+          }, 1500);
+      }
+    })
 }
 
 /*public uploadFile = (files) => {
