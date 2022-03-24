@@ -1,5 +1,5 @@
 import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
@@ -21,20 +21,12 @@ export class NuevaComponent implements OnInit {
   idActividad: number;
 
   currentDate = new Date();
-
-  shortLink: string = "";
-  loading: boolean = false; // Flag variable
-  //file: File = null; // Variable to store file
-
   progress: number = 0;
-
-  /* filename = '';
-  public progress: number;
-  public message: string;
-  @Output() public onUploadFinished = new EventEmitter(); */
+  base64textString:String="";
+  imagePath:String="";
 
   constructor(private formBuilder: FormBuilder, private actividadService: ActividadesService,
-    private uploadService: UploadService) 
+    private uploadService: UploadService, private ref: ChangeDetectorRef) 
   { 
     this.form = this.formBuilder.group({
       id: 0,
@@ -80,26 +72,7 @@ export class NuevaComponent implements OnInit {
     }); */
   }
 
-  
-  onChange(event) {
-   // this.file = event.target.files[0];
-  }
-
   onUpload(event) {
-
-    /*this.loading = !this.loading;
-    console.log(this.file);
-    this.uploadService.uploadTemporal(this.file).subscribe(
-        (event: any) => {
-            if (typeof (event) === 'object') {
-
-                // Short link via api response
-                this.shortLink = event.link;
-
-                this.loading = false; // Flag variable 
-            }
-        }
-    );*/
 
     const file = (event.target as HTMLInputElement).files[0];
     this.form.patchValue({
@@ -116,34 +89,24 @@ export class NuevaComponent implements OnInit {
           console.log('Response header has been received!');
           break;
         case HttpEventType.UploadProgress:
-          this.progress = Math.round(event.loaded / event.total * 100);
-          console.log(`Uploaded! ${this.progress}%`);
+          //setTimeout( () => this.progress = Math.round(event.loaded / event.total * 100), 0);
           break;
         case HttpEventType.Response:
           console.log('User successfully created!', event.body);
-          setTimeout(() => {
-            this.progress = 0;
-          }, 1500);
+          var reader = new FileReader();
+          reader.onload =this._handleReaderLoaded.bind(this);
+          reader.readAsBinaryString(this.form.value.file);
+
+          //setTimeout(() => {this.progress = 0; }, 1500);
       }
     })
-}
-
-/*public uploadFile = (files) => {
-  if (files.length === 0) {
-    return;
   }
-  let fileToUpload = <File>files[0];
-  const formData = new FormData();
-  formData.append('file', fileToUpload, fileToUpload.name);
-  this.http.post('https://localhost:44334/api/Upload?temp=true', formData, {reportProgress: true, observe: 'events'})
-    .subscribe(event => {
-      if (event.type === HttpEventType.UploadProgress)
-        this.progress = Math.round(100 * event.loaded / event.total);
-      else if (event.type === HttpEventType.Response) {
-        this.message = 'Upload success.';
-        this.onUploadFinished.emit(event.body);
-      }
-    });
-}*/
+
+  _handleReaderLoaded(readerEvt) {
+    var binaryString = readerEvt.target.result;
+    this.base64textString= btoa(binaryString);
+    this.imagePath = "data:image/png;base64," + this.base64textString;
+    this.ref.detectChanges();
+   }
 
 }
