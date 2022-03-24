@@ -16,8 +16,14 @@ export class ActividadesService {
 
   constructor(private http: HttpClient) { }
 
-  aniadirActividad (actividad: Actividad): Observable<Actividad> {
-    return this.http.post<Actividad>(this.myAppUrl + this.myApiUrl, actividad);
+  aniadirActividad (actividad: Actividad): Observable<Actividad> 
+  {
+    const formData = new FormData(); 
+          
+    formData.append("actividad", JSON.stringify(actividad));
+    formData.append("file", actividad.file, actividad.file.name);
+
+    return this.http.post<Actividad>(this.myAppUrl + this.myApiUrl, formData);
   }
 
   obtenerActividades$(): Observable<Actividad>{

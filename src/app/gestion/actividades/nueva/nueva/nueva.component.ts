@@ -68,9 +68,9 @@ export class NuevaComponent implements OnInit {
     };
 
     console.log(actividad);
-   /* this.actividadService.aniadirActividad(actividad).subscribe(data => {
+    this.actividadService.aniadirActividad(actividad).subscribe(data => {
       this.form.reset();
-    }); */
+    }); 
   }
 
   onUpload(event) {
@@ -93,7 +93,6 @@ export class NuevaComponent implements OnInit {
           //setTimeout( () => this.progress = Math.round(event.loaded / event.total * 100), 0);
           break;
         case HttpEventType.Response:
-          console.log('User successfully created!', event.body);
           var reader = new FileReader();
           reader.onload =this._handleReaderLoaded.bind(this);
           reader.readAsBinaryString(this.form.value.file);
