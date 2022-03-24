@@ -2,6 +2,7 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Actividad } from 'src/app/models/Actividad';
 import { ActividadesService } from 'src/app/services/actividad.service';
@@ -27,7 +28,7 @@ export class NuevaComponent implements OnInit {
  
 
   constructor(private formBuilder: FormBuilder, private actividadService: ActividadesService,
-    private uploadService: UploadService, private ref: ChangeDetectorRef) 
+    private uploadService: UploadService, private ref: ChangeDetectorRef, private toastr: ToastrService) 
   { 
     this.form = this.formBuilder.group({
       id: 0,
@@ -71,6 +72,7 @@ export class NuevaComponent implements OnInit {
 
     console.log(actividad);
     this.actividadService.aniadirActividad(actividad).subscribe(data => {
+      this.toastr.success('Actividad guardada', 'Actividad');
       this.form.reset();
     }); 
   }

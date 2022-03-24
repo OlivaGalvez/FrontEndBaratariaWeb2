@@ -16,6 +16,7 @@ import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { SplashScreenModule } from './_metronic_portal/partials/layout/splash-screen/splash-screen.module';
 // #fake-start#
 import { FakeAPIService } from './_fake/fake-api.service';
+import { ToastrModule } from 'ngx-toastr';
 // #fake-end#
 
 function appInitializer(authService: AuthService) {
@@ -33,6 +34,7 @@ function appInitializer(authService: AuthService) {
     BrowserModule,
     BrowserAnimationsModule,
     SplashScreenModule,
+    ToastrModule.forRoot(),
     TranslateModule.forRoot(),
     HttpClientModule,
     HighlightModule,
