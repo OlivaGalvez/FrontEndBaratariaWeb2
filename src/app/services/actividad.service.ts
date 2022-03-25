@@ -26,6 +26,13 @@ export class ActividadesService {
     return this.http.post<Actividad>(this.myAppUrl + this.myApiUrl, formData);
   }
 
+  obtenerActividades () {
+    this.http.get(this.myAppUrl + this.myApiUrl).toPromise()
+      .then(data => {
+        this.list = data as Actividad []
+      });
+  }
+
   obtenerActividades$(): Observable<Actividad>{
     return this.actualizarFormulario.asObservable();
   }
