@@ -1,64 +1,61 @@
-
 <div class="row">
-  <div *ngFor="let actividad of actividadesService.list">
-    <div class="col-md-6">
-      <div class="card card-custom bg-gray-100 card-stretch gutter-b">
-        <!-- Header -->
-        <div class="card-header border-0 bg-barataria py-5  text-right">
+  <div class="col-md-6" *ngFor="let actividad of actividadesService.list">
+    <div class="card card-custom bg-gray-100 card-stretch gutter-b">
+      <!-- Header -->
+      <div class="card-header border-0 bg-barataria py-5  text-right">
 
-              <div class="col-md-4 order-2 order-md-1 text-center">
-                <img class="img-fluid img-thumbnail " alt="Logo" src="./assets/media/barataria/imagen-actividad.png" />
-              </div>
-          
-              <div class="col-md-8 order-1 order-md-2">
-                  <div class="row pb-5">
-                    <div class="col-12">
-                      <div ngbDropdown placement="bottom-right" class="dropdown dropdown-inline text-right" title="Quick actions">
-                        <div ngbDropdown class="d-inline-block">
-                          <button class="btn btn-transparent-white btn-sm font-weight-bolder dropdown-toggle px-5 dropdown-toggle btn btn-transparent" id="dropdownBasic1" ngbDropdownToggle>Documentación</button>
-                          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownBasic1" ngbDropdownMenu >
-                              <button class="dropdown-item">Documentación 1</button>
-                              <button class="dropdown-item">Documentación 2</button>
-                              <button class="dropdown-item">...</button>
-                          </div>
-                        </div>
-            
-                        <div ngbDropdown class="d-inline-block">
-                          <button class="btn btn-transparent-white btn-sm font-weight-bolder dropdown-toggle px-5 dropdown-toggle btn btn-transparent ml-2" id="dropdownBasic2" ngbDropdownToggle>Enlaces</button>
-                          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownBasic2" ngbDropdownMenu >
-                              <button class="dropdown-item">Enlace 1</button>
-                              <button class="dropdown-item">Enlace 2</button>
-                              <button class="dropdown-item">...</button>
-                          </div>
-                        </div>
-            
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row pt-10">
-                    <div class="col-12 text-center">
-                      <h3 class="font-weight-bolder text-white bg-barataria mb-0">{{ actividad.titulo }}</h3>
-                    </div>
-                  </div>
-              </div>
-
-        </div>
-        <!-- Body -->
-        <div class="card-body p-0 position-relative overflow-hidden">
-          <div id="kt_mixed_widget_1_chart" class="card-rounded-bottom bg-barataria" [style.height]="'50px'">
-          </div>
-          <!--begin::Stats-->
-          <div class="card-spacer mt-n25">
-            <!--begin::Row-->
-            <div class="row m-0">
-              <div class="col bg-secondary px-6 py-8 rounded-xl mr-7 mb-7">
-                <a href="#" class="text-dark font-weight-bold font-size-h6">{{ actividad.texto }}</a>
-              </div>
+            <div class="col-md-4 order-2 order-md-1 text-center">
+              <img class="img-fluid img-thumbnail " alt="Logo" src="./assets/media/barataria/imagen-actividad.png" />
             </div>
-            <!--end::Row-->
-          </div>
-          <!--end::Stats-->
+        
+            <div class="col-md-8 order-1 order-md-2">
+                <div class="row pb-5">
+                  <div class="col-12">
+                    <div ngbDropdown placement="bottom-right" class="dropdown dropdown-inline text-right" title="Quick actions">
+                      <div ngbDropdown class="d-inline-block">
+                        <button class="btn btn-transparent-white btn-sm font-weight-bolder dropdown-toggle px-5 dropdown-toggle btn btn-transparent" id="dropdownBasic1" ngbDropdownToggle>Documentación</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownBasic1" ngbDropdownMenu >
+                            <button class="dropdown-item">Documentación 1</button>
+                            <button class="dropdown-item">Documentación 2</button>
+                            <button class="dropdown-item">...</button>
+                        </div>
+                      </div>
+          
+                      <div ngbDropdown class="d-inline-block">
+                        <button class="btn btn-transparent-white btn-sm font-weight-bolder dropdown-toggle px-5 dropdown-toggle btn btn-transparent ml-2" id="dropdownBasic2" ngbDropdownToggle>Enlaces</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownBasic2" ngbDropdownMenu >
+                            <button class="dropdown-item">Enlace 1</button>
+                            <button class="dropdown-item">Enlace 2</button>
+                            <button class="dropdown-item">...</button>
+                        </div>
+                      </div>
+          
+                    </div>
+                  </div>
+                </div>
+                <div class="row pt-10">
+                  <div class="col-12 text-center">
+                    <h3 class="font-weight-bolder text-white bg-barataria mb-0">{{ actividad.titulo }}</h3>
+                  </div>
+                </div>
+            </div>
+
+      </div>
+      <!-- Body -->
+      <div class="card-body p-0 position-relative overflow-hidden">
+        <div id="kt_mixed_widget_1_chart" class="card-rounded-bottom bg-barataria" [style.height]="'50px'">
         </div>
+        <!--begin::Stats-->
+        <div class="card-spacer mt-n25">
+          <!--begin::Row-->
+          <div class="row m-0">
+            <div class="col bg-secondary px-6 py-8 rounded-xl mr-7 mb-7">
+              <a href="#" class="text-dark font-weight-bold font-size-h6">{{ actividad.texto }}</a>
+            </div>
+          </div>
+          <!--end::Row-->
+        </div>
+        <!--end::Stats-->
       </div>
     </div>
   </div>

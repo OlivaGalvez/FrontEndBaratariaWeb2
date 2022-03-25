@@ -10,4 +10,5 @@ export class Actividad {
     file?: File;
 
     imagenServidor?: string;
+    imagenServidorBase64?: string;
 }
