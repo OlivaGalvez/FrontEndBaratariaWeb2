@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ActividadesComponent } from '../portal/actividades/actividades/actividades.component';
 import { InicioComponent } from '../portal/inicio/inicio/inicio.component';
 import { LayoutComponent } from './_layout-portal/layout.component';
 
@@ -9,6 +10,11 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: 'inicio', component: InicioComponent },
+      {
+        path: 'actividades',
+        loadChildren: () =>
+          import('../portal/actividades/actividades.module').then((m) => m.ActividadesModule),
+      },
       {
         path: 'normativa',
         loadChildren: () =>
