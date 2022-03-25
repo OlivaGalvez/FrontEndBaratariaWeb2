@@ -5,7 +5,7 @@
       <div class="card-header border-0 bg-barataria py-5  text-right">
 
             <div class="col-md-4 order-2 order-md-1 text-center">
-              <img class="img-fluid img-thumbnail " alt="Logo" src="./assets/media/barataria/imagen-actividad.png" />
+              <img class="img-fluid img-thumbnail " alt="Logo" src={{actividad.imagenServidorBase64}} />
             </div>
         
             <div class="col-md-8 order-1 order-md-2">
@@ -35,7 +35,7 @@
                 </div>
                 <div class="row pt-10">
                   <div class="col-12 text-center">
-                    <h3 class="font-weight-bolder text-white bg-barataria mb-0">{{ actividad.titulo }}</h3>
+                    <h3 class="font-weight-bolder text-white bg-barataria mb-0">{{actividad.titulo}}</h3>
                   </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
           <!--begin::Row-->
           <div class="row m-0">
             <div class="col bg-secondary px-6 py-8 rounded-xl mr-7 mb-7">
-              <a href="#" class="text-dark font-weight-bold font-size-h6">{{ actividad.texto }}</a>
+              <a href="#" class="text-dark font-weight-bold font-size-h6">{{actividad.texto}}</a>
             </div>
           </div>
           <!--end::Row-->

@@ -9,7 +9,6 @@ import { LayoutService } from 'src/app/_metronic_portal/core';
 })
 export class ActividadesComponent implements OnInit {
 
-
   constructor(private layout: LayoutService, public actividadesService: ActividadesService) { 
    
   }
