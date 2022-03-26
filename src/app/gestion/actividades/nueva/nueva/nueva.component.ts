@@ -1,5 +1,5 @@
 import { HttpEvent, HttpEventType } from '@angular/common/http';
-import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
@@ -16,7 +16,7 @@ import { EnlaceModalComponent } from '../enlace-modal/enlace-modal.component';
   templateUrl: './nueva.component.html',
   styleUrls: ['./nueva.component.scss']
 })
-export class NuevaComponent implements OnInit {
+export class NuevaComponent implements OnInit, OnDestroy {
   form: FormGroup;
   suscription: Subscription;
   actividad: Actividad;
@@ -57,7 +57,9 @@ export class NuevaComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.suscription.unsubscribe();
+    if (this.suscription) {
+      this.suscription.unsubscribe();
+    }
   }
 
   aniadirTarjeta ()
@@ -156,7 +158,7 @@ export class NuevaComponent implements OnInit {
   }
 
   editarEnlace(id: number) {
-    const modalRef = this.modalService.open(EnlaceModalComponent, { size: 'xl' });
+    const modalRef = this.modalService.open(EnlaceModalComponent, { size: 'lg' });
     modalRef.componentInstance.id = id;
     modalRef.result.then(() =>
       this.actividadService.fetch(),

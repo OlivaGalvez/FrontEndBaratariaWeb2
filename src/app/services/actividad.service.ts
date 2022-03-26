@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Actividad } from '../models/Actividad';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -10,7 +10,7 @@ import { ITableState } from '../_metronic_gestion/shared/crud-table';
     providedIn: 'root'
   })
   
-export class ActividadesService extends TableService<Actividad> {
+export class ActividadesService extends TableService<Actividad> implements OnDestroy{
   myAppUrl = 'https://localhost:44334/';
   myApiUrl = 'api/Actividades/';
 
@@ -40,6 +40,10 @@ export class ActividadesService extends TableService<Actividad> {
 
   obtenerActividades$(): Observable<Actividad>{
     return this.actualizarFormulario.asObservable();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(sb => sb.unsubscribe());
   }
 
 }
