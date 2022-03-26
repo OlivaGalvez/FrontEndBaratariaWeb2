@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { of, Subscription } from 'rxjs';
@@ -20,13 +20,15 @@ const EMPTY_ENLACE: Enlace = {
   styleUrls: ['./enlace-modal.component.scss']
 })
 
-export class EnlaceModalComponent implements OnInit, OnDestroy {
+export class EnlaceModalComponent implements OnInit/*, OnDestroy*/ {
+  
   @Input() id: number;
+  @Output() passEntry: EventEmitter<any> = new EventEmitter();
+
   isLoading$;
   actividad: Actividad;
   enlace: Enlace;
   formGroup: FormGroup;
-  private subscriptions: Subscription[] = [];
 
   constructor(private enlaceServices: EnlaceService,
     private fb: FormBuilder, public modal: NgbActiveModal) { }
@@ -68,6 +70,7 @@ export class EnlaceModalComponent implements OnInit, OnDestroy {
     if (this.enlace.id) {
      // this.edit();
     } else {
+      this.enlace.id = 1;
       this.crearEnlace();
     }
   }
@@ -79,20 +82,12 @@ export class EnlaceModalComponent implements OnInit, OnDestroy {
   }
 
   crearEnlace () {
-    const sbCreate = this.enlaceServices.create(this.enlace).pipe(
-      tap(() => {
-        this.modal.close();
-      }),
-      catchError((errorMessage) => {
-        this.modal.dismiss(errorMessage);
-        return of(this.enlace);
-      }),
-    ).subscribe((res: Enlace) => this.enlace = res);
-    this.subscriptions.push(sbCreate);
+    this.passEntry.emit(this.enlace);
+    this.modal.close(this.enlace);
   }
 
-  ngOnDestroy(): void {
+  /*ngOnDestroy(): void {
     this.subscriptions.forEach(sb => sb.unsubscribe());
-  }
+  }*/
 
 }
