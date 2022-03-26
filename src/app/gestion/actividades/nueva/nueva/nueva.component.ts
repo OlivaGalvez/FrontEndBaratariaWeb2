@@ -1,12 +1,14 @@
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Actividad } from 'src/app/models/Actividad';
 import { ActividadesService } from 'src/app/services/actividad.service';
 import { UploadService } from 'src/app/services/upload.service';
+import { EnlaceModalComponent } from '../enlace-modal/enlace-modal.component';
 
 
 @Component({
@@ -31,7 +33,8 @@ export class NuevaComponent implements OnInit {
  
 
   constructor(private formBuilder: FormBuilder, private actividadService: ActividadesService,
-    private uploadService: UploadService, private ref: ChangeDetectorRef, private toastr: ToastrService) 
+    private uploadService: UploadService, private ref: ChangeDetectorRef, private toastr: ToastrService,
+    private modalService: NgbModal) 
   { 
     this.form = this.formBuilder.group({
       id: 0,
@@ -106,7 +109,7 @@ export class NuevaComponent implements OnInit {
     });
     this.form.get('file').updateValueAndValidity();
 
-    this.uploadService.uploadTemporal(this.form.value.file).subscribe((event: HttpEvent<any>) => {
+    this.uploadService.uploadImagen(this.form.value.file).subscribe((event: HttpEvent<any>) => {
       switch (event.type) {
         case HttpEventType.Sent:
           console.log('Request has been made!');
@@ -146,6 +149,19 @@ export class NuevaComponent implements OnInit {
       file: null
     });
     element.value = "";
+  }
+
+  crearEnlace() {
+    this.editarEnlace(undefined);
+  }
+
+  editarEnlace(id: number) {
+    const modalRef = this.modalService.open(EnlaceModalComponent, { size: 'xl' });
+    modalRef.componentInstance.id = id;
+    modalRef.result.then(() =>
+      this.actividadService.fetch(),
+        () => { }
+      );
   }
 
 }

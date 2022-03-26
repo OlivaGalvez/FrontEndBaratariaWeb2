@@ -1,20 +1,25 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Actividad } from '../models/Actividad';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { TableService } from '../_metronic_portal/shared/crud-table';
+import { ITableState } from '../_metronic_gestion/shared/crud-table';
+
 
 @Injectable({
     providedIn: 'root'
   })
   
-export class ActividadesService {
+export class ActividadesService extends TableService<Actividad> {
   myAppUrl = 'https://localhost:44334/';
   myApiUrl = 'api/Actividades/';
 
   list: Actividad[];
   private actualizarFormulario = new BehaviorSubject<Actividad>({} as any);
 
-  constructor(private http: HttpClient) { }
+  constructor(@Inject(HttpClient) http) {
+    super(http);
+  }
 
   aniadirActividad (actividad: Actividad): Observable<Actividad> 
   {

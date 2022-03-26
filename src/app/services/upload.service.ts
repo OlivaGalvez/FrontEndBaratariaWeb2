@@ -11,17 +11,31 @@ export class UploadService {
       
     constructor(private http:HttpClient) { }
     
-    uploadTemporal(file):Observable<any> {
+    uploadImagen(file):Observable<any> {
     
         const formData = new FormData(); 
           
         formData.append("file", file, file.name);
 
-        return this.http.post(this.baseApiUrl, formData, {
+        return this.http.post(this.baseApiUrl + "?carpeta=imagenes", formData, {
           reportProgress: true,
           observe: 'events',
         }).pipe(catchError(this.errorMgmt));
     } 
+
+
+    uploadDocumento(file):Observable<any> {
+    
+      const formData = new FormData(); 
+        
+      formData.append("file", file, file.name);
+
+      return this.http.post(this.baseApiUrl + "?carpeta=documentos", formData, {
+        reportProgress: true,
+        observe: 'events',
+      }).pipe(catchError(this.errorMgmt));
+    } 
+
 
     errorMgmt(error: HttpErrorResponse) {
       let errorMessage = '';
