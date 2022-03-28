@@ -12,6 +12,7 @@ import { EnlaceModalComponent } from "./nueva/enlace-modal/enlace-modal.componen
 import { NuevaComponent } from "./nueva/nueva/nueva.component";
 import { EliminarEnlaceModalComponent } from './nueva/eliminar-enlace-modal/eliminar-enlace-modal.component';
 import { DocumentacionModalComponent } from './nueva/documentacion-modal/documentacion-modal.component';
+import { EliminarDocumentacionModalComponent } from './nueva/eliminar-documentacion-modal/eliminar-documentacion-modal.component';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import { DocumentacionModalComponent } from './nueva/documentacion-modal/documen
       ListadoComponent, 
       EnlaceModalComponent, 
       EliminarEnlaceModalComponent, 
-      DocumentacionModalComponent
+      DocumentacionModalComponent, 
+      EliminarDocumentacionModalComponent
     ],
     imports: [
       RouterModule.forChild([

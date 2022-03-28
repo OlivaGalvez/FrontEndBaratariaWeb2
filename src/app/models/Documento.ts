@@ -1,3 +1,4 @@
+import { NumericLiteral } from "typescript";
 import { EnlaceActividad } from "./EnlaceActividad";
 
 export class Documento {
@@ -9,6 +10,7 @@ export class Documento {
     servidor: string;
     fecha?:  moment.Moment;
     privado?: boolean;
+    tamanio?: string;
 
     file?: File;
 }

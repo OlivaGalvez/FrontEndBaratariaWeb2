@@ -159,7 +159,26 @@
           <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
             <div class="row">
               <div class="col-12">
-
+                <div class="table-responsive angular-bootstrap-table">
+                  <table class="table table-head-custom table-vertical-center overflow-hidden">
+                    <thead>
+                      <tr>
+                        <th>Nombre</th>
+                        <th>Original</th>
+                        <th>Tamaño</th>
+                        <th> </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of listDocumentacion">
+                        <td>{{ item.nombre }}</td>
+                        <td>{{ item.file.name }}</td>
+                        <td>{{ item.tamanio }}</td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
