@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Actividad } from 'src/app/models/Actividad';
-import { Enlace } from 'src/app/models/Enlace';
+import { EnlaceActividad } from 'src/app/models/EnlaceActividad';
 import { ActividadesService } from 'src/app/services/actividad.service';
 import { UploadService } from 'src/app/services/upload.service';
 import { EliminarEnlaceModalComponent } from '../eliminar-enlace-modal/eliminar-enlace-modal.component';
@@ -32,7 +32,7 @@ export class NuevaComponent implements OnInit, OnDestroy {
 
   @ViewChild('fileInput')
   myInputVariable: ElementRef;
-  listEnlaces: Enlace [] = [];
+  listEnlaces: EnlaceActividad [] = [];
 
   constructor(private formBuilder: FormBuilder, private actividadService: ActividadesService,
     private uploadService: UploadService, private ref: ChangeDetectorRef, private toastr: ToastrService,
@@ -74,7 +74,8 @@ export class NuevaComponent implements OnInit, OnDestroy {
       mostrar: this.form.get('mostrar') != null ? this.form.get('mostrar').value : false,
       texto: this.form.get('texto')?.value,
       file: this.form.get('file').value,
-      imagenServidor: this.form.get('imagenServidor').value
+      imagenServidor: this.form.get('imagenServidor').value,
+      listEnlaces: this.listEnlaces
     };
 
     console.log(actividad);
@@ -165,7 +166,7 @@ export class NuevaComponent implements OnInit, OnDestroy {
     if (id != undefined)
     {
       var result2 = this.listEnlaces.find(x => x.id === id);
-      const enlace: Enlace = {
+      const enlace: EnlaceActividad = {
         id: result2.id,
         nombre: result2.nombre,
         ruta: result2.ruta,
@@ -174,7 +175,7 @@ export class NuevaComponent implements OnInit, OnDestroy {
       modalRef.componentInstance.enlace = enlace;
     }
     else {
-      const enlace: Enlace = {
+      const enlace: EnlaceActividad = {
         id: undefined,
         nombre: '',
         ruta: '',

@@ -1,5 +1,5 @@
 import * as moment from "moment";
-import { Enlace } from "./Enlace";
+import { EnlaceActividad } from "./EnlaceActividad";
 
 export class Actividad {
     id?: number;
@@ -9,7 +9,7 @@ export class Actividad {
     mostrar?: boolean;
     texto: string;
     file?: File;
-    listEnlaces?: Enlace[];
+    listEnlaces?: EnlaceActividad[];
 
     imagenServidor?: string;
     imagenServidorBase64?: string;

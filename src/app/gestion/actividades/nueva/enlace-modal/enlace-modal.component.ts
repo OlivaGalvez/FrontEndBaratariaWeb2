@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Actividad } from 'src/app/models/Actividad';
-import { Enlace } from 'src/app/models/Enlace';
+import { EnlaceActividad } from 'src/app/models/EnlaceActividad';
 import { ActividadesService } from 'src/app/services/actividad.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { ActividadesService } from 'src/app/services/actividad.service';
 
 export class EnlaceModalComponent implements OnInit{
   
-  @Input() enlace: Enlace;
+  @Input() enlace: EnlaceActividad;
   @Output() passEntry: EventEmitter<any> = new EventEmitter();
 
   actividad: Actividad;
