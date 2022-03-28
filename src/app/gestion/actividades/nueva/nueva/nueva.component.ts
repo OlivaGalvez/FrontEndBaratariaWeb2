@@ -161,9 +161,31 @@ export class NuevaComponent implements OnInit, OnDestroy {
 
   editarEnlace(id: number) {
     const modalRef = this.modalService.open(EnlaceModalComponent, { size: 'lg' });
-    modalRef.componentInstance.id = id;
+
+    if (id != undefined)
+    {
+      var result2 = this.listEnlaces.find(x => x.id === id);
+      const enlace: Enlace = {
+        id: result2.id,
+        nombre: result2.nombre,
+        ruta: result2.ruta,
+      };
+
+      modalRef.componentInstance.enlace = enlace;
+    }
+    else {
+      const enlace: Enlace = {
+        id: undefined,
+        nombre: '',
+        ruta: '',
+      };
+      modalRef.componentInstance.enlace = enlace;
+    }
+
     modalRef.result.then((result) => {
       if (result) {
+        let index = this.listEnlaces.findIndex(d => d.id === id);
+        if (index > -1) this.listEnlaces.splice(index, 1);
         this.listEnlaces.push(result);
         this.ref.detectChanges();
       }
@@ -178,7 +200,7 @@ export class NuevaComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.id = id;
     modalRef.result.then((result) => {
       let index = this.listEnlaces.findIndex(d => d.id === id); //find index in your array
-      this.listEnlaces.splice(index, 1);//remove element from array
+      if (index > -1) this.listEnlaces.splice(index, 1);//remove element from array
       this.ref.detectChanges();
     }).catch(e => {
       console.log(e);
