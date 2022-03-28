@@ -8,7 +8,6 @@ import { Subscription } from 'rxjs';
 import { Actividad } from 'src/app/models/Actividad';
 import { Enlace } from 'src/app/models/Enlace';
 import { ActividadesService } from 'src/app/services/actividad.service';
-import { EnlaceService } from 'src/app/services/enlace.service';
 import { UploadService } from 'src/app/services/upload.service';
 import { EnlaceModalComponent } from '../enlace-modal/enlace-modal.component';
 
@@ -32,9 +31,9 @@ export class NuevaComponent implements OnInit, OnDestroy {
 
   @ViewChild('fileInput')
   myInputVariable: ElementRef;
+  listEnlaces: Enlace [] = [];
 
   constructor(private formBuilder: FormBuilder, private actividadService: ActividadesService,
-    private enlaceService: EnlaceService,
     private uploadService: UploadService, private ref: ChangeDetectorRef, private toastr: ToastrService,
     private modalService: NgbModal) 
   { 
@@ -74,8 +73,7 @@ export class NuevaComponent implements OnInit, OnDestroy {
       mostrar: this.form.get('mostrar') != null ? this.form.get('mostrar').value : false,
       texto: this.form.get('texto')?.value,
       file: this.form.get('file').value,
-      imagenServidor: this.form.get('imagenServidor').value,
-      listEnlaces: null
+      imagenServidor: this.form.get('imagenServidor').value
     };
 
     console.log(actividad);
@@ -165,8 +163,11 @@ export class NuevaComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.id = id;
     modalRef.result.then((result) => {
       if (result) {
-        console.log(result);
+        this.listEnlaces.push(result);
+        this.ref.detectChanges();
       }
+    }).catch(e => {
+      console.log(e);
     });
   }
 

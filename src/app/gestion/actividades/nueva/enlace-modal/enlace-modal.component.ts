@@ -1,18 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { of, Subscription } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
 import { Actividad } from 'src/app/models/Actividad';
 import { Enlace } from 'src/app/models/Enlace';
 import { ActividadesService } from 'src/app/services/actividad.service';
-import { EnlaceService } from 'src/app/services/enlace.service';
-
-const EMPTY_ENLACE: Enlace = {
-  id: undefined,
-  nombre: '',
-  ruta: '',
-};
 
 @Component({
   selector: 'app-enlace-modal',
@@ -20,7 +11,7 @@ const EMPTY_ENLACE: Enlace = {
   styleUrls: ['./enlace-modal.component.scss']
 })
 
-export class EnlaceModalComponent implements OnInit/*, OnDestroy*/ {
+export class EnlaceModalComponent implements OnInit{
   
   @Input() id: number;
   @Output() passEntry: EventEmitter<any> = new EventEmitter();
@@ -30,17 +21,21 @@ export class EnlaceModalComponent implements OnInit/*, OnDestroy*/ {
   enlace: Enlace;
   formGroup: FormGroup;
 
-  constructor(private enlaceServices: EnlaceService,
-    private fb: FormBuilder, public modal: NgbActiveModal) { }
+  constructor(private actividadService: ActividadesService, private fb: FormBuilder, public modal: NgbActiveModal) { }
 
   ngOnInit(): void {
-    this.isLoading$ = this.enlaceServices.isLoading$;
+    this.isLoading$ = this.actividadService.isLoading$;
     this.loadCustomer();
   }
 
   loadCustomer() {
     if (!this.id) {
-      this.enlace = EMPTY_ENLACE;
+      const enlace: Enlace = {
+        id: undefined,
+        nombre: '',
+        ruta: '',
+      };
+      this.enlace = enlace;
       this.loadForm();
     } else {
       /*const sb = this.customersService.getItemById(this.id).pipe(
@@ -70,7 +65,6 @@ export class EnlaceModalComponent implements OnInit/*, OnDestroy*/ {
     if (this.enlace.id) {
      // this.edit();
     } else {
-      this.enlace.id = 1;
       this.crearEnlace();
     }
   }
@@ -84,6 +78,7 @@ export class EnlaceModalComponent implements OnInit/*, OnDestroy*/ {
   crearEnlace () {
     this.passEntry.emit(this.enlace);
     this.modal.close(this.enlace);
+    this.formGroup.reset();
   }
 
   /*ngOnDestroy(): void {
