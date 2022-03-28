@@ -6,9 +6,11 @@ import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Actividad } from 'src/app/models/Actividad';
+import { Documento } from 'src/app/models/Documento';
 import { EnlaceActividad } from 'src/app/models/EnlaceActividad';
 import { ActividadesService } from 'src/app/services/actividad.service';
 import { UploadService } from 'src/app/services/upload.service';
+import { DocumentacionModalComponent } from '../documentacion-modal/documentacion-modal.component';
 import { EliminarEnlaceModalComponent } from '../eliminar-enlace-modal/eliminar-enlace-modal.component';
 import { EnlaceModalComponent } from '../enlace-modal/enlace-modal.component';
 
@@ -32,7 +34,10 @@ export class NuevaComponent implements OnInit, OnDestroy {
 
   @ViewChild('fileInput')
   myInputVariable: ElementRef;
+
+
   listEnlaces: EnlaceActividad [] = [];
+  listDocumentacion: Documento [] = [];
 
   constructor(private formBuilder: FormBuilder, private actividadService: ActividadesService,
     private uploadService: UploadService, private ref: ChangeDetectorRef, private toastr: ToastrService,
@@ -45,7 +50,7 @@ export class NuevaComponent implements OnInit, OnDestroy {
       fechaBaja: [null],
       mostrar: [null],
       texto: ['', [Validators.required]],
-      file: [Validators.required],
+      file: [null, Validators.required],
       imagenServidor: [null]
     })
   }
@@ -73,7 +78,7 @@ export class NuevaComponent implements OnInit, OnDestroy {
       fechaBaja: this.form.get('fechaBaja') != null ? moment.utc(this.form.get('fechaBaja').value) : null,
       mostrar: this.form.get('mostrar') != null ? this.form.get('mostrar').value : false,
       texto: this.form.get('texto')?.value,
-      file: this.form.get('file').value,
+      file: this.form.get('file')?.value,
       imagenServidor: this.form.get('imagenServidor').value,
       listEnlaces: this.listEnlaces
     };
@@ -83,12 +88,6 @@ export class NuevaComponent implements OnInit, OnDestroy {
     if (actividad.fechaBaja != null && actividad.fechaAlta >= actividad.fechaBaja)  
     {
       this.toastr.error('La fecha de baja no puede ser igual o anterior a la fecha de alta', 'Error');
-      validar = false;
-    }
-
-    if (actividad.file == null)
-    {
-      this.toastr.error('Debes seleccionar una imagen', 'Error');
       validar = false;
     }
 
@@ -203,6 +202,38 @@ export class NuevaComponent implements OnInit, OnDestroy {
       let index = this.listEnlaces.findIndex(d => d.id === id); //find index in your array
       if (index > -1) this.listEnlaces.splice(index, 1);//remove element from array
       this.ref.detectChanges();
+    }).catch(e => {
+      console.log(e);
+    });
+  }
+
+  crearDocumentacion() {
+    this.editarDocumentacion(undefined);
+  }
+
+  editarDocumentacion(id: number) {
+    const modalRef = this.modalService.open(DocumentacionModalComponent, { size: 'lg' });
+    if (id != undefined)
+    {
+    }
+    else {
+      const documento: Documento = {
+        id: undefined,
+        nombre: '',
+        original: '',
+        servidor: ''
+      };
+      modalRef.componentInstance.documento = documento;
+    }
+
+    modalRef.result.then((result) => {
+      if (result) {
+        let index = this.listDocumentacion.findIndex(d => d.id === id);
+        if (index > -1) this.listDocumentacion.splice(index, 1);
+        this.listDocumentacion.push(result);
+        this.ref.detectChanges();
+        console.log(this.listDocumentacion);
+      }
     }).catch(e => {
       console.log(e);
     });
