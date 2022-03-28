@@ -61,16 +61,17 @@ export class EnlaceModalComponent implements OnInit{
 
   guardar ()
   {
-    this.prepareCustomer();
-    if (this.enlace.id) {
+    if (this.id) {
      // this.edit();
     } else {
+      this.prepareCustomer();
       this.crearEnlace();
     }
   }
 
   private prepareCustomer() {
     const formData = this.formGroup.value;
+    this.enlace.id = Math.floor((Math.random()*6)+1);
     this.enlace.nombre = formData.nombre;
     this.enlace.ruta = formData.ruta;
   }

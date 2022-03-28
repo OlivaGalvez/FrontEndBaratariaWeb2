@@ -13,9 +13,10 @@ import { GeneralModule } from "src/app/_metronic_portal/partials/content/general
 import { ListadoComponent } from "./listado/listado/listado.component";
 import { EnlaceModalComponent } from "./nueva/enlace-modal/enlace-modal.component";
 import { NuevaComponent } from "./nueva/nueva/nueva.component";
+import { EliminarEnlaceModalComponent } from './nueva/eliminar-enlace-modal/eliminar-enlace-modal.component';
 
 @NgModule({
-    declarations: [NuevaComponent, ListadoComponent, EnlaceModalComponent],
+    declarations: [NuevaComponent, ListadoComponent, EnlaceModalComponent, EliminarEnlaceModalComponent],
     imports: [
       RouterModule.forChild([
         {

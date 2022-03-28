@@ -9,6 +9,7 @@ import { Actividad } from 'src/app/models/Actividad';
 import { Enlace } from 'src/app/models/Enlace';
 import { ActividadesService } from 'src/app/services/actividad.service';
 import { UploadService } from 'src/app/services/upload.service';
+import { EliminarEnlaceModalComponent } from '../eliminar-enlace-modal/eliminar-enlace-modal.component';
 import { EnlaceModalComponent } from '../enlace-modal/enlace-modal.component';
 
 
@@ -166,6 +167,19 @@ export class NuevaComponent implements OnInit, OnDestroy {
         this.listEnlaces.push(result);
         this.ref.detectChanges();
       }
+    }).catch(e => {
+      console.log(e);
+    });
+  }
+
+  eliminarEnlace (id: number) 
+  {
+    const modalRef = this.modalService.open(EliminarEnlaceModalComponent, { size: 'lg' });
+    modalRef.componentInstance.id = id;
+    modalRef.result.then((result) => {
+      let index = this.listEnlaces.findIndex(d => d.id === id); //find index in your array
+      this.listEnlaces.splice(index, 1);//remove element from array
+      this.ref.detectChanges();
     }).catch(e => {
       console.log(e);
     });
