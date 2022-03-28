@@ -169,7 +169,7 @@ export class NuevaComponent implements OnInit, OnDestroy {
       const enlace: EnlaceActividad = {
         id: result2.id,
         nombre: result2.nombre,
-        ruta: result2.ruta,
+        url: result2.url,
       };
 
       modalRef.componentInstance.enlace = enlace;
@@ -178,7 +178,7 @@ export class NuevaComponent implements OnInit, OnDestroy {
       const enlace: EnlaceActividad = {
         id: undefined,
         nombre: '',
-        ruta: '',
+        url: '',
       };
       modalRef.componentInstance.enlace = enlace;
     }

@@ -29,7 +29,7 @@ export class EnlaceModalComponent implements OnInit{
   loadForm() {
     this.formGroup = this.fb.group({
       nombre: [this.enlace.nombre, [Validators.required]],
-      ruta: [this.enlace.ruta, [Validators.required]],
+      url: [this.enlace.url, [Validators.required]],
     });
   }
 
@@ -41,7 +41,7 @@ export class EnlaceModalComponent implements OnInit{
       this.enlace.id = Math.floor((Math.random()*6)+1);
     }
     this.enlace.nombre = formData.nombre;
-    this.enlace.ruta = formData.ruta;
+    this.enlace.url = formData.url;
 
     this.passEntry.emit(this.enlace);
     this.modal.close(this.enlace);

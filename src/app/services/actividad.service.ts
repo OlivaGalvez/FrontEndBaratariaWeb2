@@ -4,6 +4,7 @@ import { Actividad } from '../models/Actividad';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TableService } from '../_metronic_portal/shared/crud-table';
 import { ITableState } from '../_metronic_gestion/shared/crud-table';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -14,7 +15,7 @@ export class ActividadesService extends TableService<Actividad> implements OnDes
   myAppUrl = 'https://localhost:44334/';
   myApiUrl = 'api/Actividades/';
 
-  list: Actividad[];
+  //list: Actividad[];
   private actualizarFormulario = new BehaviorSubject<Actividad>({} as any);
 
   constructor(@Inject(HttpClient) http) {
@@ -31,16 +32,17 @@ export class ActividadesService extends TableService<Actividad> implements OnDes
     return this.http.post<Actividad>(this.myAppUrl + this.myApiUrl, formData);
   }
 
-  obtenerActividades () {
-    this.http.get(this.myAppUrl + this.myApiUrl).toPromise()
+  obtenerActividades (): Observable<Actividad[]>{
+    /*this.http.get(this.myAppUrl + this.myApiUrl).toPromise()
       .then(data => {
         this.list = data as Actividad []
-      });
+      });*/
+     return this.http.get(this.myAppUrl + this.myApiUrl).pipe(map(result=><Actividad[]>result));
   }
 
-  obtenerActividades$(): Observable<Actividad>{
+  /*obtenerActividades$(): Observable<Actividad>{
     return this.actualizarFormulario.asObservable();
-  }
+  }*/
 
   ngOnDestroy() {
     this.subscriptions.forEach(sb => sb.unsubscribe());
