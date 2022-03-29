@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LayoutService } from '../../../../_metronic_gestion/core';
-import { AuthService } from '../../../../modules/auth/_services/auth.service';
+//import { AuthService } from '../../../../modules/auth/_services/auth.service';
 import { UserModel } from '../../../../modules/auth/_models/user.model';
 import KTLayoutQuickSearch from '../../../../../assets/js/layout/extended/quick-search';
 import KTLayoutQuickNotifications from '../../../../../assets/js/layout/extended/quick-notifications';
@@ -11,6 +11,7 @@ import KTLayoutQuickPanel from '../../../../../assets/js/layout/extended/quick-p
 import KTLayoutQuickUser from '../../../../../assets/js/layout/extended/quick-user';
 import KTLayoutHeaderTopbar from '../../../../../assets/js/layout/base/header-topbar';
 import { KTUtil } from '../../../../../assets/js/components/util';
+import { AuthService } from 'src/app/auth/service/auth.service';
 
 @Component({
   selector: 'app-topbar',
@@ -32,9 +33,16 @@ export class TopbarComponent implements OnInit, AfterViewInit {
   extrasLanguagesDisplay: boolean;
   extrasUserDisplay: boolean;
   extrasUserLayout: 'offcanvas' | 'dropdown';
+  agentProfile: any = {};
 
   constructor(private layout: LayoutService, private auth: AuthService) {
-    this.user$ = this.auth.currentUserSubject.asObservable();
+    //this.user$ = this.auth.currentUserSubject.asObservable();
+    //this.agentProfile = this.auth.loadUserProfile();
+    //console.log(this.agentProfile);
+    this.auth.loadUserProfile().then(data => {
+      this.agentProfile = data;
+      console.log(this.agentProfile);
+    })
   }
 
   ngOnInit(): void {

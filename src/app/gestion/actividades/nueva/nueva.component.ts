@@ -100,7 +100,7 @@ export class NuevaComponent implements OnInit, OnDestroy {
     }
   }
 
-  aniadirTarjeta ()
+  guardarActividad ()
   {
     let validar = true;
     const actividad: Actividad = {
