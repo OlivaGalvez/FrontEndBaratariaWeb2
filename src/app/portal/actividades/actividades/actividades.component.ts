@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Actividad } from 'src/app/models/Actividad';
+import { Documento } from 'src/app/models/Documento';
 import { EnlaceActividad } from 'src/app/models/EnlaceActividad';
 import { ActividadesService } from 'src/app/services/actividad.service';
 import { LayoutService } from 'src/app/_metronic_portal/core';
@@ -14,9 +15,9 @@ export class ActividadesComponent implements OnInit {
 
   list: Actividad [];
   listEnlaces: EnlaceActividad [];
-  constructor(private layout: LayoutService, public actividadesService: ActividadesService) { 
-   
-  }
+  listDocumentos: Documento [];
+
+  constructor(private layout: LayoutService, public actividadesService: ActividadesService) {  }
 
   ngOnInit() {
     //this.list.push(this.actividadesService.obtenerActividades());
@@ -25,6 +26,7 @@ export class ActividadesComponent implements OnInit {
 
       this.list.forEach( (element) => {
         this.listEnlaces = element.listEnlaces;
+        this.listDocumentos = element.listDocumentos;
       });
 
     });

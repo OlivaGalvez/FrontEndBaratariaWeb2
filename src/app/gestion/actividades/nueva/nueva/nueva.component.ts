@@ -11,6 +11,7 @@ import { EnlaceActividad } from 'src/app/models/EnlaceActividad';
 import { ActividadesService } from 'src/app/services/actividad.service';
 import { UploadService } from 'src/app/services/upload.service';
 import { DocumentacionModalComponent } from '../documentacion-modal/documentacion-modal.component';
+import { EliminarDocumentacionModalComponent } from '../eliminar-documentacion-modal/eliminar-documentacion-modal.component';
 import { EliminarEnlaceModalComponent } from '../eliminar-enlace-modal/eliminar-enlace-modal.component';
 import { EnlaceModalComponent } from '../enlace-modal/enlace-modal.component';
 
@@ -80,10 +81,9 @@ export class NuevaComponent implements OnInit, OnDestroy {
       texto: this.form.get('texto')?.value,
       file: this.form.get('file')?.value,
       imagenServidor: this.form.get('imagenServidor').value,
-      listEnlaces: this.listEnlaces
+      listEnlaces: this.listEnlaces,
+      listDocumentos: this.listDocumentacion
     };
-
-    console.log(actividad);
 
     if (actividad.fechaBaja != null && actividad.fechaAlta >= actividad.fechaBaja)  
     {
@@ -122,7 +122,6 @@ export class NuevaComponent implements OnInit, OnDestroy {
           console.log('Response header has been received!');
           break;
         case HttpEventType.UploadProgress:
-          //setTimeout( () => this.progress = Math.round(event.loaded / event.total * 100), 0);
           break;
         case HttpEventType.Response:
           var reader = new FileReader();
@@ -133,8 +132,6 @@ export class NuevaComponent implements OnInit, OnDestroy {
             imagenServidor: event.body.fileName
           });
           this.form.get('imagenServidor').updateValueAndValidity();
-
-          //setTimeout(() => {this.progress = 0; }, 1500);
       }
     })
   }
@@ -208,32 +205,71 @@ export class NuevaComponent implements OnInit, OnDestroy {
   }
 
   crearDocumentacion() {
-    this.editarDocumentacion(undefined);
+    this.editarDocumento(undefined);
   }
 
-  editarDocumentacion(id: number) {
+  editarDocumento(id: number) {
     const modalRef = this.modalService.open(DocumentacionModalComponent, { size: 'lg' });
     if (id != undefined)
     {
+      var result2 = this.listDocumentacion.find(x => x.id === id);
+      const documento: Documento = {
+        id: result2.id,
+        nombre: result2.nombre
+      };
+
+      modalRef.componentInstance.documento = documento;
     }
     else {
       const documento: Documento = {
         id: undefined,
-        nombre: '',
-        original: '',
-        servidor: ''
+        nombre: ''
       };
       modalRef.componentInstance.documento = documento;
     }
 
-    modalRef.result.then((result) => {
+    modalRef.result.then((result: Documento) => {
       if (result) {
         let index = this.listDocumentacion.findIndex(d => d.id === id);
         if (index > -1) this.listDocumentacion.splice(index, 1);
-        this.listDocumentacion.push(result);
-        this.ref.detectChanges();
-        console.log(this.listDocumentacion);
+        this.subirDocAlta(result);
       }
+    }).catch(e => {
+      console.log(e);
+    });
+  }
+
+  subirDocAlta (result) 
+  {
+    this.uploadService.uploadDocumento(result.file).subscribe((event: HttpEvent<any>) => {
+      switch (event.type) {
+        case HttpEventType.Sent:
+          console.log('Request has been made!');
+          break;
+        case HttpEventType.ResponseHeader:
+          console.log('Response header has been received!');
+          break;
+        case HttpEventType.UploadProgress:
+          break;
+        case HttpEventType.Response:
+          result.fullPath =  event.body.fullPath;
+          result.servidor = event.body.fileName;
+          result.original = result.file.name;
+          this.listDocumentacion.push(result);
+          console.log(this.listDocumentacion);
+          this.ref.detectChanges();
+      }
+    })
+  }
+
+  eliminarDocumento (id: number) 
+  {
+    const modalRef = this.modalService.open(EliminarDocumentacionModalComponent, { size: 'lg' });
+    modalRef.componentInstance.id = id;
+    modalRef.result.then((result) => {
+      let index = this.listDocumentacion.findIndex(d => d.id === id); //find index in your array
+      if (index > -1) this.listDocumentacion.splice(index, 1);//remove element from array
+      this.ref.detectChanges();
     }).catch(e => {
       console.log(e);
     });

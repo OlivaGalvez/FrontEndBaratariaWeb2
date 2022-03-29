@@ -64,6 +64,62 @@
 </form>
 
   <div class="row">
+    <div class="col-12">
+      <div class="card card-custom gutter-b">
+        <div class="card-header">
+          <div class="card-title">
+            <h3 class="card-label">Documentación</h3>
+          </div>
+          <div class="card-toolbar">
+            <button type="button" class="btn btn-primary" (click)="crearDocumentacion()">Añadir</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+            <div class="row">
+              <div class="col-12">
+                <div class="table-responsive angular-bootstrap-table">
+                  <table class="table table-head-custom table-vertical-center overflow-hidden">
+                    <thead>
+                      <tr>
+                        <th>Nombre</th>
+                        <th>Original</th>
+                        <th>Tamaño</th>
+                        <th> </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of listDocumentacion">
+                        <td>{{ item.nombre }}</td>
+                        <td><a href="{{ item.fullPath }}" target="_blank">{{ item.original }}</a></td>
+                        <td>{{ item.tamanio }}</td>
+                        <td class="text-center accion">
+
+                          <a title="Editar documento" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
+                          (click)="editarDocumento(item.id)">
+                            <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
+                              class="svg-icon svg-icon-md svg-icon-primary">
+                            </span>
+                          </a>
+            
+                          <a title="Eliminar documento" class="btn btn-icon btn-light btn-hover-danger btn-sm"
+                            (click)="eliminarDocumento(item.id)">
+                            <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"
+                              class="svg-icon svg-icon-md svg-icon-danger">
+                            </span>
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="col-12 col-md-5">
       <div class="card card-custom gutter-b">
         <div class="card-header">
@@ -120,7 +176,7 @@
                           <td> <a href="{{ item.url }}" target="_blank">{{ item.url }}</a></td>
                           <td class="text-center accion">
 
-                            <a title="Edit customer" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
+                            <a title="Edit enlace" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
                             (click)="editarEnlace(item.id)">
                               <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
                                 class="svg-icon svg-icon-md svg-icon-primary">
@@ -142,47 +198,6 @@
               </div>
             </div>
           </div>
-      </div>
-    </div>
-
-    <div class="col-12">
-      <div class="card card-custom gutter-b">
-        <div class="card-header">
-          <div class="card-title">
-            <h3 class="card-label">Documentación</h3>
-          </div>
-          <div class="card-toolbar">
-            <button type="button" class="btn btn-primary" (click)="crearDocumentacion()">Añadir</button>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
-            <div class="row">
-              <div class="col-12">
-                <div class="table-responsive angular-bootstrap-table">
-                  <table class="table table-head-custom table-vertical-center overflow-hidden">
-                    <thead>
-                      <tr>
-                        <th>Nombre</th>
-                        <th>Original</th>
-                        <th>Tamaño</th>
-                        <th> </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let item of listDocumentacion">
-                        <td>{{ item.nombre }}</td>
-                        <td>{{ item.file.name }}</td>
-                        <td>{{ item.tamanio }}</td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>

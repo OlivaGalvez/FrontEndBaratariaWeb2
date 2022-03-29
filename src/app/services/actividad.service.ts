@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { TableService } from '../_metronic_portal/shared/crud-table';
 import { ITableState } from '../_metronic_gestion/shared/crud-table';
 import { map } from 'rxjs/operators';
+import { Documento } from '../models/Documento';
 
 
 @Injectable({
@@ -27,16 +28,16 @@ export class ActividadesService extends TableService<Actividad> implements OnDes
     const formData = new FormData(); 
           
     formData.append("actividad", JSON.stringify(actividad));
-    formData.append("file", actividad.file, actividad.file.name);
-
+    formData.append("imagen", actividad.file, actividad.file.name);
+    /*for (let i = 0; i < actividad.listDocumentos.length; i++) {
+      const file = actividad.listDocumentos[i].file;
+      formData.append('documentos', file, file.name);
+    }*/
+    formData.append("documentos", JSON.stringify(actividad.listDocumentos));
     return this.http.post<Actividad>(this.myAppUrl + this.myApiUrl, formData);
   }
 
   obtenerActividades (): Observable<Actividad[]>{
-    /*this.http.get(this.myAppUrl + this.myApiUrl).toPromise()
-      .then(data => {
-        this.list = data as Actividad []
-      });*/
      return this.http.get(this.myAppUrl + this.myApiUrl).pipe(map(result=><Actividad[]>result));
   }
 
