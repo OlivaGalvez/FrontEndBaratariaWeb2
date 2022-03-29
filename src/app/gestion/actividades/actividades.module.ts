@@ -9,10 +9,10 @@ import { NgbDateCustomParserFormatter } from "src/app/services/date-formatter.se
 import { GeneralModule } from "src/app/_metronic_portal/partials/content/general/general.module";
 import { ListadoComponent } from "./listado/listado/listado.component";
 import { EnlaceModalComponent } from "./nueva/enlace-modal/enlace-modal.component";
-import { NuevaComponent } from "./nueva/nueva/nueva.component";
 import { EliminarEnlaceModalComponent } from './nueva/eliminar-enlace-modal/eliminar-enlace-modal.component';
 import { DocumentacionModalComponent } from './nueva/documentacion-modal/documentacion-modal.component';
 import { EliminarDocumentacionModalComponent } from './nueva/eliminar-documentacion-modal/eliminar-documentacion-modal.component';
+import { NuevaComponent } from "./nueva/nueva.component";
 
 @NgModule({
     declarations: [
@@ -27,6 +27,10 @@ import { EliminarDocumentacionModalComponent } from './nueva/eliminar-documentac
       RouterModule.forChild([
         {
           path: 'nueva',
+          component: NuevaComponent,
+        },
+        {
+          path: 'gestion/:id',
           component: NuevaComponent,
         },
         {

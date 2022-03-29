@@ -1,9 +1,9 @@
 <!--begin::Brand-->
 <div class="brand flex-column-auto bg-barataria" id="kt_brand" [ngClass]="brandClasses">
   <!--begin::Logo-->
-  <!-- <a routerLink="/admin" class="brand-logo">
+  <a routerLink="/admin" class="brand-logo">
     <img class="w-75" alt="Logo" [attr.src]="headerLogo" />
-  </a> -->
+  </a>
   <!--end::Logo-->
 
   <ng-container *ngIf="asideSelfMinimizeToggle">
@@ -61,8 +61,7 @@
           <span class="menu-text">Actividades</span>
           <i class="menu-arrow"></i>
         </a>
-        <div class="menu-submenu">
-          <i class="menu-arrow"></i>
+        <div class="menu-submenu"><i class="menu-arrow"></i>
           <ul class="menu-subnav">
             <!-- Nueva Actividad -->
             <li class="menu-item"aria-haspopup="true" data-menu-toggle="hover" 
@@ -78,6 +77,13 @@
               <a class="menu-link" routerLink="/admin/actividad/listado" routerLinkActive="active">
                 <i class="menu-bullet menu-bullet-dot"><span></span></i>
                 <span class="menu-text">Listado</span>
+              </a>
+            </li>
+            <li class="menu-item" aria-haspopup="true" data-menu-toggle="hover" style="display: none;"
+              routerLinkActive="menu-item-active">
+              <a class="menu-link" routerLink="/admin/actividad/gestion" routerLinkActive="active">
+                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <span class="menu-text">Gestion</span>
               </a>
             </li>
           </ul>

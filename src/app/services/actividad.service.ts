@@ -1,12 +1,11 @@
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Actividad } from '../models/Actividad';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { TableService } from '../_metronic_portal/shared/crud-table';
-import { ITableState } from '../_metronic_gestion/shared/crud-table';
 import { map } from 'rxjs/operators';
-import { Documento } from '../models/Documento';
-
+import { ITableState, PaginatorState, TableResponseModel } from '../_metronic_gestion/shared/crud-table';
+import { baseFilter } from '../_fake';
 
 @Injectable({
     providedIn: 'root'
@@ -15,9 +14,6 @@ import { Documento } from '../models/Documento';
 export class ActividadesService extends TableService<Actividad> implements OnDestroy{
   myAppUrl = 'https://localhost:44334/';
   myApiUrl = 'api/Actividades/';
-
-  //list: Actividad[];
-  private actualizarFormulario = new BehaviorSubject<Actividad>({} as any);
 
   constructor(@Inject(HttpClient) http) {
     super(http);
@@ -29,10 +25,6 @@ export class ActividadesService extends TableService<Actividad> implements OnDes
           
     formData.append("actividad", JSON.stringify(actividad));
     formData.append("imagen", actividad.file, actividad.file.name);
-    /*for (let i = 0; i < actividad.listDocumentos.length; i++) {
-      const file = actividad.listDocumentos[i].file;
-      formData.append('documentos', file, file.name);
-    }*/
     formData.append("documentos", JSON.stringify(actividad.listDocumentos));
     return this.http.post<Actividad>(this.myAppUrl + this.myApiUrl, formData);
   }
@@ -41,9 +33,9 @@ export class ActividadesService extends TableService<Actividad> implements OnDes
      return this.http.get(this.myAppUrl + this.myApiUrl).pipe(map(result=><Actividad[]>result));
   }
 
-  /*obtenerActividades$(): Observable<Actividad>{
-    return this.actualizarFormulario.asObservable();
-  }*/
+  getById (id: string): Observable<Actividad>{
+    return this.http.get(this.myAppUrl + this.myApiUrl + id).pipe(map(result=><Actividad>result));
+ }
 
   ngOnDestroy() {
     this.subscriptions.forEach(sb => sb.unsubscribe());

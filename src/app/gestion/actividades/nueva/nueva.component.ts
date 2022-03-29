@@ -1,19 +1,21 @@
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef, ViewChild, ElementRef, OnDestroy, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { Actividad } from 'src/app/models/Actividad';
 import { Documento } from 'src/app/models/Documento';
 import { EnlaceActividad } from 'src/app/models/EnlaceActividad';
 import { ActividadesService } from 'src/app/services/actividad.service';
 import { UploadService } from 'src/app/services/upload.service';
-import { DocumentacionModalComponent } from '../documentacion-modal/documentacion-modal.component';
-import { EliminarDocumentacionModalComponent } from '../eliminar-documentacion-modal/eliminar-documentacion-modal.component';
-import { EliminarEnlaceModalComponent } from '../eliminar-enlace-modal/eliminar-enlace-modal.component';
-import { EnlaceModalComponent } from '../enlace-modal/enlace-modal.component';
+import { DocumentacionModalComponent } from './documentacion-modal/documentacion-modal.component';
+import { EliminarDocumentacionModalComponent } from './eliminar-documentacion-modal/eliminar-documentacion-modal.component';
+import { EliminarEnlaceModalComponent } from './eliminar-enlace-modal/eliminar-enlace-modal.component';
+import { EnlaceModalComponent } from './enlace-modal/enlace-modal.component';
 
 
 @Component({
@@ -25,7 +27,8 @@ export class NuevaComponent implements OnInit, OnDestroy {
   form: FormGroup;
   suscription: Subscription;
   actividad: Actividad;
-  idActividad: number;
+  idActividad: string;
+  isAddMode: boolean;
 
   currentDate = new Date();
   progress: number = 0;
@@ -40,10 +43,19 @@ export class NuevaComponent implements OnInit, OnDestroy {
   listEnlaces: EnlaceActividad [] = [];
   listDocumentacion: Documento [] = [];
 
-  constructor(private formBuilder: FormBuilder, private actividadService: ActividadesService,
+  constructor(private formBuilder: FormBuilder,  private router: ActivatedRoute, private actividadService: ActividadesService,
     private uploadService: UploadService, private ref: ChangeDetectorRef, private toastr: ToastrService,
     private modalService: NgbModal) 
   { 
+  }
+
+  ngOnInit(): void {
+
+    this.idActividad = this.router.snapshot.paramMap.get('id');
+
+    this.isAddMode = !this.idActividad;
+
+
     this.form = this.formBuilder.group({
       id: 0,
       titulo: ['', [Validators.required]],
@@ -54,14 +66,32 @@ export class NuevaComponent implements OnInit, OnDestroy {
       file: [null, Validators.required],
       imagenServidor: [null]
     })
-  }
 
-  ngOnInit(): void {
-    const objBeginDate = { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth()+ 1, 
-      day: this.currentDate.getDate() };
-    this.form.patchValue({
-      fechaAlta: objBeginDate
-    });
+    if (this.isAddMode)
+    {
+      const fechaAltaAux = { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth()+ 1, 
+        day: this.currentDate.getDate() };
+      this.form.patchValue({
+          fechaAlta: fechaAltaAux
+      });
+    }
+    else
+    {
+      this.actividadService.getById(this.idActividad).pipe(first()).subscribe(result => 
+        this.form.patchValue({
+          
+          titulo: result.titulo,
+          mostrar: result.mostrar,
+          texto: result.texto,
+          fechaBaja: result.fechaBaja != null ? {year: new Date(moment(result.fechaBaja).format("YYYY-MM-DD HH:mm:ss")).getFullYear(),
+          month: new Date(moment(result.fechaBaja).format("YYYY-MM-DD HH:mm:ss")).getMonth(), 
+          day: new Date(moment(result.fechaBaja).format("YYYY-MM-DD HH:mm:ss")).getDate()} : null,
+          fechaAlta:  {year: new Date(moment(result.fechaAlta).format("YYYY-MM-DD HH:mm:ss")).getFullYear(),
+            month: new Date(moment(result.fechaAlta).format("YYYY-MM-DD HH:mm:ss")).getMonth(), 
+            day: new Date(moment(result.fechaAlta).format("YYYY-MM-DD HH:mm:ss")).getDate()}
+        })
+      );
+    }
   }
 
   ngOnDestroy() {

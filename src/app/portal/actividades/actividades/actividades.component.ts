@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { Actividad } from 'src/app/models/Actividad';
 import { Documento } from 'src/app/models/Documento';
 import { EnlaceActividad } from 'src/app/models/EnlaceActividad';
@@ -11,7 +11,8 @@ import { LayoutService } from 'src/app/_metronic_portal/core';
   templateUrl: './actividades.component.html',
   styleUrls: ['./actividades.component.scss']
 })
-export class ActividadesComponent implements OnInit {
+export class ActividadesComponent implements OnInit, OnDestroy {
+  private subscriptions: Subscription[] = [];
 
   list: Actividad [];
   listEnlaces: EnlaceActividad [];
@@ -20,15 +21,17 @@ export class ActividadesComponent implements OnInit {
   constructor(private layout: LayoutService, public actividadesService: ActividadesService) {  }
 
   ngOnInit() {
-    //this.list.push(this.actividadesService.obtenerActividades());
-    this.actividadesService.obtenerActividades().subscribe(res => {
+    const sb = this.actividadesService.obtenerActividades().subscribe(res => {
       this.list = res;
-
       this.list.forEach( (element) => {
         this.listEnlaces = element.listEnlaces;
         this.listDocumentos = element.listDocumentos;
       });
-
     });
+    this.subscriptions.push(sb);
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((sb) => sb.unsubscribe());
   }
 }
