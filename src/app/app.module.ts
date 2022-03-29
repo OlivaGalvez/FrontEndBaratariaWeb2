@@ -6,10 +6,9 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { ClipboardModule } from 'ngx-clipboard';
 import { TranslateModule } from '@ngx-translate/core';
 import { InlineSVGModule } from 'ng-inline-svg';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+//import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthService } from './modules/auth/_services/auth.service';
 import { environment } from 'src/environments/environment';
 // Highlight JS
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
@@ -17,15 +16,19 @@ import { SplashScreenModule } from './_metronic_portal/partials/layout/splash-sc
 // #fake-start#
 import { FakeAPIService } from './_fake/fake-api.service';
 import { ToastrModule } from 'ngx-toastr';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { initializer } from './auth/keycloak-initializer';
+import { AuthGuard } from './auth/auth.guard';
+import { AuthService } from './auth/service/auth.service';
 // #fake-end#
 
-function appInitializer(authService: AuthService) {
+/*function appInitializer(authService: AuthService) {
   return () => {
     return new Promise((resolve) => {
       authService.getUserByToken().subscribe().add(resolve);
     });
   };
-}
+}*/
 
 
 @NgModule({
@@ -49,15 +52,26 @@ function appInitializer(authService: AuthService) {
     // #fake-end#
     AppRoutingModule,
     InlineSVGModule.forRoot(),
-    NgbModule
+    //NgbModule,
+    KeycloakAngularModule
   ],
   providers: [
-    {
+    /*{
       provide: APP_INITIALIZER,
       useFactory: appInitializer,
       multi: true,
       deps: [AuthService],
+    },*/
+    
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializer,
+      multi: true,
+      deps: [KeycloakService]
     },
+    AuthGuard,
+    AuthService,
+    
     {
       provide: HIGHLIGHT_OPTIONS,
       useValue: {
