@@ -35,7 +35,21 @@ export class ActividadesService extends TableService<Actividad> implements OnDes
 
   getById (id: string): Observable<Actividad>{
     return this.http.get(this.myAppUrl + this.myApiUrl + id).pipe(map(result=><Actividad>result));
- }
+  }
+
+   // Necesario para mostrar las actividades en la tabla de listado
+   find(tableState: ITableState): Observable<TableResponseModel<Actividad>> {
+    return this.http.get<Actividad[]>(this.myAppUrl + this.myApiUrl + "?portal=false").pipe(
+      map((response: Actividad[]) => {
+        const filteredResult = baseFilter(response, tableState);
+        const result: TableResponseModel<Actividad> = {
+          items: filteredResult.items,
+          total: filteredResult.total
+        };
+        return result;
+      })
+    );
+  }
 
   ngOnDestroy() {
     this.subscriptions.forEach(sb => sb.unsubscribe());

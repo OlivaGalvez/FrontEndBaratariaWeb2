@@ -13,6 +13,8 @@ import { EliminarEnlaceModalComponent } from './nueva/eliminar-enlace-modal/elim
 import { DocumentacionModalComponent } from './nueva/documentacion-modal/documentacion-modal.component';
 import { EliminarDocumentacionModalComponent } from './nueva/eliminar-documentacion-modal/eliminar-documentacion-modal.component';
 import { NuevaComponent } from "./nueva/nueva.component";
+import { PaginatorComponent } from "src/app/_metronic_gestion/shared/crud-table/components/paginator/paginator.component";
+import { CRUDTableModule } from "src/app/_metronic_gestion/shared/crud-table";
 
 @NgModule({
     declarations: [
@@ -43,6 +45,7 @@ import { NuevaComponent } from "./nueva/nueva.component";
       MatCheckboxModule,
       GeneralModule,
       InlineSVGModule,
+      CRUDTableModule,
 
       FormsModule,
       ReactiveFormsModule,

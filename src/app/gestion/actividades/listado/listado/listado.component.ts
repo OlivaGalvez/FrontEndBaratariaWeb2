@@ -18,15 +18,17 @@ export class ListadoComponent implements OnInit, OnDestroy {
   list: Actividad [];
 
   private subscriptions: Subscription[] = [];
-  constructor(private router: Router, private ref: ChangeDetectorRef, private actividadService: ActividadesService) { }
+  constructor(private router: Router, private ref: ChangeDetectorRef, public actividadService: ActividadesService) { }
 
   ngOnInit(): void {
-   // this.actividadService.fetch();
-   // this.paginator = this.actividadService.paginator;
-    const sb = this.actividadService.obtenerActividades().subscribe(res => {
+    this.actividadService.fetch();
+    this.paginator = this.actividadService.paginator;
+    /*const sb = this.actividadService.obtenerActividades().subscribe(res => {
+      this.isLoading = true;
       this.list = res;
       this.ref.detectChanges();
-    });
+    });*/
+    const sb = this.actividadService.isLoading$.subscribe(res => this.isLoading = res);
     this.subscriptions.push(sb);
   }
 
@@ -43,5 +45,11 @@ export class ListadoComponent implements OnInit, OnDestroy {
     if (date != null) return new Date(moment(date).add(-1, 'M').format("YYYY-MM-DD HH:mm:ss"));
     return null;
   }
+
+  // pagination
+  paginate(paginator: PaginatorState) {
+    this.actividadService.patchState({ paginator });
+  }
+  
 
 }
