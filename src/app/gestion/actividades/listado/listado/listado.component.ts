@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import * as moment from 'moment';
+import { Observable, Subscription } from 'rxjs';
 import { Actividad } from 'src/app/models/Actividad';
 import { ActividadesService } from 'src/app/services/actividad.service';
 import { PaginatorState } from 'src/app/_metronic_gestion/shared/crud-table';
@@ -17,14 +18,14 @@ export class ListadoComponent implements OnInit, OnDestroy {
   list: Actividad [];
 
   private subscriptions: Subscription[] = [];
-  constructor(private router: Router, private actividadService: ActividadesService) { }
+  constructor(private router: Router, private ref: ChangeDetectorRef, private actividadService: ActividadesService) { }
 
   ngOnInit(): void {
    // this.actividadService.fetch();
    // this.paginator = this.actividadService.paginator;
     const sb = this.actividadService.obtenerActividades().subscribe(res => {
       this.list = res;
-      console.log(this.list);
+      this.ref.detectChanges();
     });
     this.subscriptions.push(sb);
   }
@@ -35,6 +36,12 @@ export class ListadoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.forEach((sb) => sb.unsubscribe());
+  }
+
+  convertDate (date)
+  {
+    if (date != null) return new Date(moment(date).add(-1, 'M').format("YYYY-MM-DD HH:mm:ss"));
+    return null;
   }
 
 }

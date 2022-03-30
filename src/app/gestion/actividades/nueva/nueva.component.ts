@@ -127,8 +127,11 @@ export class NuevaComponent implements OnInit, OnDestroy {
         this.toastr.success('Actividad guardada', 'Actividad');
         this.myInputVariable.nativeElement.value = "";
         this.mostrarImagen = false;
+
+        this.listEnlaces = null;
+        this.listDocumentacion = null;
+
         this.ref.detectChanges();
-        
         this.form.reset();
         this.ngOnInit();
       }); 
