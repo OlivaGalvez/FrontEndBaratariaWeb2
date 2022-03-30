@@ -112,6 +112,16 @@
   background-color: #ebc71d;
 }
 
+.aside-menu .menu-nav > .menu-item.menu-item-active > .menu-heading, .aside-menu .menu-nav > .menu-item.menu-item-active > .menu-link {
+  background-color: #ebc71d;
+}
+.aside-menu .menu-nav > .menu-item.menu-item-open > .menu-heading, .aside-menu .menu-nav > .menu-item.menu-item-open > .menu-link {
+  background-color: transparent;
+}
+.aside-menu .menu-nav > .menu-item .menu-submenu .menu-item.menu-item-active > .menu-link {
+  background-color: #ebc71d;
+}
+
 .aside-menu {
   background-color: #027762;
 }

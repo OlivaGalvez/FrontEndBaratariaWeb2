@@ -77,7 +77,8 @@
             <h3 class="card-label">Documentación</h3>
           </div>
           <div class="card-toolbar">
-            <button *ngIf="mostrarBotonesGeneral" type="button" class="btn btn-primary" (click)="crearDocumentacion()">Añadir</button>
+            <button *ngIf="mostrarBotonesGeneral" type="button" class="btn btn-primary" (click)="crearDocumentacion()">
+              <i class="fa fa-plus"></i> Añadir</button>
           </div>
         </div>
         <div class="card-body">
@@ -130,9 +131,9 @@
     <div class="col-12 col-md-5">
       <div class="card card-custom gutter-b">
         <div class="card-header">
-            <div class="card-title mb-0 text-right">
-              <p>Imagen</p>
-            </div>
+          <div class="card-title mb-0 text-right">
+            <p>Imagen</p>
+          </div>
         </div>
           <div class="card-body">
             <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
@@ -144,17 +145,17 @@
                   </div>
                 </div>
                 <div class="col-12 text-center">
-                  <div class="img-wraps"  [className]="mostrarImagen ? 'mostrarImagenArea' : 'ocultarImagenArea'">
-                    <img id="imagen-subida" [src]="imagePath" class="img-responsive">
-                    <a  class="btn btn-eliminar-img" (click)="reset(fileInput)"><i class="fa fa-trash"></i></a>
+                  <div  [className]="mostrarImagen ? 'mostrarImagenArea' : 'ocultarImagenArea'">
+                    <img id="imagen-subida" [src]="imagePath" class="img-responsive img-container" style="max-width: 100%;">
+                    <a  class="btn btn-danger btn-eliminar-img" (click)="reset(fileInput)"><i class="fa fa-trash"></i> </a>
                   </div>
                 </div>
               </div>
 
               <div *ngIf="!mostrarBotonesGeneral" class="row">
                 <div class="col-12 text-center">
-                  <div class="img-wraps"  [className]="mostrarImagen ? 'mostrarImagenArea' : 'ocultarImagenArea'">
-                    <img id="imagen-subida" [src]="imagePath" class="img-responsive">
+                  <div [className]="mostrarImagen ? 'mostrarImagenArea' : 'ocultarImagenArea'">
+                    <img id="imagen-subida" [src]="imagePath" class="img-responsive"  style="max-width: 100%;">
                   </div>
                 </div>
               </div>
@@ -171,7 +172,8 @@
             <h3 class="card-label">Enlaces</h3>
           </div>
           <div class="card-toolbar">
-            <button *ngIf="mostrarBotonesGeneral" type="button" class="btn btn-primary" (click)="crearEnlace()">Añadir</button>
+            <button *ngIf="mostrarBotonesGeneral" type="button" class="btn btn-primary" (click)="crearEnlace()">
+              <i class="fa fa-plus"></i> Añadir</button>
           </div>
         </div>
           <div class="card-body">

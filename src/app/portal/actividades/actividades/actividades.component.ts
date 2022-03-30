@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import * as moment from 'moment';
 import { Observable, Subscription } from 'rxjs';
 import { Actividad } from 'src/app/models/Actividad';
 import { Documento } from 'src/app/models/Documento';
@@ -24,6 +25,16 @@ export class ActividadesComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.push(sb);
     this.ref.detectChanges();
+  }
+
+  convertDate (date)
+  {
+    let fecha = moment(date).add(-1, 'M').locale('es');
+    let cadena = "";
+    if (date != null) {
+      cadena = fecha.format('DD') + " de " + fecha.format('MMMM') + " del " + fecha.format('YYYY');
+    } 
+    return cadena;
   }
 
   toArrayDocumentos(answers: object) {

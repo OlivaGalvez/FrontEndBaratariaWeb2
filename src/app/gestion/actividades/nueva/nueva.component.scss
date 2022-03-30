@@ -11,6 +11,9 @@
 
 .mostrarImagenArea {
   display: block;
+  margin: 10px;
+  height: auto;
+  overflow: auto;
 }
 
 .img-wraps {
@@ -43,7 +46,9 @@
 
 .btn-eliminar-img {
   position: absolute;
-  bottom: 0;
+  left: 89%;
+  bottom: -2%;
+  transform: translate(-50%, -50%);
 }
 
 .accion {
