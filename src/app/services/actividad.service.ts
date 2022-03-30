@@ -33,7 +33,7 @@ export class ActividadesService extends TableService<Actividad> implements OnDes
   {
     const formData = new FormData(); 
     formData.append("actividad", JSON.stringify(actividad));
-    formData.append("imagen", actividad.file, actividad.file.name);
+    if (actividad.file) formData.append("imagen", actividad.file, actividad.file.name);
     formData.append("documentos", JSON.stringify(actividad.listDocumentos));
     return this.http.put<Actividad>(this.myAppUrl + this.myApiUrl + actividad.id, formData);
   }

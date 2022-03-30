@@ -1,8 +1,11 @@
 <form [formGroup]="form" (ngSubmit) = "guardarActividad()" class="form" id="kt_form">
   <app-notice class="text-right">
-    <button class="btn btn-success " type="submit" name="btn-guardar" [disabled]="form.invalid">
+    <button *ngIf="mostrarBotonesGeneral" class="btn btn-success " type="submit" name="btn-guardar" [disabled]="form.invalid">
       <i class="fa fa-check"></i>  Guardar
     </button>
+    <a *ngIf="mostrarBotonEdit" class="btn btn-success " name="btn-editar" (click)="editarForm()">
+      <i class="fa fa-edit"></i>  Editar
+    </a>
   </app-notice>
 
   <div class="card card-custom gutter-b">
@@ -71,7 +74,7 @@
             <h3 class="card-label">Documentación</h3>
           </div>
           <div class="card-toolbar">
-            <button type="button" class="btn btn-primary" (click)="crearDocumentacion()">Añadir</button>
+            <button *ngIf="mostrarBotonesGeneral" type="button" class="btn btn-primary" (click)="crearDocumentacion()">Añadir</button>
           </div>
         </div>
         <div class="card-body">
@@ -93,21 +96,22 @@
                         <td>{{ item.nombre }}</td>
                         <td><a href="{{ item.fullPath }}" target="_blank">{{ item.original }}</a></td>
                         <td>{{ item.tamanio }}</td>
-                        <td class="text-center accion">
-
-                          <a title="Editar documento" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
-                          (click)="editarDocumento(item.id)">
-                            <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
-                              class="svg-icon svg-icon-md svg-icon-primary">
-                            </span>
-                          </a>
-            
-                          <a title="Eliminar documento" class="btn btn-icon btn-light btn-hover-danger btn-sm"
-                            (click)="eliminarDocumento(item.id)">
-                            <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"
-                              class="svg-icon svg-icon-md svg-icon-danger">
-                            </span>
-                          </a>
+                        <td>
+                          <div *ngIf="mostrarBotonesGeneral" class="text-center accion">
+                            <a title="Editar documento" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
+                            (click)="editarDocumento(item.id)">
+                              <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
+                                class="svg-icon svg-icon-md svg-icon-primary">
+                              </span>
+                            </a>
+              
+                            <a title="Eliminar documento" class="btn btn-icon btn-light btn-hover-danger btn-sm"
+                              (click)="eliminarDocumento(item.id)">
+                              <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"
+                                class="svg-icon svg-icon-md svg-icon-danger">
+                              </span>
+                            </a>
+                          </div>
                         </td>
                       </tr>
                     </tbody>
@@ -129,8 +133,9 @@
         </div>
           <div class="card-body">
             <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
-              <div class="row">
-                <div class="col-12">
+
+              <div *ngIf="mostrarBotonesGeneral" class="row">
+                <div  class="col-12">
                   <div class="form-group">
                     <input #fileInput type="file" accept="image/*" (change)="onUpload($event)">
                   </div>
@@ -138,10 +143,19 @@
                 <div class="col-12 text-center">
                   <div class="img-wraps"  [className]="mostrarImagen ? 'mostrarImagenArea' : 'ocultarImagenArea'">
                     <img id="imagen-subida" [src]="imagePath" class="img-responsive">
-                    <a class="btn btn-eliminar-img" (click)="reset(fileInput)"><i class="fa fa-trash"></i></a>
+                    <a  class="btn btn-eliminar-img" (click)="reset(fileInput)"><i class="fa fa-trash"></i></a>
                   </div>
                 </div>
               </div>
+
+              <div *ngIf="!mostrarBotonesGeneral" class="row">
+                <div class="col-12 text-center">
+                  <div class="img-wraps"  [className]="mostrarImagen ? 'mostrarImagenArea' : 'ocultarImagenArea'">
+                    <img id="imagen-subida" [src]="imagePath" class="img-responsive">
+                  </div>
+                </div>
+              </div>
+              
             </div>
           </div>
       </div>
@@ -154,7 +168,7 @@
             <h3 class="card-label">Enlaces</h3>
           </div>
           <div class="card-toolbar">
-            <button type="button" class="btn btn-primary" (click)="crearEnlace()">Añadir</button>
+            <button *ngIf="mostrarBotonesGeneral" type="button" class="btn btn-primary" (click)="crearEnlace()">Añadir</button>
           </div>
         </div>
           <div class="card-body">
@@ -174,21 +188,22 @@
                         <tr *ngFor="let item of listEnlaces">
                           <td>{{ item.nombre }}</td>
                           <td> <a href="{{ item.url }}" target="_blank">{{ item.url }}</a></td>
-                          <td class="text-center accion">
-
-                            <a title="Edit enlace" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
-                            (click)="editarEnlace(item.id)">
-                              <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
-                                class="svg-icon svg-icon-md svg-icon-primary">
-                              </span>
-                            </a>
-              
-                            <a title="Eliminar enlace" class="btn btn-icon btn-light btn-hover-danger btn-sm"
-                              (click)="eliminarEnlace(item.id)">
-                              <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"
-                                class="svg-icon svg-icon-md svg-icon-danger">
-                              </span>
-                            </a>
+                          <td>
+                            <div *ngIf="mostrarBotonesGeneral" class="text-center accion">
+                              <a title="Edit enlace" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
+                              (click)="editarEnlace(item.id)">
+                                <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
+                                  class="svg-icon svg-icon-md svg-icon-primary">
+                                </span>
+                              </a>
+                
+                              <a title="Eliminar enlace" class="btn btn-icon btn-light btn-hover-danger btn-sm"
+                                (click)="eliminarEnlace(item.id)">
+                                <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"
+                                  class="svg-icon svg-icon-md svg-icon-danger">
+                                </span>
+                              </a>
+                            </div>
                           </td>
                         </tr>
                       </tbody>

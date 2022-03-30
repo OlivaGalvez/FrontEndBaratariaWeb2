@@ -28,7 +28,11 @@ export class NuevaComponent implements OnInit, OnDestroy {
   suscription: Subscription;
   actividad: Actividad;
   idActividad: string;
+
   isAddMode: boolean;
+  disabledCampos: boolean = true;
+  mostrarBotonesGeneral: boolean = true;
+  mostrarBotonEdit: boolean = true;
 
   currentDate = new Date();
   progress: number = 0;
@@ -54,16 +58,36 @@ export class NuevaComponent implements OnInit, OnDestroy {
     this.idActividad = this.router.snapshot.paramMap.get('id');
 
     this.isAddMode = !this.idActividad;
-
+    if (this.isAddMode) {
+      this.disabledCampos = false; this.mostrarBotonEdit = false;
+    }
+    else {
+      this.mostrarBotonesGeneral = false;
+    }
 
     this.form = this.formBuilder.group({
       id: 0,
-      titulo: ['', [Validators.required]],
-      fechaAlta: ['', [Validators.required]],
-      fechaBaja: [null],
-      mostrar: [null],
-      texto: ['', [Validators.required]],
-      file: [null, Validators.required],
+      titulo: [{
+          value: '',
+          disabled: this.disabledCampos,
+      },  [Validators.required]],
+      fechaAlta: [{
+        value: '',
+        disabled: this.disabledCampos,
+      },  [Validators.required]],
+      fechaBaja: [{
+        value: null,
+        disabled: this.disabledCampos,
+      }],
+      mostrar: [{
+          value: null,
+          disabled: this.disabledCampos,
+      }],
+      texto: [{
+        value: '',
+        disabled: this.disabledCampos,
+      },  [Validators.required]],
+      file: [null],
       imagenServidor: [null]
     })
 
@@ -107,6 +131,17 @@ export class NuevaComponent implements OnInit, OnDestroy {
     this.listDocumentacion = this.actividad.listDocumentos;
   }
 
+  editarForm ()
+  {
+    this.mostrarBotonesGeneral = true;
+    this.mostrarBotonEdit = false;
+    this.form.get('titulo').enable();
+    this.form.get('fechaAlta').enable();
+    this.form.get('fechaBaja').enable();
+    this.form.get('mostrar').enable();
+    this.form.get('texto').enable();
+  }
+
   ngOnDestroy() {
     if (this.suscription) {
       this.suscription.unsubscribe();
@@ -134,8 +169,6 @@ export class NuevaComponent implements OnInit, OnDestroy {
       this.toastr.error('La fecha de baja no puede ser igual o anterior a la fecha de alta', 'Error');
       validar = false;
     }
-
-    console.log(actividad);
 
     if (validar)
     {
