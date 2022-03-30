@@ -15,7 +15,6 @@ export const routes: Routes = [
   },
   {
     path: '',
-    //canActivate: [AuthGuard],
     loadChildren: () =>
       import('./pages/layout-portal.module').then((m) => m.LayoutModule),
   },

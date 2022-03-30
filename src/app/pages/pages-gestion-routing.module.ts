@@ -14,6 +14,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('../gestion/actividades/actividades.module').then((m) => m.ActividadesModule),
       },
+      {
+        path: 'enlaces',
+        loadChildren: () =>
+          import('../gestion/enlaces/enlaces.module').then((m) => m.EnlacesModule),
+      },
 /* 
       {
         path: 'dashboard',

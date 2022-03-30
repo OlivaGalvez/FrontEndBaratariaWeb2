@@ -7,35 +7,23 @@ import { NgbDateParserFormatter, NgbModalModule, NgbModule } from "@ng-bootstrap
 import { InlineSVGModule } from "ng-inline-svg";
 import { NgbDateCustomParserFormatter } from "src/app/services/date-formatter.service";
 import { GeneralModule } from "src/app/_metronic_portal/partials/content/general/general.module";
-import { ListadoComponent } from "./listado/listado/listado.component";
-import { EnlaceModalComponent } from "./nueva/enlace-modal/enlace-modal.component";
-import { EliminarEnlaceModalComponent } from './nueva/eliminar-enlace-modal/eliminar-enlace-modal.component';
-import { DocumentacionModalComponent } from './nueva/documentacion-modal/documentacion-modal.component';
-import { EliminarDocumentacionModalComponent } from './nueva/eliminar-documentacion-modal/eliminar-documentacion-modal.component';
-import { NuevaComponent } from "./nueva/nueva.component";
 import { PaginatorComponent } from "src/app/_metronic_gestion/shared/crud-table/components/paginator/paginator.component";
 import { CRUDTableModule } from "src/app/_metronic_gestion/shared/crud-table";
-import { EliminarActividadComponent } from './nueva/eliminar-actividad/eliminar-actividad.component';
+import { NuevoComponent } from "./nuevo/nuevo.component";
+import { ListadoComponent } from "./listado/listado.component";
 
 @NgModule({
     declarations: [
-      NuevaComponent, 
-      ListadoComponent, 
-      EnlaceModalComponent, 
-      EliminarEnlaceModalComponent, 
-      DocumentacionModalComponent, 
-      EliminarDocumentacionModalComponent, 
-      EliminarActividadComponent
     ],
     imports: [
       RouterModule.forChild([
         {
-          path: 'nueva',
-          component: NuevaComponent,
+          path: 'nuevo',
+          component: NuevoComponent,
         },
         {
           path: 'gestion/:id',
-          component: NuevaComponent,
+          component: NuevoComponent,
         },
         {
           path: 'listado',
@@ -56,11 +44,6 @@ import { EliminarActividadComponent } from './nueva/eliminar-actividad/eliminar-
       { provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter }  // <-- add this
     ],
     entryComponents: [
-      EnlaceModalComponent,
-      EliminarEnlaceModalComponent, 
-      DocumentacionModalComponent, 
-      EliminarDocumentacionModalComponent, 
-      EliminarActividadComponent
     ]
   })
-  export class ActividadesModule {}
+  export class EnlacesModule {}

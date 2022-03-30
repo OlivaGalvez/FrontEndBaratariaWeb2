@@ -5,7 +5,7 @@ import { NgbDropdown, NgbDropdownModule, NgbModule } from "@ng-bootstrap/ng-boot
 import { NgApexchartsModule } from "ng-apexcharts";
 import { InlineSVGModule } from "ng-inline-svg";
 import { DropdownMenusModule } from "src/app/_metronic_portal/partials/content/dropdown-menus/dropdown-menus.module";
-import { ActividadesComponent } from "./actividades/actividades.component";
+import { ActividadesComponent } from "./actividades.component";
 
 @NgModule({
     declarations: [ActividadesComponent],
