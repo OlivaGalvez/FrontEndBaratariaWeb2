@@ -1,4 +1,31 @@
 <div class="row">
+
+    <!-- <div class="col-12">
+      <div class="card card-custom gutter-b">
+        <div class="card-header">
+          <div class="card-title">
+            <h3 class="card-label">Filtrar información</h3>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="form form-label-right">
+            <div class="form-group row">
+              <div class="col-lg-4">
+                <div class="row" [formGroup]="filterGroup">
+                  <div class="col-lg-6">
+                    <select class="form-control" name="status" placeholder="Filter by Status" formControlName="status">
+                      <option value=true>Si</option>
+                      <option value=false>No</option>
+                    </select><small class="form-text text-muted"><b>Filter</b> by Mostrar</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
     <div class="col-12">
       <div class="card card-custom gutter-b">
         <div class="card-header">
@@ -15,11 +42,31 @@
                   <table class="table table-head-custom table-vertical-center overflow-hidden">
                     <thead>
                       <tr>
-                        <th>Id</th>
-                        <th>Fecha Alta</th>
-                        <th>Fecha Baja</th>
-                        <th>Título</th>
-                        <th>Mostrar</th>
+                        <th>
+                          Id
+                          <app-sort-icon column="id" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                            (sort)="sort($event)"></app-sort-icon>
+                        </th>
+                        <th>
+                          Fecha Alta
+                          <app-sort-icon column="fechaAlta" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                          (sort)="sort($event)"></app-sort-icon>
+                        </th>
+                        <th>
+                          Fecha Baja
+                          <app-sort-icon column="fechaBaja" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                          (sort)="sort($event)"></app-sort-icon>
+                        </th>
+                        <th>
+                          Título
+                          <app-sort-icon column="titulo" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                          (sort)="sort($event)"></app-sort-icon>
+                        </th>
+                        <th>
+                          Mostrar
+                          <app-sort-icon column="mostrar" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                          (sort)="sort($event)"></app-sort-icon>
+                        </th>
                         <th> </th>
                       </tr>
                     </thead>

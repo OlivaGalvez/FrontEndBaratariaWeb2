@@ -5,13 +5,15 @@ export function initializer(keycloak: KeycloakService): () => Promise<boolean> {
 
     const options: KeycloakOptions = {
       config : environment.keycloackConfig,
-      loadUserProfileAtStartUp: true,
+     // loadUserProfileAtStartUp: true,
       initOptions: {
-          onLoad: 'check-sso',
+          //onLoad: 'check-sso',
           // onLoad: 'login-required',
           checkLoginIframe: false
       },
-      bearerExcludedUrls: []
+      enableBearerInterceptor: true,
+      bearerPrefix: 'Bearer',
+      bearerExcludedUrls: [' ', '/assets', '/error' ]
     };
 
     return () => keycloak.init(options);

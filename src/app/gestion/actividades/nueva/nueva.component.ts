@@ -6,7 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { first, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { Actividad } from 'src/app/models/Actividad';
 import { Documento } from 'src/app/models/Documento';
 import { EnlaceActividad } from 'src/app/models/EnlaceActividad';
@@ -77,21 +77,34 @@ export class NuevaComponent implements OnInit, OnDestroy {
     }
     else
     {
-      this.actividadService.getById(this.idActividad).pipe(first()).subscribe(result => 
+      
+      this.actividadService.getById(this.idActividad).pipe(
+        tap(data =>  this.mostrarDatosAlEditar(data)),
+      ).subscribe(result => 
         this.form.patchValue({
           
           titulo: result.titulo,
           mostrar: result.mostrar,
           texto: result.texto,
           fechaBaja: result.fechaBaja != null ? {year: new Date(moment(result.fechaBaja).format("YYYY-MM-DD HH:mm:ss")).getFullYear(),
-          month: new Date(moment(result.fechaBaja).format("YYYY-MM-DD HH:mm:ss")).getMonth(), 
-          day: new Date(moment(result.fechaBaja).format("YYYY-MM-DD HH:mm:ss")).getDate()} : null,
+            month: new Date(moment(result.fechaBaja).format("YYYY-MM-DD HH:mm:ss")).getMonth(), 
+            day: new Date(moment(result.fechaBaja).format("YYYY-MM-DD HH:mm:ss")).getDate()} : null,
           fechaAlta:  {year: new Date(moment(result.fechaAlta).format("YYYY-MM-DD HH:mm:ss")).getFullYear(),
             month: new Date(moment(result.fechaAlta).format("YYYY-MM-DD HH:mm:ss")).getMonth(), 
             day: new Date(moment(result.fechaAlta).format("YYYY-MM-DD HH:mm:ss")).getDate()}
         })
       );
+     
     }
+   
+  }
+
+  mostrarDatosAlEditar (data) {
+    this.actividad = data;
+    this.mostrarImagen = true;
+    this.imagePath = this.actividad.imagenServidorBase64;
+    this.listEnlaces = this.actividad.listEnlaces;
+    this.listDocumentacion = this.actividad.listDocumentos;
   }
 
   ngOnDestroy() {
@@ -104,6 +117,7 @@ export class NuevaComponent implements OnInit, OnDestroy {
   {
     let validar = true;
     const actividad: Actividad = {
+      id: this.actividad != null ? this.actividad.id : 0,
       titulo: this.form.get('titulo')?.value,
       fechaAlta: moment.utc(this.form.get('fechaAlta')?.value),
       fechaBaja: this.form.get('fechaBaja') != null ? moment.utc(this.form.get('fechaBaja').value) : null,
@@ -121,20 +135,42 @@ export class NuevaComponent implements OnInit, OnDestroy {
       validar = false;
     }
 
+    console.log(actividad);
+
     if (validar)
     {
-      this.actividadService.aniadirActividad(actividad).subscribe(data => {
-        this.toastr.success('Actividad guardada', 'Actividad');
-        this.myInputVariable.nativeElement.value = "";
-        this.mostrarImagen = false;
-
-        this.listEnlaces = null;
-        this.listDocumentacion = null;
-
-        this.ref.detectChanges();
-        this.form.reset();
-        this.ngOnInit();
-      }); 
+      //Nueva Actividad
+      if (this.isAddMode)
+      {
+        this.actividadService.aniadirActividad(actividad).subscribe(data => {
+          this.toastr.success('Actividad guardada', 'Actividad');
+          this.myInputVariable.nativeElement.value = "";
+          this.mostrarImagen = false;
+  
+          this.listEnlaces = null;
+          this.listDocumentacion = null;
+  
+          this.ref.detectChanges();
+          this.form.reset();
+          this.ngOnInit();
+        }); 
+      }
+      //Editar actividad
+      else {
+        this.actividadService.modificarActividad(actividad).subscribe(data => {
+          this.toastr.success('Actividad guardada', 'Actividad');
+          this.myInputVariable.nativeElement.value = "";
+          this.mostrarImagen = false;
+  
+          this.listEnlaces = null;
+          this.listDocumentacion = null;
+  
+          this.ref.detectChanges();
+          this.form.reset();
+          this.ngOnInit();
+        }); 
+      }
+     
     }
   }
 

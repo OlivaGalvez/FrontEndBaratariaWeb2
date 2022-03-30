@@ -29,6 +29,15 @@ export class ActividadesService extends TableService<Actividad> implements OnDes
     return this.http.post<Actividad>(this.myAppUrl + this.myApiUrl, formData);
   }
 
+  modificarActividad (actividad: Actividad): Observable<Actividad> 
+  {
+    const formData = new FormData(); 
+    formData.append("actividad", JSON.stringify(actividad));
+    formData.append("imagen", actividad.file, actividad.file.name);
+    formData.append("documentos", JSON.stringify(actividad.listDocumentos));
+    return this.http.put<Actividad>(this.myAppUrl + this.myApiUrl + actividad.id, formData);
+  }
+
   obtenerActividades (): Observable<Actividad[]>{
      return this.http.get(this.myAppUrl + this.myApiUrl).pipe(map(result=><Actividad[]>result));
   }
