@@ -149,7 +149,7 @@ export const DefaultLayoutConfigPortal = {
   "footer": {
     "display": true,
     "width": "fixed",
-    "fixed": false
+    "fixed": true
   },
   "extras": {
     "search": {

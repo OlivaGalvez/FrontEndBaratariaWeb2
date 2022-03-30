@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Actividad } from 'src/app/models/Actividad';
 import { Documento } from 'src/app/models/Documento';
@@ -15,20 +15,23 @@ export class ActividadesComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   list: Actividad [];
-  listEnlaces: EnlaceActividad [];
-  listDocumentos: Documento [];
 
-  constructor(private layout: LayoutService, public actividadesService: ActividadesService) {  }
+  constructor(private ref: ChangeDetectorRef, public actividadesService: ActividadesService) {  }
 
   ngOnInit() {
     const sb = this.actividadesService.obtenerActividades().subscribe(res => {
       this.list = res;
-      this.list.forEach( (element) => {
-        this.listEnlaces = element.listEnlaces;
-        this.listDocumentos = element.listDocumentos;
-      });
     });
     this.subscriptions.push(sb);
+    this.ref.detectChanges();
+  }
+
+  toArrayDocumentos(answers: object) {
+    return Object.keys(answers).map(key => answers[key])
+  }
+
+  toArrayEnlaces(answers: object) {
+    return Object.keys(answers).map(key => answers[key])
   }
 
   ngOnDestroy() {

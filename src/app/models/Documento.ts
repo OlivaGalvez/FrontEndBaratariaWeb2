@@ -1,6 +1,3 @@
-import { NumericLiteral } from "typescript";
-import { EnlaceActividad } from "./EnlaceActividad";
-
 export class Documento {
     id?: number;
     actividadId?: number;

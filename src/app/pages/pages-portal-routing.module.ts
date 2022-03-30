@@ -20,7 +20,7 @@ const routes: Routes = [
         loadChildren: () =>
           import('../portal/normativa/normativa.module').then((m) => m.NormativaModule),
       },
-      {
+      /*{
         path: 'dashboard',
         loadChildren: () =>
           import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
@@ -71,7 +71,7 @@ const routes: Routes = [
           import('../modules/material/material.module').then(
             (m) => m.MaterialModule
           ),
-      },
+      },*/
       {
         path: '',
         redirectTo: '/inicio',

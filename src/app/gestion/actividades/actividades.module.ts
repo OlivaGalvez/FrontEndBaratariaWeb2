@@ -15,6 +15,7 @@ import { EliminarDocumentacionModalComponent } from './nueva/eliminar-documentac
 import { NuevaComponent } from "./nueva/nueva.component";
 import { PaginatorComponent } from "src/app/_metronic_gestion/shared/crud-table/components/paginator/paginator.component";
 import { CRUDTableModule } from "src/app/_metronic_gestion/shared/crud-table";
+import { EliminarActividadComponent } from './nueva/eliminar-actividad/eliminar-actividad.component';
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import { CRUDTableModule } from "src/app/_metronic_gestion/shared/crud-table";
       EnlaceModalComponent, 
       EliminarEnlaceModalComponent, 
       DocumentacionModalComponent, 
-      EliminarDocumentacionModalComponent
+      EliminarDocumentacionModalComponent, 
+      EliminarActividadComponent
     ],
     imports: [
       RouterModule.forChild([

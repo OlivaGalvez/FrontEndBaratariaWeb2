@@ -6,13 +6,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { first, map, mergeMap, switchMap, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { Actividad } from 'src/app/models/Actividad';
 import { Documento } from 'src/app/models/Documento';
 import { EnlaceActividad } from 'src/app/models/EnlaceActividad';
 import { ActividadesService } from 'src/app/services/actividad.service';
 import { UploadService } from 'src/app/services/upload.service';
 import { DocumentacionModalComponent } from './documentacion-modal/documentacion-modal.component';
+import { EliminarActividadComponent } from './eliminar-actividad/eliminar-actividad.component';
 import { EliminarDocumentacionModalComponent } from './eliminar-documentacion-modal/eliminar-documentacion-modal.component';
 import { EliminarEnlaceModalComponent } from './eliminar-enlace-modal/eliminar-enlace-modal.component';
 import { EnlaceModalComponent } from './enlace-modal/enlace-modal.component';
@@ -33,6 +34,7 @@ export class NuevaComponent implements OnInit, OnDestroy {
   disabledCampos: boolean = true;
   mostrarBotonesGeneral: boolean = true;
   mostrarBotonEdit: boolean = true;
+  mostrarBotonDelete: boolean = false;
 
   currentDate = new Date();
   progress: number = 0;
@@ -47,7 +49,8 @@ export class NuevaComponent implements OnInit, OnDestroy {
   listEnlaces: EnlaceActividad [] = [];
   listDocumentacion: Documento [] = [];
 
-  constructor(private formBuilder: FormBuilder,  private router: ActivatedRoute, private actividadService: ActividadesService,
+  constructor(private formBuilder: FormBuilder,  private activatedRouter: ActivatedRoute, private router: Router,
+    private actividadService: ActividadesService,
     private uploadService: UploadService, private ref: ChangeDetectorRef, private toastr: ToastrService,
     private modalService: NgbModal) 
   { 
@@ -55,11 +58,11 @@ export class NuevaComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.idActividad = this.router.snapshot.paramMap.get('id');
+    this.idActividad = this.activatedRouter.snapshot.paramMap.get('id');
 
     this.isAddMode = !this.idActividad;
     if (this.isAddMode) {
-      this.disabledCampos = false; this.mostrarBotonEdit = false;
+      this.disabledCampos = false; this.mostrarBotonEdit = false; 
     }
     else {
       this.mostrarBotonesGeneral = false;
@@ -135,11 +138,26 @@ export class NuevaComponent implements OnInit, OnDestroy {
   {
     this.mostrarBotonesGeneral = true;
     this.mostrarBotonEdit = false;
+    this.mostrarBotonDelete = true;
     this.form.get('titulo').enable();
     this.form.get('fechaAlta').enable();
     this.form.get('fechaBaja').enable();
     this.form.get('mostrar').enable();
     this.form.get('texto').enable();
+  }
+
+  eliminarForm () 
+  {
+    const modalRef = this.modalService.open(EliminarActividadComponent, { size: 'lg' });
+    modalRef.result.then((result) => {
+      this.actividadService.eliminarActividad(this.actividad.id).subscribe((data)=>{
+        this.router.navigate(['/admin/actividad/listado/']);
+        this.toastr.error('Actividad borrada', 'Actividad');
+      });
+      
+    }).catch(e => {
+      console.log(e);
+    });
   }
 
   ngOnDestroy() {
