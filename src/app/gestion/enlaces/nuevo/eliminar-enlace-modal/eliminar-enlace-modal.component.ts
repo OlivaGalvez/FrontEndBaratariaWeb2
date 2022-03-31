@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-eliminar-enlace-modal',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EliminarEnlaceModalComponent implements OnInit {
 
-  constructor() { }
+  @Input() id: number;
+
+  constructor(public modal: NgbActiveModal) { }
 
   ngOnInit(): void {
+  }
+
+  eliminarEnlace ()
+  {
+    this.modal.close();
   }
 
 }

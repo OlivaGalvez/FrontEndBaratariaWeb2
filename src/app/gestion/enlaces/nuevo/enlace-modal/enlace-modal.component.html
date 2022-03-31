@@ -1,8 +1,8 @@
 <div class="modal-content">
     <div class="modal-header">
         <ng-container *ngIf="convenio">
-            <h3 class="card-label" *ngIf="convenio.id">Editar enlace</h3>
-            <h3 class="card-label" *ngIf="!convenio.id">Nuevo enlace</h3>
+            <h3 class="card-label" *ngIf="convenio.url">Editar enlace</h3>
+            <h3 class="card-label" *ngIf="!convenio.url">Nuevo enlace</h3>
         </ng-container>
     </div>
     <div class="overlay overlay-block cursor-default modal-body" style="min-height: 204px">

@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Convenio } from 'src/app/models/Convenio';
 import { UploadService } from 'src/app/services/upload.service';
+import { EliminarEnlaceModalComponent } from './eliminar-enlace-modal/eliminar-enlace-modal.component';
 import { EnlaceModalComponent } from './enlace-modal/enlace-modal.component';
 
 @Component({
@@ -30,6 +31,8 @@ export class NuevoComponent implements OnInit, OnDestroy {
   base64textString:String="";
   imagePath:String="";
   mostrarImagen: boolean = false;
+
+  listEnlaces: string [];
 
   constructor(private formBuilder: FormBuilder, private activatedRouter: ActivatedRoute,private router: Router,
     private uploadService: UploadService, private ref: ChangeDetectorRef, private toastr: ToastrService,
@@ -141,34 +144,50 @@ export class NuevoComponent implements OnInit, OnDestroy {
     this.editarEnlace(undefined);
   }
 
-  editarEnlace(id: number) {
+  editarEnlace(url: string) {
     const modalRef = this.modalService.open(EnlaceModalComponent, { size: 'lg' });
 
-    modalRef.componentInstance.convenio = this.convenio;
+    if (url != undefined)
+    {
+      const convenio: Convenio = {
+        id: undefined,
+        url: url,
+        titulo: '',
+        fechaAlta: null
+      };
+
+      modalRef.componentInstance.convenio = convenio;
+    }
+    else {
+      const convenio: Convenio = {
+        id: undefined,
+        url: undefined,
+        titulo: '',
+        fechaAlta: null
+      };
+      modalRef.componentInstance.convenio = convenio;
+    }
 
     modalRef.result.then((result) => {
       if (result) {
-       /* let index = this.listEnlaces.findIndex(d => d.id === id);
-        if (index > -1) this.listEnlaces.splice(index, 1);
+        this.listEnlaces = [];
         this.listEnlaces.push(result);
-        this.ref.detectChanges();*/
+        this.ref.detectChanges();
       }
     }).catch(e => {
       console.log(e);
     });
   }
 
- /* eliminarEnlace (id: number) 
+  eliminarEnlace (url: string) 
   {
     const modalRef = this.modalService.open(EliminarEnlaceModalComponent, { size: 'lg' });
-    modalRef.componentInstance.id = id;
     modalRef.result.then((result) => {
-      let index = this.listEnlaces.findIndex(d => d.id === id); //find index in your array
-      if (index > -1) this.listEnlaces.splice(index, 1);//remove element from array
+      this.listEnlaces = [];
       this.ref.detectChanges();
     }).catch(e => {
       console.log(e);
     });
-  }*/
+  }
 
 }
