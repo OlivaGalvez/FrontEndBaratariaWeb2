@@ -37,7 +37,6 @@ export class NuevaComponent implements OnInit, OnDestroy {
   mostrarBotonDelete: boolean = false;
 
   currentDate = new Date();
-  progress: number = 0;
   base64textString:String="";
   imagePath:String="";
   mostrarImagen: boolean = false;
@@ -78,10 +77,6 @@ export class NuevaComponent implements OnInit, OnDestroy {
         value: '',
         disabled: this.disabledCampos,
       },  [Validators.required]],
-      fechaBaja: [{
-        value: null,
-        disabled: this.disabledCampos,
-      }],
       mostrar: [{
           value: null,
           disabled: this.disabledCampos,
@@ -113,9 +108,6 @@ export class NuevaComponent implements OnInit, OnDestroy {
           titulo: result.titulo,
           mostrar: result.mostrar,
           texto: result.texto,
-          fechaBaja: result.fechaBaja != null ? {year: new Date(moment(result.fechaBaja).format("YYYY-MM-DD HH:mm:ss")).getFullYear(),
-            month: new Date(moment(result.fechaBaja).format("YYYY-MM-DD HH:mm:ss")).getMonth(), 
-            day: new Date(moment(result.fechaBaja).format("YYYY-MM-DD HH:mm:ss")).getDate()} : null,
           fechaAlta:  {year: new Date(moment(result.fechaAlta).format("YYYY-MM-DD HH:mm:ss")).getFullYear(),
             month: new Date(moment(result.fechaAlta).format("YYYY-MM-DD HH:mm:ss")).getMonth(), 
             day: new Date(moment(result.fechaAlta).format("YYYY-MM-DD HH:mm:ss")).getDate()}
@@ -141,7 +133,6 @@ export class NuevaComponent implements OnInit, OnDestroy {
     this.mostrarBotonDelete = true;
     this.form.get('titulo').enable();
     this.form.get('fechaAlta').enable();
-    this.form.get('fechaBaja').enable();
     this.form.get('mostrar').enable();
     this.form.get('texto').enable();
   }
@@ -173,7 +164,6 @@ export class NuevaComponent implements OnInit, OnDestroy {
       id: this.actividad != null ? this.actividad.id : 0,
       titulo: this.form.get('titulo')?.value,
       fechaAlta: moment.utc(this.form.get('fechaAlta')?.value),
-      fechaBaja: this.form.get('fechaBaja') != null ? moment.utc(this.form.get('fechaBaja').value) : null,
       mostrar: this.form.get('mostrar') != null ? this.form.get('mostrar').value : false,
       texto: this.form.get('texto')?.value,
       file: this.form.get('file')?.value,
@@ -181,12 +171,6 @@ export class NuevaComponent implements OnInit, OnDestroy {
       listEnlaces: this.listEnlaces,
       listDocumentos: this.listDocumentacion
     };
-
-    if (actividad.fechaBaja != null && actividad.fechaAlta >= actividad.fechaBaja)  
-    {
-      this.toastr.error('La fecha de baja no puede ser igual o anterior a la fecha de alta', 'Error');
-      validar = false;
-    }
 
     if (validar)
     {

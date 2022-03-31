@@ -1,16 +1,13 @@
 import * as moment from "moment";
-import { Documento } from "./Documento";
 import { EnlaceActividad } from "./EnlaceActividad";
 
-export class Actividad {
+export class Convenio {
     id?: number;
     titulo: string;
     fechaAlta:  moment.Moment;
     mostrar?: boolean;
-    texto: string;
     file?: File;
-    listEnlaces?: EnlaceActividad[];
-    listDocumentos?: Documento[];
+    enlace?: EnlaceActividad;
 
     imagenServidor?: string;
     imagenServidorBase64?: string;
