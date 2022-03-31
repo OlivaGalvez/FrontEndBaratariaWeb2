@@ -7,7 +7,7 @@ export class Convenio {
     fechaAlta:  moment.Moment;
     mostrar?: boolean;
     file?: File;
-    enlace?: EnlaceActividad;
+    url: string;
 
     imagenServidor?: string;
     imagenServidorBase64?: string;

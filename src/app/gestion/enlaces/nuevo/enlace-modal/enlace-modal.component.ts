@@ -1,17 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { EnlaceActividad } from 'src/app/models/EnlaceActividad';
+import { Convenio } from 'src/app/models/Convenio';
 
 @Component({
   selector: 'app-enlace-modal',
   templateUrl: './enlace-modal.component.html',
   styleUrls: ['./enlace-modal.component.scss']
 })
+export class EnlaceModalComponent implements OnInit {
 
-export class EnlaceModalComponent implements OnInit{
-  
-  @Input() enlace: EnlaceActividad;
+  @Input() convenio: Convenio;
   @Output() passEntry: EventEmitter<any> = new EventEmitter();
   
   formGroup: FormGroup;
@@ -24,23 +23,18 @@ export class EnlaceModalComponent implements OnInit{
 
   loadForm() {
     this.formGroup = this.fb.group({
-      nombre: [this.enlace.nombre, [Validators.required]],
-      url: [this.enlace.url, [Validators.required]],
+      url: [this.convenio.url, [Validators.required]],
     });
   }
 
   guardar ()
   {
     const formData = this.formGroup.value;
-    if (!this.enlace.id)
-    {
-      this.enlace.id = Math.floor((Math.random()*6)+1);
-    }
-    this.enlace.nombre = formData.nombre;
-    this.enlace.url = formData.url;
+    this.convenio.url = formData.url;
 
-    this.passEntry.emit(this.enlace);
-    this.modal.close(this.enlace);
+    this.passEntry.emit(this.convenio.url);
+    this.modal.close(this.convenio.url);
     this.formGroup.reset();
   }
+
 }
