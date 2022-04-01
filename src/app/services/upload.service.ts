@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
     
-    baseApiUrl = "https://localhost:44334/api/Upload"
+    API_URL = `${environment.apiUrl}` + 'api/Upload';
       
     constructor(private http:HttpClient) { }
     
@@ -17,7 +18,7 @@ export class UploadService {
           
         formData.append("file", file, file.name);
 
-        return this.http.post(this.baseApiUrl + "?carpeta=imagenes", formData, {
+        return this.http.post(this.API_URL + "?carpeta=imagenes", formData, {
           reportProgress: true,
           observe: 'events',
         }).pipe(catchError(this.errorMgmt));
@@ -30,7 +31,7 @@ export class UploadService {
         
       formData.append("file", file, file.name);
 
-      return this.http.post(this.baseApiUrl + "?carpeta=documentos", formData, {
+      return this.http.post(this.API_URL + "?carpeta=documentos", formData, {
         reportProgress: true,
         observe: 'events',
       }).pipe(catchError(this.errorMgmt));

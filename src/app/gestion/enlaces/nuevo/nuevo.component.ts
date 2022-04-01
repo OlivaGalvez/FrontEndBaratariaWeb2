@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Convenio } from 'src/app/models/Convenio';
@@ -90,7 +91,55 @@ export class NuevoComponent implements OnInit, OnDestroy {
 
   guardarConvenio ()
   {
-    
+    let validar = true;
+
+    console.log(this.listEnlaces);
+
+   /* const convenio: Convenio = {
+      id: this.convenio != null ? this.convenio.id : 0,
+      titulo: this.form.get('titulo')?.value,
+      fechaAlta: moment.utc(this.form.get('fechaAlta')?.value),
+      mostrar: this.form.get('mostrar') != null ? this.form.get('mostrar').value : false,
+      file: this.form.get('file')?.value,
+      imagenServidor: this.form.get('imagenServidor').value,
+      url: this.listEnlaces[0],
+    };*/
+
+    /*if (validar)
+    {
+      //Nueva Actividad
+      if (this.isAddMode)
+      {
+        this.actividadService.aniadirActividad(actividad).subscribe(data => {
+          this.toastr.success('Actividad guardada', 'Actividad');
+          this.myInputVariable.nativeElement.value = "";
+          this.mostrarImagen = false;
+  
+          this.listEnlaces = null;
+          this.listDocumentacion = null;
+  
+          this.ref.detectChanges();
+          this.form.reset();
+          this.ngOnInit();
+        }); 
+      }
+      //Editar actividad
+      else {
+        this.actividadService.modificarActividad(actividad).subscribe(data => {
+          this.toastr.success('Actividad guardada', 'Actividad');
+          this.myInputVariable.nativeElement.value = "";
+          this.mostrarImagen = false;
+  
+          this.listEnlaces = null;
+          this.listDocumentacion = null;
+  
+          this.ref.detectChanges();
+          this.form.reset();
+          this.ngOnInit();
+        }); 
+      }
+     
+    }*/
   }
 
   reset(element) {

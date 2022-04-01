@@ -6,6 +6,7 @@ import { Documento } from 'src/app/models/Documento';
 import { EnlaceActividad } from 'src/app/models/EnlaceActividad';
 import { ActividadesService } from 'src/app/services/actividad.service';
 import { LayoutService } from 'src/app/_metronic_portal/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-actividades',
@@ -15,6 +16,7 @@ import { LayoutService } from 'src/app/_metronic_portal/core';
 export class ActividadesComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
+  API_URL = `${environment.apiUrl}`;
   list: Actividad [];
 
   constructor(private ref: ChangeDetectorRef, public actividadesService: ActividadesService) {  }
