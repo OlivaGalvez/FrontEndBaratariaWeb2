@@ -75,7 +75,7 @@ export class NuevaComponent implements OnInit, OnDestroy {
       },  [Validators.required]],
       fechaAlta: [{
         value: '',
-        disabled: this.disabledCampos,
+        disabled: true,
       },  [Validators.required]],
       mostrar: [{
           value: null,
@@ -132,9 +132,26 @@ export class NuevaComponent implements OnInit, OnDestroy {
     this.mostrarBotonEdit = false;
     this.mostrarBotonDelete = true;
     this.form.get('titulo').enable();
-    this.form.get('fechaAlta').enable();
+    //this.form.get('fechaAlta').enable();
     this.form.get('mostrar').enable();
     this.form.get('texto').enable();
+  }
+
+  download(url): void {
+    this.uploadService.download(url).subscribe((x) => {
+        var newBlob = new Blob([x], { type: "application/pdf" });
+        const data = window.URL.createObjectURL(newBlob);
+        
+        var link = document.createElement('a');
+        link.href = data;
+        link.download = url;
+        link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+        
+        setTimeout(function () {
+            window.URL.revokeObjectURL(data);
+            link.remove();
+        }, 100);
+    });
   }
 
   eliminarForm () 
@@ -356,7 +373,7 @@ export class NuevaComponent implements OnInit, OnDestroy {
         case HttpEventType.UploadProgress:
           break;
         case HttpEventType.Response:
-          result.fullPath =  event.body.fullPath;
+          result.url =  event.body.url;
           result.servidor = event.body.fileName;
           result.original = result.file.name;
           this.listDocumentacion.push(result);

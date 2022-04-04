@@ -11,5 +11,5 @@ export class Documento {
     url?:string;
 
     file?: File;
-    fullPath?: string;
+   // fullPath?: string;
 }

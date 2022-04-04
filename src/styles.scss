@@ -122,6 +122,11 @@
   background-color: #ebc71d;
 }
 
+a:not([href]):not([class]) {
+  color: #027762;
+  text-decoration: underline;
+}
+
 .aside-menu {
   background-color: #027762;
 }

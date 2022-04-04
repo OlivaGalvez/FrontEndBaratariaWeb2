@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class UploadService {
     
-    API_URL = `${environment.apiUrl}` + 'api/Upload';
+    API_URL = `${environment.apiUrl}` + 'api/File/';
       
     constructor(private http:HttpClient) { }
     
@@ -18,7 +18,7 @@ export class UploadService {
           
         formData.append("file", file, file.name);
 
-        return this.http.post(this.API_URL + "?carpeta=imagenes", formData, {
+        return this.http.post(this.API_URL + "Upload?carpeta=imagenes", formData, {
           reportProgress: true,
           observe: 'events',
         }).pipe(catchError(this.errorMgmt));
@@ -31,11 +31,16 @@ export class UploadService {
         
       formData.append("file", file, file.name);
 
-      return this.http.post(this.API_URL + "?carpeta=documentos", formData, {
+      return this.http.post(this.API_URL + "Upload?carpeta=documentos", formData, {
         reportProgress: true,
         observe: 'events',
       }).pipe(catchError(this.errorMgmt));
     } 
+
+    download(fileUrl: string): Observable<Blob> {
+      
+      return this.http.get(this.API_URL + 'Download?fileUrl=' + fileUrl, { responseType: 'blob'});
+    }
 
 
     errorMgmt(error: HttpErrorResponse) {
