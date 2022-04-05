@@ -74,9 +74,17 @@ export class NuevaComponent implements OnInit, OnDestroy {
           disabled: this.disabledCampos,
       },  [Validators.required]],
       fechaAlta: [{
-        value: '',
+        value: null,
         disabled: true,
       },  [Validators.required]],
+      fechaInicio: [{
+        value: null,
+        disabled: this.disabledCampos,
+      },  [Validators.required]],
+      fechaFin: [{
+          value: null,
+          disabled: this.disabledCampos,
+      }],
       mostrar: [{
           value: null,
           disabled: this.disabledCampos,
@@ -94,7 +102,8 @@ export class NuevaComponent implements OnInit, OnDestroy {
       const fechaAltaAux = { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth()+ 1, 
         day: this.currentDate.getDate() };
       this.form.patchValue({
-          fechaAlta: fechaAltaAux
+          fechaAlta: fechaAltaAux,
+          fechaInicio: fechaAltaAux
       });
     }
     else
@@ -104,13 +113,18 @@ export class NuevaComponent implements OnInit, OnDestroy {
         tap(data =>  this.mostrarDatosAlEditar(data)),
       ).subscribe(result => 
         this.form.patchValue({
-          
           titulo: result.titulo,
           mostrar: result.mostrar,
           texto: result.texto,
           fechaAlta:  {year: new Date(moment(result.fechaAlta).format("YYYY-MM-DD HH:mm:ss")).getFullYear(),
             month: new Date(moment(result.fechaAlta).format("YYYY-MM-DD HH:mm:ss")).getMonth(), 
-            day: new Date(moment(result.fechaAlta).format("YYYY-MM-DD HH:mm:ss")).getDate()}
+            day: new Date(moment(result.fechaAlta).format("YYYY-MM-DD HH:mm:ss")).getDate()},
+          fechaInicio: result.fechaInicio != null ? {year: new Date(moment(result.fechaInicio).format("YYYY-MM-DD HH:mm:ss")).getFullYear(),
+            month: new Date(moment(result.fechaInicio).format("YYYY-MM-DD HH:mm:ss")).getMonth(), 
+            day: new Date(moment(result.fechaInicio).format("YYYY-MM-DD HH:mm:ss")).getDate()} : null,
+          fechaFin: result.fechaFin != null ? {year: new Date(moment(result.fechaFin).format("YYYY-MM-DD HH:mm:ss")).getFullYear(),
+            month: new Date(moment(result.fechaFin).format("YYYY-MM-DD HH:mm:ss")).getMonth(), 
+            day: new Date(moment(result.fechaFin).format("YYYY-MM-DD HH:mm:ss")).getDate()} : null,
         })
       );
      
@@ -132,7 +146,8 @@ export class NuevaComponent implements OnInit, OnDestroy {
     this.mostrarBotonEdit = false;
     this.mostrarBotonDelete = true;
     this.form.get('titulo').enable();
-    //this.form.get('fechaAlta').enable();
+    this.form.get('fechaInicio').enable();
+    this.form.get('fechaFin').enable();
     this.form.get('mostrar').enable();
     this.form.get('texto').enable();
   }
@@ -181,6 +196,8 @@ export class NuevaComponent implements OnInit, OnDestroy {
       id: this.actividad != null ? this.actividad.id : 0,
       titulo: this.form.get('titulo')?.value,
       fechaAlta: moment.utc(this.form.get('fechaAlta')?.value),
+      fechaInicio: moment.utc(this.form.get('fechaInicio')?.value),
+      fechaFin: moment.utc(this.form.get('fechaFin')?.value),
       mostrar: this.form.get('mostrar') != null ? this.form.get('mostrar').value : false,
       texto: this.form.get('texto')?.value,
       file: this.form.get('file')?.value,
@@ -189,6 +206,18 @@ export class NuevaComponent implements OnInit, OnDestroy {
       listDocumentos: this.listDocumentacion
     };
 
+    if (actividad.fechaFin != null && actividad.fechaInicio > actividad.fechaFin)  
+    {
+      this.toastr.error('La fecha fin no puede ser anterior a la fecha inicio', 'Error');
+      validar = false;
+    }
+
+    if (this.isAddMode && actividad.file == null)
+    {
+      this.toastr.error('Inserte una imagen', 'Error');
+      validar = false;
+    }
+
     if (validar)
     {
       //Nueva Actividad
@@ -196,15 +225,7 @@ export class NuevaComponent implements OnInit, OnDestroy {
       {
         this.actividadService.aniadirActividad(actividad).subscribe(data => {
           this.toastr.success('Actividad guardada', 'Actividad');
-          this.myInputVariable.nativeElement.value = "";
-          this.mostrarImagen = false;
-  
-          this.listEnlaces = null;
-          this.listDocumentacion = null;
-  
-          this.ref.detectChanges();
-          this.form.reset();
-          this.ngOnInit();
+          this.router.navigate(['/admin/actividad/gestion/' + data.id]);
         }); 
       }
       //Editar actividad
@@ -377,7 +398,6 @@ export class NuevaComponent implements OnInit, OnDestroy {
           result.servidor = event.body.fileName;
           result.original = result.file.name;
           this.listDocumentacion.push(result);
-          console.log(this.listDocumentacion);
           this.ref.detectChanges();
       }
     })

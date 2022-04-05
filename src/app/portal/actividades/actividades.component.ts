@@ -51,13 +51,20 @@ export class ActividadesComponent implements OnInit, OnDestroy {
     });
   }
 
-  convertDate (date)
+  convertDate (actividad : Actividad)
   {
-    let fecha = moment(date).add(-1, 'M').locale('es');
     let cadena = "";
-    if (date != null) {
-      cadena = fecha.format('DD') + " de " + fecha.format('MMMM') + " del " + fecha.format('YYYY');
+    let fechaInicio = moment(actividad.fechaInicio).add(-1, 'M').locale('es');
+   
+    if (actividad.fechaInicio != null) {
+      cadena = fechaInicio.format('DD') + " de " + fechaInicio.format('MMMM') + " del " + fechaInicio.format('YYYY');
+
+      if (actividad.fechaFin != null &&  actividad.fechaInicio != actividad.fechaFin) {
+        let fechaFin = moment(actividad.fechaFin).add(-1, 'M').locale('es');
+        cadena += " - " + fechaFin.format('DD') + " de " + fechaFin.format('MMMM') + " del " + fechaFin.format('YYYY');
+      } 
     } 
+   
     return cadena;
   }
 
