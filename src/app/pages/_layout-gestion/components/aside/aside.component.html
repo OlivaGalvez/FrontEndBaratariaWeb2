@@ -87,6 +87,41 @@
         </div>
       </li>
 
+      <!-- Convenios -->
+      <li class="menu-item menu-item-submenu" aria-haspopup="true"
+      data-menu-toggle="hover" routerLinkActive="menu-item-open">
+      <a class="menu-link menu-toggle" routerLinkActive="active" href="/admin/convenios">
+        <span [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+          cacheSVG="true" class="svg-icon menu-icon"></span>
+        <span class="menu-text">Convenios</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="menu-submenu"><i class="menu-arrow"></i>
+        <ul class="menu-subnav">
+          <!-- Nuevo Convenio -->
+          <li class="menu-item"aria-haspopup="true" data-menu-toggle="hover" 
+            routerLinkActive="menu-item-active">
+            <a class="menu-link" routerLink="/admin/convenios/nuevo" routerLinkActive="active">
+              <span class="menu-text">Nuevo Convenio</span>
+            </a>
+          </li>
+          <!-- Listado Convenios -->
+          <li class="menu-item" aria-haspopup="true" data-menu-toggle="hover"
+            routerLinkActive="menu-item-active">
+            <a class="menu-link" routerLink="/admin/convenios/listado" routerLinkActive="active">
+              <span class="menu-text">Listado</span>
+            </a>
+          </li>
+          <li class="menu-item" aria-haspopup="true" data-menu-toggle="hover" style="display: none;"
+            routerLinkActive="menu-item-active">
+            <a class="menu-link" routerLink="/admin/convenios/gestion" routerLinkActive="active">
+              <span class="menu-text">Gestion</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </li>
+
        <!-- Enlaces -->
        <li class="menu-item menu-item-submenu" aria-haspopup="true"
        data-menu-toggle="hover" routerLinkActive="menu-item-open">
@@ -98,14 +133,14 @@
        </a>
        <div class="menu-submenu"><i class="menu-arrow"></i>
          <ul class="menu-subnav">
-           <!-- Nueva Actividad -->
+           <!-- Nuevo Enlace -->
            <li class="menu-item"aria-haspopup="true" data-menu-toggle="hover" 
              routerLinkActive="menu-item-active">
              <a class="menu-link" routerLink="/admin/enlaces/nuevo" routerLinkActive="active">
                <span class="menu-text">Nuevo Enlace</span>
              </a>
            </li>
-           <!-- Listado Actividades -->
+           <!-- Listado Enlaces -->
            <li class="menu-item" aria-haspopup="true" data-menu-toggle="hover"
              routerLinkActive="menu-item-active">
              <a class="menu-link" routerLink="/admin/enlaces/listado" routerLinkActive="active">

@@ -15,6 +15,11 @@ const routes: Routes = [
           import('../gestion/actividades/actividades.module').then((m) => m.ActividadesModule),
       },
       {
+        path: 'convenios',
+        loadChildren: () =>
+          import('../gestion/convenios/convenios.module').then((m) => m.ConveniosModule),
+      },
+      {
         path: 'enlaces',
         loadChildren: () =>
           import('../gestion/enlaces/enlaces.module').then((m) => m.EnlacesModule),

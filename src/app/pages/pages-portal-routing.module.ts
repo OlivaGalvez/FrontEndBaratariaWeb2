@@ -15,6 +15,11 @@ const routes: Routes = [
           import('../portal/actividades/actividades.module').then((m) => m.ActividadesModule),
       },
       { 
+        path: 'convenios', 
+        loadChildren: () =>
+          import('../portal/convenios/convenios.module').then((m) => m.ConveniosModule),
+      },
+      { 
         path: 'enlaces', 
         loadChildren: () =>
           import('../portal/enlaces/enlaces.module').then((m) => m.EnlacesModule),
