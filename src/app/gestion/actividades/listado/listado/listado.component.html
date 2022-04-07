@@ -53,6 +53,16 @@
                           (sort)="sort($event)"></app-sort-icon>
                         </th>
                         <th>
+                          Fecha Inicio
+                          <app-sort-icon column="fechaInicio" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                          (sort)="sort($event)"></app-sort-icon>
+                        </th>
+                        <th>
+                          Fecha Fin
+                          <app-sort-icon column="fechaFin" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                          (sort)="sort($event)"></app-sort-icon>
+                        </th>
+                        <th>
                           Título
                           <app-sort-icon column="titulo" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
                           (sort)="sort($event)"></app-sort-icon>
@@ -69,6 +79,8 @@
                       <tr *ngFor="let item of actividadService.items$ | async">
                         <td>{{ item.id }}</td>
                         <td>{{ convertDate(item.fechaAlta) | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{ convertDate(item.fechaInicio) | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{ convertDate(item.fechaFin) | date: 'dd/MM/yyyy'}}</td>
                         <td>{{ item.titulo }}</td>
                         <td>{{ item.mostrar ? 'Si' : 'No' }}</td>
                         <td class="text-center accion">

@@ -108,7 +108,6 @@ export class NuevaComponent implements OnInit, OnDestroy {
     }
     else
     {
-      
       this.actividadService.getById(this.idActividad).pipe(
         tap(data =>  this.mostrarDatosAlEditar(data)),
       ).subscribe(result => 
@@ -127,7 +126,6 @@ export class NuevaComponent implements OnInit, OnDestroy {
             day: new Date(moment(result.fechaFin).format("YYYY-MM-DD HH:mm:ss")).getDate()} : null,
         })
       );
-     
     }
    
   }

@@ -6,10 +6,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Enlace } from 'src/app/models/Enlace';
 import { EnlaceService } from 'src/app/services/enlace.service';
 import { UploadService } from 'src/app/services/upload.service';
 import { EliminarEnlaceModalComponent } from './eliminar-enlace-modal/eliminar-enlace-modal.component';
+import { EliminarEnlaceComponent } from './eliminar-enlace/eliminar-enlace.component';
 import { EnlaceModalComponent } from './enlace-modal/enlace-modal.component';
 
 @Component({
@@ -21,7 +23,7 @@ export class NuevoComponent implements OnInit, OnDestroy {
   form: FormGroup;
   suscription: Subscription;
   enlace: Enlace;
-  idConvenio: string;
+  idEnlace: string;
 
   isAddMode: boolean;
   disabledCampos: boolean = true;
@@ -44,9 +46,9 @@ export class NuevoComponent implements OnInit, OnDestroy {
     private modalService: NgbModal, private enlaceService: EnlaceService) { }
 
   ngOnInit(): void {
-    this.idConvenio = this.activatedRouter.snapshot.paramMap.get('id');
+    this.idEnlace = this.activatedRouter.snapshot.paramMap.get('id');
 
-    this.isAddMode = !this.idConvenio;
+    this.isAddMode = !this.idEnlace;
     if (this.isAddMode) {
       this.disabledCampos = false; this.mostrarBotonEdit = false; 
     }
@@ -82,9 +84,52 @@ export class NuevoComponent implements OnInit, OnDestroy {
     }
     else
     {
-     //FALTA CODIGO
+      this.enlaceService.getById(this.idEnlace).pipe(
+        tap(data =>  this.mostrarDatosAlEditar(data)),
+      ).subscribe(result => 
+        this.form.patchValue({
+          titulo: result.titulo,
+          mostrar: result.mostrar,
+          fechaAlta:  {year: new Date(moment(result.fechaAlta).format("YYYY-MM-DD HH:mm:ss")).getFullYear(),
+            month: new Date(moment(result.fechaAlta).format("YYYY-MM-DD HH:mm:ss")).getMonth(), 
+            day: new Date(moment(result.fechaAlta).format("YYYY-MM-DD HH:mm:ss")).getDate()}
+        })
+      );
     }
 
+  }
+
+  mostrarDatosAlEditar (data) {
+    this.enlace = data;
+    this.mostrarImagen = true;
+    this.imagePath = this.enlace.imagenServidorBase64;
+    this.listEnlaces = [];
+    this.listEnlaces.push(this.enlace.url);
+    this.ref.detectChanges();
+  }
+
+  editarForm ()
+  {
+    this.mostrarBotonesGeneral = true;
+    this.mostrarBotonEdit = false;
+    this.mostrarBotonDelete = true;
+    this.form.get('titulo').enable();
+    this.form.get('mostrar').enable();
+  }
+
+  
+  eliminarForm () 
+  {
+     const modalRef = this.modalService.open(EliminarEnlaceComponent, { size: 'lg' });
+      modalRef.result.then((result) => {
+      this.enlaceService.eliminarEnlace(this.enlace.id).subscribe((data)=>{
+        this.router.navigate(['/admin/enlaces/listado/']);
+        this.toastr.error('Enlace borrado', 'Enlace');
+      });
+      
+    }).catch(e => {
+      console.log(e);
+    }); 
   }
 
   ngOnDestroy() {
@@ -120,30 +165,22 @@ export class NuevoComponent implements OnInit, OnDestroy {
       {
         this.enlaceService.aniadirEnlace(enlace).subscribe(data => {
           this.toastr.success('Enlace guardado', 'Enlaces');
-          this.myInputVariable.nativeElement.value = "";
-          this.mostrarImagen = false;
-  
-          this.listEnlaces = null;
-  
-          this.ref.detectChanges();
-          this.form.reset();
-          this.ngOnInit();
+          this.router.navigate(['/admin/enlaces/gestion/' + data.id]);
         }); 
       }
-      //Editar actividad
+      //Editar enlace
       else {
-       /*  this.actividadService.modificarActividad(actividad).subscribe(data => {
-          this.toastr.success('Actividad guardada', 'Actividad');
+         this.enlaceService.modificarEnlace(enlace).subscribe(data => {
+          this.toastr.success('Enlace guardado', 'Enlaces');
           this.myInputVariable.nativeElement.value = "";
           this.mostrarImagen = false;
   
           this.listEnlaces = null;
-          this.listDocumentacion = null;
   
           this.ref.detectChanges();
           this.form.reset();
           this.ngOnInit();
-        });  */
+        });  
       }
      
     }

@@ -12,13 +12,15 @@ import { InlineSVGModule } from "ng-inline-svg";
 import { CRUDTableModule } from "src/app/_metronic_gestion/shared/crud-table";
 import { EnlaceModalComponent } from './nuevo/enlace-modal/enlace-modal.component';
 import { EliminarEnlaceModalComponent } from './nuevo/eliminar-enlace-modal/eliminar-enlace-modal.component';
+import { EliminarEnlaceComponent } from './nuevo/eliminar-enlace/eliminar-enlace.component';
 
 @NgModule({
     declarations: [
       NuevoComponent,
       ListadoComponent,
       EnlaceModalComponent,
-      EliminarEnlaceModalComponent
+      EliminarEnlaceModalComponent,
+      EliminarEnlaceComponent
     ],
     imports: [
       RouterModule.forChild([
@@ -50,7 +52,8 @@ import { EliminarEnlaceModalComponent } from './nuevo/eliminar-enlace-modal/elim
     ],
     entryComponents: [
       EnlaceModalComponent,
-      EliminarEnlaceModalComponent
+      EliminarEnlaceModalComponent,
+      EliminarEnlaceComponent
     ]
   })
   export class EnlacesModule {}
