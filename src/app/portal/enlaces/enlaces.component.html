@@ -1,9 +1,12 @@
 <!--Hay que hacer la parte de gestión-->
 
 <div class="row">
-    <div class="col-lg-4 col-sm-6">
-        <a href="#" target="_blank"><div class="thumbnail text-center">
-            <img class="img-enlaces" src="/assets/media/barataria/centroAgua.png" />
+    <div class="col-lg-4 col-sm-6"  *ngFor="let enlace of list">
+        <a *ngIf="enlace.url" href="{{enlace.url}}" target="_blank"><div class="thumbnail text-center">
+            <img class="img-enlaces" src={{enlace.imagenServidorBase64}} />
         </div></a>
+       <div *ngIf="!enlace.url" class="thumbnail text-center">
+            <img class="img-enlaces" src={{enlace.imagenServidorBase64}} />
+        </div>
     </div>
 </div>

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Convenio } from 'src/app/models/Convenio';
+import { Enlace } from 'src/app/models/Enlace';
 
 @Component({
   selector: 'app-enlace-modal',
@@ -10,7 +10,7 @@ import { Convenio } from 'src/app/models/Convenio';
 })
 export class EnlaceModalComponent implements OnInit {
 
-  @Input() convenio: Convenio;
+  @Input() enlace: Enlace;
   @Output() passEntry: EventEmitter<any> = new EventEmitter();
   
   formGroup: FormGroup;
@@ -23,17 +23,17 @@ export class EnlaceModalComponent implements OnInit {
 
   loadForm() {
     this.formGroup = this.fb.group({
-      url: [this.convenio.url, [Validators.required]],
+      url: [this.enlace.url, [Validators.required]],
     });
   }
 
   guardar ()
   {
     const formData = this.formGroup.value;
-    this.convenio.url = formData.url;
+    this.enlace.url = formData.url;
 
-    this.passEntry.emit(this.convenio.url);
-    this.modal.close(this.convenio.url);
+    this.passEntry.emit(this.enlace.url);
+    this.modal.close(this.enlace.url);
     this.formGroup.reset();
   }
 

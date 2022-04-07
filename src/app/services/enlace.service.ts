@@ -1,30 +1,35 @@
 import { HttpClient } from "@angular/common/http";
 import { Inject, Injectable, OnDestroy } from "@angular/core";
 import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 import { environment } from "src/environments/environment";
-import { Convenio } from "../models/Convenio";
+import { Enlace } from "../models/Enlace";
 import { TableService } from "../_metronic_gestion/shared/crud-table";
 
 @Injectable({
     providedIn: 'root'
   })
   
-  export class ConvenioService extends TableService<Convenio> implements OnDestroy{
+  export class EnlaceService extends TableService<Enlace> implements OnDestroy{
 
-    API_URL = `${environment.apiUrl}` + 'api/Convenios/';
+    API_URL = `${environment.apiUrl}` + 'api/Enlaces/';
   
     constructor(@Inject(HttpClient) http) {
       super(http);
     }
   
-    aniadirConvenio (convenio: Convenio): Observable<Convenio> 
+    aniadirEnlace (enlace: Enlace): Observable<Enlace> 
     {
       const formData = new FormData(); 
             
-      formData.append("convenio", JSON.stringify(convenio));
-      formData.append("imagen", convenio.file, convenio.file.name);
-      return this.http.post<Convenio>(this.API_URL, formData);
+      formData.append("enlace", JSON.stringify(enlace));
+      formData.append("imagen", enlace.file, enlace.file.name);
+      return this.http.post<Enlace>(this.API_URL, formData);
     }
+
+    obtenerEnlaces (): Observable<Enlace[]>{
+      return this.http.get(this.API_URL).pipe(map(result=><Enlace[]>result));
+   }
   
     /*modificarActividad (actividad: Actividad): Observable<Actividad> 
     {
@@ -40,9 +45,7 @@ import { TableService } from "../_metronic_gestion/shared/crud-table";
       return this.http.delete(this.API_URL + id);
     }
   
-    obtenerActividades (): Observable<Actividad[]>{
-       return this.http.get(this.API_URL).pipe(map(result=><Actividad[]>result));
-    }
+    
   
     getById (id: string): Observable<Actividad>{
       return this.http.get(this.API_URL + id).pipe(map(result=><Actividad>result));

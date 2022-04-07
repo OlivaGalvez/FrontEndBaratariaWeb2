@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ActividadesComponent } from '../portal/actividades/actividades.component';
-import { EnlacesComponent } from '../portal/enlaces/enlaces.component';
 import { InicioComponent } from '../portal/inicio/inicio.component';
 import { LayoutComponent } from './_layout-portal/layout.component';
 
@@ -16,7 +14,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('../portal/actividades/actividades.module').then((m) => m.ActividadesModule),
       },
-      { path: 'enlaces', component: EnlacesComponent },
+      { 
+        path: 'enlaces', 
+        loadChildren: () =>
+          import('../portal/enlaces/enlaces.module').then((m) => m.EnlacesModule),
+      },
       {
         path: 'normativa',
         loadChildren: () =>

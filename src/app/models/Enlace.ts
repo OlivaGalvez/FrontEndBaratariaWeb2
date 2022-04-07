@@ -1,7 +1,7 @@
 import * as moment from "moment";
 import { EnlaceActividad } from "./EnlaceActividad";
 
-export class Convenio {
+export class Enlace {
     id?: number;
     titulo: string;
     fechaAlta:  moment.Moment;

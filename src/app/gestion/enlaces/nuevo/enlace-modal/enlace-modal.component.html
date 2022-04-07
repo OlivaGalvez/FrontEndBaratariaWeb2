@@ -1,12 +1,12 @@
 <div class="modal-content">
     <div class="modal-header">
-        <ng-container *ngIf="convenio">
-            <h3 class="card-label" *ngIf="convenio.url">Editar enlace</h3>
-            <h3 class="card-label" *ngIf="!convenio.url">Nuevo enlace</h3>
+        <ng-container *ngIf="enlace">
+            <h3 class="card-label" *ngIf="enlace.url">Editar enlace</h3>
+            <h3 class="card-label" *ngIf="!enlace.url">Nuevo enlace</h3>
         </ng-container>
     </div>
     <div class="overlay overlay-block cursor-default modal-body" style="min-height: 204px">
-        <ng-container *ngIf="convenio">
+        <ng-container *ngIf="enlace">
             <form action="#" class="form form-label-right" [formGroup]="formGroup">
                 <div class="form-group row">
                     <div class="col-lg-12">
@@ -20,7 +20,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-light btn-elevate mr-2" (click)="modal.dismiss()">Cancelar</button>
-        <ng-container *ngIf="convenio">
+        <ng-container *ngIf="enlace">
             <button type="button" class="btn btn-primary btn-elevate" (click)="guardar()" 
                 [disabled]="formGroup.invalid" >Guardar </button>
         </ng-container>

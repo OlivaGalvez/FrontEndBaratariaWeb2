@@ -6,8 +6,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { Convenio } from 'src/app/models/Convenio';
-import { ConvenioService } from 'src/app/services/convenio.service';
+import { Enlace } from 'src/app/models/Enlace';
+import { EnlaceService } from 'src/app/services/enlace.service';
 import { UploadService } from 'src/app/services/upload.service';
 import { EliminarEnlaceModalComponent } from './eliminar-enlace-modal/eliminar-enlace-modal.component';
 import { EnlaceModalComponent } from './enlace-modal/enlace-modal.component';
@@ -20,7 +20,7 @@ import { EnlaceModalComponent } from './enlace-modal/enlace-modal.component';
 export class NuevoComponent implements OnInit, OnDestroy {
   form: FormGroup;
   suscription: Subscription;
-  convenio: Convenio;
+  enlace: Enlace;
   idConvenio: string;
 
   isAddMode: boolean;
@@ -41,7 +41,7 @@ export class NuevoComponent implements OnInit, OnDestroy {
 
   constructor(private formBuilder: FormBuilder, private activatedRouter: ActivatedRoute,private router: Router,
     private uploadService: UploadService, private ref: ChangeDetectorRef, private toastr: ToastrService,
-    private modalService: NgbModal, private convenioService: ConvenioService) { }
+    private modalService: NgbModal, private enlaceService: EnlaceService) { }
 
   ngOnInit(): void {
     this.idConvenio = this.activatedRouter.snapshot.paramMap.get('id');
@@ -97,8 +97,8 @@ export class NuevoComponent implements OnInit, OnDestroy {
   {
     let validar = true;
 
-    const convenio: Convenio = {
-      id: this.convenio != null ? this.convenio.id : 0,
+    const enlace: Enlace = {
+      id: this.enlace != null ? this.enlace.id : 0,
       titulo: this.form.get('titulo')?.value,
       fechaAlta: moment.utc(this.form.get('fechaAlta')?.value),
       mostrar: this.form.get('mostrar') != null ? this.form.get('mostrar').value : false,
@@ -107,7 +107,7 @@ export class NuevoComponent implements OnInit, OnDestroy {
       url: this.listEnlaces != null ? this.listEnlaces[0] : "",
     };
 
-    if (this.isAddMode && convenio.file == null)
+    if (this.isAddMode && enlace.file == null)
     {
       this.toastr.error('Inserte una imagen', 'Error');
       validar = false;
@@ -118,7 +118,7 @@ export class NuevoComponent implements OnInit, OnDestroy {
       //Nuevo Convenio
       if (this.isAddMode)
       {
-        this.convenioService.aniadirConvenio(convenio).subscribe(data => {
+        this.enlaceService.aniadirEnlace(enlace).subscribe(data => {
           this.toastr.success('Enlace guardado', 'Enlaces');
           this.myInputVariable.nativeElement.value = "";
           this.mostrarImagen = false;
@@ -205,23 +205,23 @@ export class NuevoComponent implements OnInit, OnDestroy {
 
     if (url != undefined)
     {
-      const convenio: Convenio = {
+      const enlace: Enlace = {
         id: undefined,
         url: url,
         titulo: '',
         fechaAlta: null
       };
 
-      modalRef.componentInstance.convenio = convenio;
+      modalRef.componentInstance.enlace = enlace;
     }
     else {
-      const convenio: Convenio = {
+      const enlace: Enlace = {
         id: undefined,
         url: undefined,
         titulo: '',
         fechaAlta: null
       };
-      modalRef.componentInstance.convenio = convenio;
+      modalRef.componentInstance.enlace = enlace;
     }
 
     modalRef.result.then((result) => {
