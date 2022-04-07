@@ -1,5 +1,5 @@
 import { HttpEvent, HttpEventType } from '@angular/common/http';
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Convenio } from 'src/app/models/Convenio';
+import { ConvenioService } from 'src/app/services/convenio.service';
 import { UploadService } from 'src/app/services/upload.service';
 import { EliminarEnlaceModalComponent } from './eliminar-enlace-modal/eliminar-enlace-modal.component';
 import { EnlaceModalComponent } from './enlace-modal/enlace-modal.component';
@@ -33,11 +34,14 @@ export class NuevoComponent implements OnInit, OnDestroy {
   imagePath:String="";
   mostrarImagen: boolean = false;
 
+  @ViewChild('fileInput')
+  myInputVariable: ElementRef;
+
   listEnlaces: string [];
 
   constructor(private formBuilder: FormBuilder, private activatedRouter: ActivatedRoute,private router: Router,
     private uploadService: UploadService, private ref: ChangeDetectorRef, private toastr: ToastrService,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal, private convenioService: ConvenioService) { }
 
   ngOnInit(): void {
     this.idConvenio = this.activatedRouter.snapshot.paramMap.get('id');
@@ -57,8 +61,8 @@ export class NuevoComponent implements OnInit, OnDestroy {
           disabled: this.disabledCampos,
       },  [Validators.required]],
       fechaAlta: [{
-        value: '',
-        disabled: this.disabledCampos,
+        value: null,
+        disabled: true,
       },  [Validators.required]],
       mostrar: [{
           value: null,
@@ -93,30 +97,33 @@ export class NuevoComponent implements OnInit, OnDestroy {
   {
     let validar = true;
 
-    console.log(this.listEnlaces);
-
-   /* const convenio: Convenio = {
+    const convenio: Convenio = {
       id: this.convenio != null ? this.convenio.id : 0,
       titulo: this.form.get('titulo')?.value,
       fechaAlta: moment.utc(this.form.get('fechaAlta')?.value),
       mostrar: this.form.get('mostrar') != null ? this.form.get('mostrar').value : false,
       file: this.form.get('file')?.value,
       imagenServidor: this.form.get('imagenServidor').value,
-      url: this.listEnlaces[0],
-    };*/
+      url: this.listEnlaces != null ? this.listEnlaces[0] : "",
+    };
 
-    /*if (validar)
+    if (this.isAddMode && convenio.file == null)
     {
-      //Nueva Actividad
+      this.toastr.error('Inserte una imagen', 'Error');
+      validar = false;
+    }
+
+    if (validar)
+    {
+      //Nuevo Convenio
       if (this.isAddMode)
       {
-        this.actividadService.aniadirActividad(actividad).subscribe(data => {
-          this.toastr.success('Actividad guardada', 'Actividad');
+        this.convenioService.aniadirConvenio(convenio).subscribe(data => {
+          this.toastr.success('Enlace guardado', 'Enlaces');
           this.myInputVariable.nativeElement.value = "";
           this.mostrarImagen = false;
   
           this.listEnlaces = null;
-          this.listDocumentacion = null;
   
           this.ref.detectChanges();
           this.form.reset();
@@ -125,7 +132,7 @@ export class NuevoComponent implements OnInit, OnDestroy {
       }
       //Editar actividad
       else {
-        this.actividadService.modificarActividad(actividad).subscribe(data => {
+       /*  this.actividadService.modificarActividad(actividad).subscribe(data => {
           this.toastr.success('Actividad guardada', 'Actividad');
           this.myInputVariable.nativeElement.value = "";
           this.mostrarImagen = false;
@@ -136,10 +143,10 @@ export class NuevoComponent implements OnInit, OnDestroy {
           this.ref.detectChanges();
           this.form.reset();
           this.ngOnInit();
-        }); 
+        });  */
       }
      
-    }*/
+    }
   }
 
   reset(element) {

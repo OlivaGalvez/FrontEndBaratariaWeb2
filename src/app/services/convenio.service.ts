@@ -11,7 +11,7 @@ import { TableService } from "../_metronic_gestion/shared/crud-table";
   
   export class ConvenioService extends TableService<Convenio> implements OnDestroy{
 
-    API_URL = `${environment.apiUrl}` + 'api/Actividades/';
+    API_URL = `${environment.apiUrl}` + 'api/Convenios/';
   
     constructor(@Inject(HttpClient) http) {
       super(http);
