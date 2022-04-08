@@ -138,3 +138,7 @@ a:not([href]):not([class]) {
 .green-icon {
   color: #28a745;
 }
+
+textarea {
+	resize: none;
+}

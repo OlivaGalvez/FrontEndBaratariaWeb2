@@ -24,6 +24,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('../portal/enlaces/enlaces.module').then((m) => m.EnlacesModule),
       },
+      { 
+        path: 'asociacion', 
+        loadChildren: () =>
+          import('../portal/asociacion/asociacion.module').then((m) => m.AsociacionModule),
+      },
       {
         path: 'normativa',
         loadChildren: () =>

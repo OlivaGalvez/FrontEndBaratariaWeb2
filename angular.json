@@ -40,6 +40,8 @@
               "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/summernote/dist/summernote-lite.min.js",
               "node_modules/apexcharts/dist/apexcharts.min.js",
               "node_modules/clipboard/dist/clipboard.js"
             ]
@@ -104,6 +106,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/summernote/dist/summernote-lite.min.css",
               "src/styles.scss"
             ],
             "scripts": []
