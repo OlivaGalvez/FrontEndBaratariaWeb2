@@ -1,0 +1,22 @@
+.ocultarImagenArea {
+    display: none;
+  }
+  
+  .mostrarImagenArea {
+    display: block;
+    margin: 10px;
+    height: auto;
+    overflow: auto;
+  }
+  
+  .btn-eliminar-img {
+    position: absolute;
+    left: 89%;
+    bottom: -2%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .accion {
+    justify-content: space-between;
+  }
+  

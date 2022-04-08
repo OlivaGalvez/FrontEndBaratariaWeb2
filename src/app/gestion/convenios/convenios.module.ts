@@ -10,11 +10,15 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { GeneralModule } from "src/app/_metronic_gestion/partials/content/general/general.module";
 import { InlineSVGModule } from "ng-inline-svg";
 import { CRUDTableModule } from "src/app/_metronic_gestion/shared/crud-table";
+import { DocumentacionModalComponent } from './nuevo/documentacion-modal/documentacion-modal.component';
+import { EliminarDocumentacionModalComponent } from './nuevo/eliminar-documentacion-modal/eliminar-documentacion-modal.component';
 
 @NgModule({
     declarations: [
       NuevoComponent,
       ListadoComponent,
+      DocumentacionModalComponent,
+      EliminarDocumentacionModalComponent,
     ],
     imports: [
       RouterModule.forChild([
@@ -45,6 +49,8 @@ import { CRUDTableModule } from "src/app/_metronic_gestion/shared/crud-table";
       { provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter }  // <-- add this
     ],
     entryComponents: [
+      DocumentacionModalComponent,
+      EliminarDocumentacionModalComponent
     ]
   })
   export class ConveniosModule {}
