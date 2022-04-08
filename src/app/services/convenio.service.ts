@@ -3,33 +3,31 @@ import { HttpClient } from '@angular/common/http';
 import { Actividad } from '../models/Actividad';
 import { Observable } from 'rxjs';
 import { TableService } from '../_metronic_portal/shared/crud-table';
-import { map } from 'rxjs/operators';
-import { ITableState, PaginatorState, TableResponseModel } from '../_metronic_gestion/shared/crud-table';
-import { baseFilter } from '../_fake';
 import { environment } from 'src/environments/environment';
+import { Convenio } from '../models/Convenio';
 
 @Injectable({
     providedIn: 'root'
   })
   
-export class ActividadesService extends TableService<Actividad> implements OnDestroy{
+export class ConveniosService extends TableService<Convenio> implements OnDestroy{
 
-  API_URL = `${environment.apiUrl}` + 'api/Actividades/';
+  API_URL = `${environment.apiUrl}` + 'api/Convenios/';
 
   constructor(@Inject(HttpClient) http) {
     super(http);
   }
 
-  aniadirActividad (actividad: Actividad): Observable<Actividad> 
+  aniadirConvenio (convenio: Convenio): Observable<Convenio> 
   {
     const formData = new FormData(); 
           
-    formData.append("actividad", JSON.stringify(actividad));
-    formData.append("imagen", actividad.file, actividad.file.name);
+    formData.append("convenio", JSON.stringify(convenio));
+    formData.append("imagen", convenio.file, convenio.file.name);
     return this.http.post<Actividad>(this.API_URL, formData);
   }
 
-  modificarActividad (actividad: Actividad): Observable<Actividad> 
+ /*  modificarActividad (actividad: Actividad): Observable<Actividad> 
   {
     const formData = new FormData(); 
     formData.append("actividad", JSON.stringify(actividad));
@@ -62,7 +60,7 @@ export class ActividadesService extends TableService<Actividad> implements OnDes
         return result;
       })
     );
-  }
+  } */
 
   ngOnDestroy() {
     this.subscriptions.forEach(sb => sb.unsubscribe());

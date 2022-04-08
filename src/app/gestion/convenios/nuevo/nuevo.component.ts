@@ -3,14 +3,18 @@ import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Convenio } from 'src/app/models/Convenio';
 import { DireccionWeb } from 'src/app/models/DireccionWeb';
 import { Documento } from 'src/app/models/Documento';
+import { ConveniosService } from 'src/app/services/convenio.service';
 import { UploadService } from 'src/app/services/upload.service';
 import { DocumentacionModalComponent } from './documentacion-modal/documentacion-modal.component';
 import { EliminarDocumentacionModalComponent } from './eliminar-documentacion-modal/eliminar-documentacion-modal.component';
+import { EliminarEnlaceModalComponent } from './eliminar-enlace-modal/eliminar-enlace-modal.component';
+import { EnlaceModalComponent } from './enlace-modal/enlace-modal.component';
 
 @Component({
   selector: 'app-nuevo',
@@ -42,7 +46,7 @@ export class NuevoComponent implements OnInit, OnDestroy {
 
   constructor(private formBuilder: FormBuilder,  private activatedRouter: ActivatedRoute, private router: Router,
     private uploadService: UploadService, private ref: ChangeDetectorRef, private toastr: ToastrService,
-    private modalService: NgbModal) 
+    private modalService: NgbModal, private conveniosService: ConveniosService) 
   { 
   }
 
@@ -119,7 +123,61 @@ export class NuevoComponent implements OnInit, OnDestroy {
 
   guardarConvenio ()
   {
+    let validar = true;
+    const convenio: Convenio = {
+      id: this.convenio != null ? this.convenio.id : 0,
+      titulo: this.form.get('titulo')?.value,
+      fechaAlta: moment.utc(this.form.get('fechaAlta')?.value),
+      mostrar: this.form.get('mostrar') != null ? this.form.get('mostrar').value : false,
+      texto: this.form.get('texto')?.value,
+      file: this.form.get('file')?.value,
+      imagenServidor: this.form.get('imagenServidor').value,
+      listEnlaces: this.listEnlaces,
+      listDocumentos: this.listDocumentacion
+    };
 
+    if (this.isAddMode && convenio.file == null)
+    {
+      this.toastr.error('Inserte una imagen', 'Error');
+      validar = false;
+    }
+
+    if (validar)
+    {
+      //Nuevo convenio
+      if (this.isAddMode)
+      {
+         this.conveniosService.aniadirConvenio(convenio).subscribe(data => {
+          this.toastr.success('Convenio guardado', 'Convenio');
+          this.router.navigate(['/admin/convenios/gestion/' + data.id]);
+        });  
+      }
+      //Editar convenio
+      else {
+        /* this.actividadService.modificarActividad(actividad).subscribe(data => {
+          this.toastr.success('Actividad guardada', 'Actividad');
+          this.myInputVariable.nativeElement.value = "";
+          this.mostrarImagen = false;
+  
+          this.listEnlaces = null;
+          this.listDocumentacion = null;
+
+          this.mostrarBotonEdit = true;
+          this.mostrarBotonDelete = false;
+
+          this.form.get('titulo').disable();
+          this.form.get('fechaInicio').disable();
+          this.form.get('fechaFin').disable();
+          this.form.get('mostrar').disable();
+          this.form.get('texto').disable();
+  
+          this.ref.detectChanges();
+          this.form.reset();
+          this.ngOnInit();
+        });  */
+      }
+     
+    }
   }
 
   crearDocumentacion() {
@@ -255,5 +313,58 @@ export class NuevoComponent implements OnInit, OnDestroy {
     });
     element.value = "";
   }
+
+  crearEnlace() {
+    this.editarEnlace(undefined);
+  }
+
+  editarEnlace(id: number) {
+    const modalRef = this.modalService.open(EnlaceModalComponent, { size: 'lg' });
+
+    if (id != undefined)
+    {
+      var result2 = this.listEnlaces.find(x => x.id === id);
+      const enlace: DireccionWeb = {
+        id: result2.id,
+        nombre: result2.nombre,
+        url: result2.url,
+      };
+
+      modalRef.componentInstance.enlace = enlace;
+    }
+    else {
+      const enlace: DireccionWeb = {
+        id: undefined,
+        nombre: '',
+        url: '',
+      };
+      modalRef.componentInstance.enlace = enlace;
+    }
+
+    modalRef.result.then((result) => {
+      if (result) {
+        let index = this.listEnlaces.findIndex(d => d.id === id);
+        if (index > -1) this.listEnlaces.splice(index, 1);
+        this.listEnlaces.push(result);
+        this.ref.detectChanges();
+      }
+    }).catch(e => {
+      console.log(e);
+    });
+  }
+
+  eliminarEnlace (id: number) 
+  {
+    const modalRef = this.modalService.open(EliminarEnlaceModalComponent, { size: 'lg' });
+    modalRef.componentInstance.id = id;
+    modalRef.result.then((result) => {
+      let index = this.listEnlaces.findIndex(d => d.id === id); //find index in your array
+      if (index > -1) this.listEnlaces.splice(index, 1);//remove element from array
+      this.ref.detectChanges();
+    }).catch(e => {
+      console.log(e);
+    }); 
+  }
+
 
 }

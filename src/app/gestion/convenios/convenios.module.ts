@@ -12,6 +12,8 @@ import { InlineSVGModule } from "ng-inline-svg";
 import { CRUDTableModule } from "src/app/_metronic_gestion/shared/crud-table";
 import { DocumentacionModalComponent } from './nuevo/documentacion-modal/documentacion-modal.component';
 import { EliminarDocumentacionModalComponent } from './nuevo/eliminar-documentacion-modal/eliminar-documentacion-modal.component';
+import { EnlaceModalComponent } from './nuevo/enlace-modal/enlace-modal.component';
+import { EliminarEnlaceModalComponent } from './nuevo/eliminar-enlace-modal/eliminar-enlace-modal.component';
 
 @NgModule({
     declarations: [
@@ -19,6 +21,8 @@ import { EliminarDocumentacionModalComponent } from './nuevo/eliminar-documentac
       ListadoComponent,
       DocumentacionModalComponent,
       EliminarDocumentacionModalComponent,
+      EnlaceModalComponent,
+      EliminarEnlaceModalComponent,
     ],
     imports: [
       RouterModule.forChild([
@@ -50,7 +54,9 @@ import { EliminarDocumentacionModalComponent } from './nuevo/eliminar-documentac
     ],
     entryComponents: [
       DocumentacionModalComponent,
-      EliminarDocumentacionModalComponent
+      EliminarDocumentacionModalComponent,
+      EnlaceModalComponent,
+      EliminarEnlaceModalComponent
     ]
   })
   export class ConveniosModule {}
