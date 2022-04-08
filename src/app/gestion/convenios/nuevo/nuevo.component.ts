@@ -6,12 +6,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Convenio } from 'src/app/models/Convenio';
 import { DireccionWeb } from 'src/app/models/DireccionWeb';
 import { Documento } from 'src/app/models/Documento';
 import { ConveniosService } from 'src/app/services/convenio.service';
 import { UploadService } from 'src/app/services/upload.service';
 import { DocumentacionModalComponent } from './documentacion-modal/documentacion-modal.component';
+import { EliminarConvenioComponent } from './eliminar-convenio/eliminar-convenio.component';
 import { EliminarDocumentacionModalComponent } from './eliminar-documentacion-modal/eliminar-documentacion-modal.component';
 import { EliminarEnlaceModalComponent } from './eliminar-enlace-modal/eliminar-enlace-modal.component';
 import { EnlaceModalComponent } from './enlace-modal/enlace-modal.component';
@@ -93,7 +95,7 @@ export class NuevoComponent implements OnInit, OnDestroy {
     }
     else
     {
-      /* this.actividadService.getById(this.idActividad).pipe(
+       this.conveniosService.getById(this.idConvenio).pipe(
         tap(data =>  this.mostrarDatosAlEditar(data)),
       ).subscribe(result => 
         this.form.patchValue({
@@ -103,16 +105,28 @@ export class NuevoComponent implements OnInit, OnDestroy {
           fechaAlta:  {year: new Date(moment(result.fechaAlta).format("YYYY-MM-DD HH:mm:ss")).getFullYear(),
             month: new Date(moment(result.fechaAlta).format("YYYY-MM-DD HH:mm:ss")).getMonth(), 
             day: new Date(moment(result.fechaAlta).format("YYYY-MM-DD HH:mm:ss")).getDate()},
-          fechaInicio: result.fechaInicio != null ? {year: new Date(moment(result.fechaInicio).format("YYYY-MM-DD HH:mm:ss")).getFullYear(),
-            month: new Date(moment(result.fechaInicio).format("YYYY-MM-DD HH:mm:ss")).getMonth(), 
-            day: new Date(moment(result.fechaInicio).format("YYYY-MM-DD HH:mm:ss")).getDate()} : null,
-          fechaFin: result.fechaFin != null ? {year: new Date(moment(result.fechaFin).format("YYYY-MM-DD HH:mm:ss")).getFullYear(),
-            month: new Date(moment(result.fechaFin).format("YYYY-MM-DD HH:mm:ss")).getMonth(), 
-            day: new Date(moment(result.fechaFin).format("YYYY-MM-DD HH:mm:ss")).getDate()} : null,
         })
-      ); */
+      ); 
     }
 
+  }
+
+  mostrarDatosAlEditar (data) {
+    this.convenio = data;
+    this.mostrarImagen = true;
+    this.imagePath = this.convenio.imagenServidorBase64;
+    this.listEnlaces = this.convenio.listEnlaces;
+    this.listDocumentacion = this.convenio.listDocumentos;
+  }
+
+  editarForm ()
+  {
+    this.mostrarBotonesGeneral = true;
+    this.mostrarBotonEdit = false;
+    this.mostrarBotonDelete = true;
+    this.form.get('titulo').enable();
+    this.form.get('mostrar').enable();
+    this.form.get('texto').enable();
   }
 
   ngOnDestroy() {
@@ -149,13 +163,13 @@ export class NuevoComponent implements OnInit, OnDestroy {
       {
          this.conveniosService.aniadirConvenio(convenio).subscribe(data => {
           this.toastr.success('Convenio guardado', 'Convenio');
-          this.router.navigate(['/admin/convenios/gestion/' + data.id]);
+          this.router.navigate(['/admin/convenio/gestion/' + data.id]);
         });  
       }
       //Editar convenio
       else {
-        /* this.actividadService.modificarActividad(actividad).subscribe(data => {
-          this.toastr.success('Actividad guardada', 'Actividad');
+         this.conveniosService.modificarConvenio(convenio).subscribe(data => {
+          this.toastr.success('Convenio guardado', 'Convenio');
           this.myInputVariable.nativeElement.value = "";
           this.mostrarImagen = false;
   
@@ -166,18 +180,30 @@ export class NuevoComponent implements OnInit, OnDestroy {
           this.mostrarBotonDelete = false;
 
           this.form.get('titulo').disable();
-          this.form.get('fechaInicio').disable();
-          this.form.get('fechaFin').disable();
           this.form.get('mostrar').disable();
           this.form.get('texto').disable();
   
           this.ref.detectChanges();
           this.form.reset();
           this.ngOnInit();
-        });  */
+        });  
       }
      
     }
+  }
+
+  eliminarForm () 
+  {
+     const modalRef = this.modalService.open(EliminarConvenioComponent, { size: 'lg' });
+    modalRef.result.then((result) => {
+      this.conveniosService.eliminarConvenio(this.convenio.id).subscribe((data)=>{
+        this.router.navigate(['/admin/convenio/listado/']);
+        this.toastr.error('Convenio borrado', 'Convenio');
+      });
+      
+    }).catch(e => {
+      console.log(e);
+    }); 
   }
 
   crearDocumentacion() {

@@ -3,12 +3,12 @@
       <button *ngIf="mostrarBotonesGeneral" class="btn btn-success " type="submit" name="btn-guardar" [disabled]="form.invalid">
         <i class="fa fa-check"></i>  Guardar
       </button>
-    <!--   <a *ngIf="mostrarBotonEdit" class="btn btn-info " name="btn-editar" (click)="editarForm()">
+      <a *ngIf="mostrarBotonEdit" class="btn btn-info " name="btn-editar" (click)="editarForm()">
         <i class="fa fa-edit"></i>  Editar
       </a>
       <a *ngIf="mostrarBotonDelete" class="btn btn-danger ml-2" name="btn-eliminar" (click)="eliminarForm()">
         <i class="fa fa-trash"></i>  Eliminar
-      </a> -->
+      </a>
     </app-notice>
   
     <div class="card card-custom gutter-b">
@@ -86,7 +86,12 @@
                       <tbody>
                         <tr *ngFor="let item of listDocumentacion">
                           <td>{{ item.nombre }}</td>
-                          <td><a (click)="download(item.url, item.original)" target="_blank">{{ item.original }}</a></td>
+                          <td> 
+                            <div class="btn-group btn-group-sm" role="group">
+                              <a (click)="download(item.url, item.original)"  class="btn btn-outline-success" title="" target="_blank" >{{ item.original }}</a>
+                              <a (click)="download(item.url, item.original)"  class="btn btn-outline-success" title=""><i class="fa fa-download"></i></a>
+													  </div>
+                        </td>
                           <td>{{ item.tamanio }}</td>
                           <td>
                             <div *ngIf="mostrarBotonesGeneral" class="text-center accion">

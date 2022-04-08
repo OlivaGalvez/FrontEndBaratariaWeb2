@@ -14,6 +14,7 @@ import { DocumentacionModalComponent } from './nuevo/documentacion-modal/documen
 import { EliminarDocumentacionModalComponent } from './nuevo/eliminar-documentacion-modal/eliminar-documentacion-modal.component';
 import { EnlaceModalComponent } from './nuevo/enlace-modal/enlace-modal.component';
 import { EliminarEnlaceModalComponent } from './nuevo/eliminar-enlace-modal/eliminar-enlace-modal.component';
+import { EliminarConvenioComponent } from './nuevo/eliminar-convenio/eliminar-convenio.component';
 
 @NgModule({
     declarations: [
@@ -23,6 +24,7 @@ import { EliminarEnlaceModalComponent } from './nuevo/eliminar-enlace-modal/elim
       EliminarDocumentacionModalComponent,
       EnlaceModalComponent,
       EliminarEnlaceModalComponent,
+      EliminarConvenioComponent
     ],
     imports: [
       RouterModule.forChild([
@@ -56,7 +58,8 @@ import { EliminarEnlaceModalComponent } from './nuevo/eliminar-enlace-modal/elim
       DocumentacionModalComponent,
       EliminarDocumentacionModalComponent,
       EnlaceModalComponent,
-      EliminarEnlaceModalComponent
+      EliminarEnlaceModalComponent,
+      EliminarConvenioComponent
     ]
   })
   export class ConveniosModule {}

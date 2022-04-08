@@ -96,6 +96,4 @@ export class ListadoComponent implements OnInit, OnDestroy {
   paginate(paginator: PaginatorState) {
     this.actividadService.patchState({ paginator });
   }
-  
-
 }
