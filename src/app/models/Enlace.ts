@@ -1,5 +1,4 @@
 import * as moment from "moment";
-import { EnlaceActividad } from "./EnlaceActividad";
 
 export class Enlace {
     id?: number;

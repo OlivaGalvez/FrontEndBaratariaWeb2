@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { EnlaceActividad } from 'src/app/models/EnlaceActividad';
+import { DireccionWeb } from 'src/app/models/DireccionWeb';
 
 @Component({
   selector: 'app-enlace-modal',
@@ -11,7 +11,7 @@ import { EnlaceActividad } from 'src/app/models/EnlaceActividad';
 
 export class EnlaceModalComponent implements OnInit{
   
-  @Input() enlace: EnlaceActividad;
+  @Input() enlace: DireccionWeb;
   @Output() passEntry: EventEmitter<any> = new EventEmitter();
   
   formGroup: FormGroup;

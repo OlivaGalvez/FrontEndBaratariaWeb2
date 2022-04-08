@@ -176,6 +176,11 @@ export class NuevoComponent implements OnInit, OnDestroy {
           this.mostrarImagen = false;
   
           this.listEnlaces = null;
+
+          this.mostrarBotonEdit = true;
+          this.mostrarBotonDelete = false;
+          this.form.get('titulo').disable();
+          this.form.get('mostrar').disable();
   
           this.ref.detectChanges();
           this.form.reset();

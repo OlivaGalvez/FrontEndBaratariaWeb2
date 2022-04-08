@@ -1,13 +1,9 @@
-import { HttpResponse } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Actividad } from 'src/app/models/Actividad';
-import { Documento } from 'src/app/models/Documento';
-import { EnlaceActividad } from 'src/app/models/EnlaceActividad';
 import { ActividadesService } from 'src/app/services/actividad.service';
 import { UploadService } from 'src/app/services/upload.service';
-import { LayoutService } from 'src/app/_metronic_portal/core';
 import { environment } from 'src/environments/environment';
 
 @Component({

@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Actividad } from 'src/app/models/Actividad';
 import { Documento } from 'src/app/models/Documento';
-import { EnlaceActividad } from 'src/app/models/EnlaceActividad';
+import { DireccionWeb } from 'src/app/models/DireccionWeb';
 import { ActividadesService } from 'src/app/services/actividad.service';
 import { UploadService } from 'src/app/services/upload.service';
 import { DocumentacionModalComponent } from './documentacion-modal/documentacion-modal.component';
@@ -45,7 +45,7 @@ export class NuevaComponent implements OnInit, OnDestroy {
   myInputVariable: ElementRef;
 
 
-  listEnlaces: EnlaceActividad [] = [];
+  listEnlaces: DireccionWeb [] = [];
   listDocumentacion: Documento [] = [];
 
   constructor(private formBuilder: FormBuilder,  private activatedRouter: ActivatedRoute, private router: Router,
@@ -235,6 +235,15 @@ export class NuevaComponent implements OnInit, OnDestroy {
   
           this.listEnlaces = null;
           this.listDocumentacion = null;
+
+          this.mostrarBotonEdit = true;
+          this.mostrarBotonDelete = false;
+
+          this.form.get('titulo').disable();
+          this.form.get('fechaInicio').disable();
+          this.form.get('fechaFin').disable();
+          this.form.get('mostrar').disable();
+          this.form.get('texto').disable();
   
           this.ref.detectChanges();
           this.form.reset();
@@ -302,7 +311,7 @@ export class NuevaComponent implements OnInit, OnDestroy {
     if (id != undefined)
     {
       var result2 = this.listEnlaces.find(x => x.id === id);
-      const enlace: EnlaceActividad = {
+      const enlace: DireccionWeb = {
         id: result2.id,
         nombre: result2.nombre,
         url: result2.url,
@@ -311,7 +320,7 @@ export class NuevaComponent implements OnInit, OnDestroy {
       modalRef.componentInstance.enlace = enlace;
     }
     else {
-      const enlace: EnlaceActividad = {
+      const enlace: DireccionWeb = {
         id: undefined,
         nombre: '',
         url: '',
