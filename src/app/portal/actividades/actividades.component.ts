@@ -30,14 +30,14 @@ export class ActividadesComponent implements OnInit, OnDestroy {
   }
 
   
-  download(url): void {
+  download(url, original): void {
     this.uploadService.download(url).subscribe((x) => {
         var newBlob = new Blob([x], { type: "application/pdf" });
         const data = window.URL.createObjectURL(newBlob);
         
         var link = document.createElement('a');
         link.href = data;
-        link.download = url;
+        link.download = original;
         link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
         
         setTimeout(function () {

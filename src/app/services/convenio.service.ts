@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { TableService } from '../_metronic_portal/shared/crud-table';
 import { environment } from 'src/environments/environment';
 import { Convenio } from '../models/Convenio';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -27,6 +28,10 @@ export class ConveniosService extends TableService<Convenio> implements OnDestro
     return this.http.post<Actividad>(this.API_URL, formData);
   }
 
+  obtenerConvenios (): Observable<Convenio[]>{
+    return this.http.get(this.API_URL).pipe(map(result=><Convenio[]>result));
+ }
+
  /*  modificarActividad (actividad: Actividad): Observable<Actividad> 
   {
     const formData = new FormData(); 
@@ -40,9 +45,7 @@ export class ConveniosService extends TableService<Convenio> implements OnDestro
     return this.http.delete(this.API_URL + id);
   }
 
-  obtenerActividades (): Observable<Actividad[]>{
-     return this.http.get(this.API_URL).pipe(map(result=><Actividad[]>result));
-  }
+  
 
   getById (id: string): Observable<Actividad>{
     return this.http.get(this.API_URL + id).pipe(map(result=><Actividad>result));
