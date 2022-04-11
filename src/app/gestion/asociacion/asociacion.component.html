@@ -1,4 +1,51 @@
-<p>asociacion works!</p>
+<form [formGroup]="form" (ngSubmit) = "guardar()" class="form" id="kt_form">
 
-<!-- 
-<div  [ngxSummernoteView]="html"></div> -->
+    <app-notice class="text-right">
+        <button *ngIf="mostrarBotonesGeneral" class="btn btn-success " type="submit" name="btn-guardar" [disabled]="form.invalid">
+          <i class="fa fa-check"></i>  Guardar
+        </button>
+        <a *ngIf="mostrarBotonEdit" class="btn btn-info " name="btn-editar" (click)="editarForm()">
+          <i class="fa fa-edit"></i>  Editar
+        </a>
+    </app-notice>
+
+    <div class="card card-custom gutter-b">
+        <div class="card-header">
+            <div class="card-title mb-0 text-right">
+            <p>Información de la asociación</p>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Título</label>
+                            <input type="text" class="form-control" formControlName="titulo" placeholder="Título"/>
+                        </div>
+                        </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Fecha Alta</label>
+                            <div class="input-group">
+                            <input class="form-control" placeholder="dd-mm-yyyy" name="dp" ngbDatepicker formControlName="fechaAlta" #d="ngbDatepicker">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" (click)="d.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
+                                </button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Descripción</label>
+                            <input  [ngxSummernote]="config" [ngxSummernoteDisabled]="editorDisabled" formControlName="texto" placeholder="Descripción de la asociación" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
