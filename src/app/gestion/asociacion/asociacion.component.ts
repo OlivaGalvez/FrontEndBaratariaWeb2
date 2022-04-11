@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Asociacion } from 'src/app/models/Asociacion';
 import { Documento } from 'src/app/models/Documento';
 import { AsociacionService } from 'src/app/services/asociacion.service';
@@ -108,9 +109,19 @@ export class AsociacionComponent implements OnInit, OnDestroy {
 
     const fechaAltaAux = { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth()+ 1, 
       day: this.currentDate.getDate() };
-    this.form.patchValue({
+   /*  this.form.patchValue({
         fechaAlta: fechaAltaAux,
-    });
+    }); */
+
+    this.asociacionService.obtenerDatos().pipe(
+      tap(),
+    ).subscribe(result => 
+      this.form.patchValue({
+        titulo: result.titulo,
+        texto: result.texto,
+        fechaAlta:  fechaAltaAux
+      })
+    );
     
   }
 
@@ -148,9 +159,10 @@ export class AsociacionComponent implements OnInit, OnDestroy {
       this.form.get('titulo').disable();
       this.editorDisabled = true;
 
-      this.ref.detectChanges();
-      this.form.reset();
       this.ngOnInit();
+      this.form.reset();
+      this.ref.detectChanges();
+     
     }); 
   }
 
