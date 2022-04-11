@@ -1,7 +1,9 @@
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Console } from 'console';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
@@ -10,6 +12,8 @@ import { Asociacion } from 'src/app/models/Asociacion';
 import { Documento } from 'src/app/models/Documento';
 import { AsociacionService } from 'src/app/services/asociacion.service';
 import { UploadService } from 'src/app/services/upload.service';
+import { DocumentacionModelComponent } from './documentacion-model/documentacion-model.component';
+import { EliminarDocumentacionModelComponent } from './eliminar-documentacion-model/eliminar-documentacion-model.component';
 
 @Component({
   selector: 'app-asociacion',
@@ -109,20 +113,25 @@ export class AsociacionComponent implements OnInit, OnDestroy {
 
     const fechaAltaAux = { year: this.currentDate.getFullYear(), month: this.currentDate.getMonth()+ 1, 
       day: this.currentDate.getDate() };
-   /*  this.form.patchValue({
+    this.form.patchValue({
         fechaAlta: fechaAltaAux,
-    }); */
+    }); 
 
     this.asociacionService.obtenerDatos().pipe(
-      tap(),
+      tap(data =>  this.mostrarDatosAlEditar(data)),
     ).subscribe(result => 
       this.form.patchValue({
         titulo: result.titulo,
-        texto: result.texto,
-        fechaAlta:  fechaAltaAux
+        texto: result.texto
       })
     );
     
+  }
+
+  mostrarDatosAlEditar (data) {
+    this.asociacion = data;
+    this.listDocumentacion = this.asociacion.listDocumentos;
+    this.ref.detectChanges();
   }
 
   editarForm ()
@@ -164,6 +173,93 @@ export class AsociacionComponent implements OnInit, OnDestroy {
       this.ref.detectChanges();
      
     }); 
+  }
+
+  download(url, original): void {
+    this.uploadService.download(url).subscribe((x) => {
+        var newBlob = new Blob([x], { type: "application/pdf" });
+        const data = window.URL.createObjectURL(newBlob);
+        
+        var link = document.createElement('a');
+        link.href = data;
+        link.download = original;
+        link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+        
+        setTimeout(function () {
+            window.URL.revokeObjectURL(data);
+            link.remove();
+        }, 100);
+    });
+  }
+
+  crearDocumentacion() {
+    this.editarDocumento(undefined);
+  }
+
+  editarDocumento(id: number) {
+    const modalRef = this.modalService.open(DocumentacionModelComponent, { size: 'lg' });
+    if (id != undefined)
+    {
+      var result2 = this.listDocumentacion.find(x => x.id === id);
+      const documento: Documento = {
+        id: result2.id,
+        nombre: result2.nombre
+      };
+
+      modalRef.componentInstance.documento = documento;
+    }
+    else {
+      const documento: Documento = {
+        id: undefined,
+        nombre: ''
+      };
+      modalRef.componentInstance.documento = documento;
+    }
+
+    modalRef.result.then((result: Documento) => {
+      if (result) {
+        let index = this.listDocumentacion.findIndex(d => d.id === id);
+        if (index > -1) this.listDocumentacion.splice(index, 1);
+        this.subirDocAlta(result);
+      }
+    }).catch(e => {
+      console.log(e);
+    });
+  }
+
+  subirDocAlta (result) 
+  {
+    this.uploadService.uploadDocumento(result.file).subscribe((event: HttpEvent<any>) => {
+      switch (event.type) {
+        case HttpEventType.Sent:
+          console.log('Request has been made!');
+          break;
+        case HttpEventType.ResponseHeader:
+          console.log('Response header has been received!');
+          break;
+        case HttpEventType.UploadProgress:
+          break;
+        case HttpEventType.Response:
+          result.url =  event.body.url;
+          result.servidor = event.body.fileName;
+          result.original = result.file.name;
+          this.listDocumentacion.push(result);
+          this.ref.detectChanges();
+      }
+    })
+  }
+
+  eliminarDocumento (id: number) 
+  {
+    const modalRef = this.modalService.open(EliminarDocumentacionModelComponent, { size: 'lg' });
+    modalRef.componentInstance.id = id;
+    modalRef.result.then((result) => {
+      let index = this.listDocumentacion.findIndex(d => d.id === id); //find index in your array
+      if (index > -1) this.listDocumentacion.splice(index, 1);//remove element from array
+      this.ref.detectChanges();
+    }).catch(e => {
+      console.log(e);
+    });
   }
 
 }

@@ -10,10 +10,14 @@ import { InlineSVGModule } from "ng-inline-svg";
 import { CRUDTableModule } from "src/app/_metronic_gestion/shared/crud-table";
 import { AsociacionComponent } from "./asociacion.component";
 import { NgxSummernoteModule } from "ngx-summernote";
+import { DocumentacionModelComponent } from './documentacion-model/documentacion-model.component';
+import { EliminarDocumentacionModelComponent } from './eliminar-documentacion-model/eliminar-documentacion-model.component';
 
 @NgModule({
     declarations: [
-      AsociacionComponent
+      AsociacionComponent,
+      DocumentacionModelComponent,
+      EliminarDocumentacionModelComponent
     ],
     imports: [
       RouterModule.forChild([
@@ -37,6 +41,8 @@ import { NgxSummernoteModule } from "ngx-summernote";
       { provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter }  // <-- add this
     ],
     entryComponents: [
+      DocumentacionModelComponent,
+      EliminarDocumentacionModelComponent
     ]
   })
   export class AsociacionModule {}

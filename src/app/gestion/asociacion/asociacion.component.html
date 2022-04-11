@@ -49,3 +49,67 @@
     </div>
 </form>
 
+<div class="row">
+    <div class="col-12">
+        <div class="card card-custom gutter-b">
+          <div class="card-header">
+            <div class="card-title">
+              <h3 class="card-label">Documentación</h3>
+            </div>
+            <div class="card-toolbar">
+              <button *ngIf="mostrarBotonesGeneral" type="button" class="btn btn-primary" (click)="crearDocumentacion()">
+                <i class="fa fa-plus"></i> Añadir</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+              <div class="row">
+                <div class="col-12">
+                  <div class="table-responsive angular-bootstrap-table">
+                    <table class="table table-head-custom table-vertical-center overflow-hidden">
+                      <thead>
+                        <tr>
+                          <th>Nombre</th>
+                          <th>Original</th>
+                          <th>Tamaño</th>
+                          <th> </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of listDocumentacion">
+                          <td>{{ item.nombre }}</td>
+                          <td>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <a (click)="download(item.url, item.original)"  class="btn btn-outline-success" title="" target="_blank" >{{ item.original }}</a>
+                                <a (click)="download(item.url, item.original)"  class="btn btn-outline-success" title=""><i class="fa fa-download"></i></a>
+                            </div>
+                          </td>
+                          <td>{{ item.tamanio }}</td>
+                          <td>
+                            <div *ngIf="mostrarBotonesGeneral" class="text-center accion">
+                              <a title="Editar documento" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
+                              (click)="editarDocumento(item.id)">
+                                <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
+                                  class="svg-icon svg-icon-md svg-icon-primary">
+                                </span>
+                              </a>
+                
+                              <a title="Eliminar documento" class="btn btn-icon btn-light btn-hover-danger btn-sm"
+                                (click)="eliminarDocumento(item.id)">
+                                <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"
+                                  class="svg-icon svg-icon-md svg-icon-danger">
+                                </span>
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
