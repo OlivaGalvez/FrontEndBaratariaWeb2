@@ -24,6 +24,16 @@ const routes: Routes = [
         loadChildren: () =>
           import('../portal/enlaces/enlaces.module').then((m) => m.EnlacesModule),
       },
+      { 
+        path: 'telefonia', 
+        loadChildren: () =>
+          import('../portal/telefonia/telefonia.module').then((m) => m.TelefoniaModule),
+      },
+      { 
+        path: 'ofertas', 
+        loadChildren: () =>
+          import('../portal/ofertas/ofertas.module').then((m) => m.OfertasModule),
+      },
       {
         path: 'normativa',
         loadChildren: () =>

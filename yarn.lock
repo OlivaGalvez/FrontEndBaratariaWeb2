@@ -6060,6 +6060,13 @@
   "resolved" "https://registry.npmjs.org/ng-inline-svg/-/ng-inline-svg-10.1.0.tgz"
   "version" "10.1.0"
 
+"ng-zoom@^1.1.5":
+  "integrity" "sha512-5Xu2vhBYYhtEEPhXZO3m8Ir56dMkW1qE++08mvlHXRUtpDu2ylQHV1pajMP+bxvUA7YWMHWmKlLYGdJGCedtJQ=="
+  "resolved" "https://registry.npmjs.org/ng-zoom/-/ng-zoom-1.1.5.tgz"
+  "version" "1.1.5"
+  dependencies:
+    "tslib" "^2.3.0"
+
 "ngx-clipboard@^13.0.1":
   "integrity" "sha512-e7QBsw7bX5ajhVR2++NAaYZYw90hKeEBlb006TW85WDUA3kmlrXpMDwOvVJuRewU6Nh+U1QiQMJq5a0ivk0zWg=="
   "resolved" "https://registry.npmjs.org/ngx-clipboard/-/ngx-clipboard-13.0.1.tgz"
@@ -6075,6 +6082,11 @@
     "highlight.js" "*"
     "highlightjs-line-numbers.js" "*"
     "tslib" "^2.0.0"
+
+"ngx-image-zoom@^0.6.0":
+  "integrity" "sha512-XWuC+bHvYr02C7TcnkK7Dv4BgohTt59sJNaaKRJ6p0js8tYuZdO0kiKVYgTBBctMuAd5hzXbbZgCjrmeG1Pmdw=="
+  "resolved" "https://registry.npmjs.org/ngx-image-zoom/-/ngx-image-zoom-0.6.0.tgz"
+  "version" "0.6.0"
 
 "ngx-perfect-scrollbar@^9.0.0":
   "integrity" "sha512-jiFrOLONf/w2PjSKkEjQeTnMdlMVcQgjzIrYcsor1HWTmE+95J2sZAd/WF4zoutbpIqfU8VQQoAp8HOa7U1c/g=="
@@ -8934,7 +8946,7 @@
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
   "version" "1.14.1"
 
-"tslib@^2.0.0":
+"tslib@^2.0.0", "tslib@^2.3.0":
   "integrity" "sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw=="
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-2.3.1.tgz"
   "version" "2.3.1"
