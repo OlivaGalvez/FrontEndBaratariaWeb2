@@ -147,7 +147,7 @@ export const DefaultLayoutConfigGestion = {
     }
   },
   "footer": {
-    "display": true,
+    "display": false,
     "width": "fixed",
     "fixed": true
   },

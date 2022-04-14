@@ -9,6 +9,8 @@ export class Actividad {
     fechaInicio:  moment.Moment;
     fechaFin?:  moment.Moment;
     mostrar?: boolean;
+    importeSocio?: number;
+    importeNoSocio?: number;
     texto: string;
     file?: File;
     listEnlaces?: DireccionWeb[];

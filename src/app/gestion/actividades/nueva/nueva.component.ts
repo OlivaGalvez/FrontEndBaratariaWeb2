@@ -89,6 +89,14 @@ export class NuevaComponent implements OnInit, OnDestroy {
           value: null,
           disabled: this.disabledCampos,
       }],
+      importeSocio: [{
+        value: null,
+        disabled: this.disabledCampos,
+      }],
+      importeNoSocio: [{
+        value: null,
+        disabled: this.disabledCampos,
+      }],
       texto: [{
         value: '',
         disabled: this.disabledCampos,
@@ -115,6 +123,8 @@ export class NuevaComponent implements OnInit, OnDestroy {
           titulo: result.titulo,
           mostrar: result.mostrar,
           texto: result.texto,
+          importeSocio: result.importeSocio,
+          importeNoSocio: result.importeNoSocio,
           fechaAlta:  {year: new Date(moment(result.fechaAlta).format("YYYY-MM-DD HH:mm:ss")).getFullYear(),
             month: new Date(moment(result.fechaAlta).format("YYYY-MM-DD HH:mm:ss")).getMonth(), 
             day: new Date(moment(result.fechaAlta).format("YYYY-MM-DD HH:mm:ss")).getDate()},
@@ -147,6 +157,8 @@ export class NuevaComponent implements OnInit, OnDestroy {
     this.form.get('fechaInicio').enable();
     this.form.get('fechaFin').enable();
     this.form.get('mostrar').enable();
+    this.form.get('importeSocio').enable();
+    this.form.get('importeNoSocio').enable();
     this.form.get('texto').enable();
   }
 
@@ -197,6 +209,8 @@ export class NuevaComponent implements OnInit, OnDestroy {
       fechaInicio: moment.utc(this.form.get('fechaInicio')?.value),
       fechaFin: moment.utc(this.form.get('fechaFin')?.value),
       mostrar: this.form.get('mostrar') != null ? this.form.get('mostrar').value : false,
+      importeSocio: this.form.get('importeSocio')?.value,
+      importeNoSocio: this.form.get('importeNoSocio')?.value,
       texto: this.form.get('texto')?.value,
       file: this.form.get('file')?.value,
       imagenServidor: this.form.get('imagenServidor').value,
@@ -244,10 +258,13 @@ export class NuevaComponent implements OnInit, OnDestroy {
           this.form.get('fechaFin').disable();
           this.form.get('mostrar').disable();
           this.form.get('texto').disable();
+          this.form.get('importeSocio').disable();
+          this.form.get('importeNoSocio').disable();
   
-          this.ref.detectChanges();
+         
           this.form.reset();
           this.ngOnInit();
+          this.ref.detectChanges();
         }); 
       }
      
@@ -422,5 +439,14 @@ export class NuevaComponent implements OnInit, OnDestroy {
       console.log(e);
     });
   }
+
+  decimalFilter(event: any) {
+    const reg = /^-?\d*(\.\d{0,2})?$/;
+    let input = event.target.value + String.fromCharCode(event.charCode);
+ 
+    if (!reg.test(input)) {
+        event.preventDefault();
+    }
+ }
 
 }

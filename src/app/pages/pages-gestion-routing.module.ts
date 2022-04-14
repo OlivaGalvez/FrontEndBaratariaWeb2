@@ -24,11 +24,6 @@ const routes: Routes = [
         loadChildren: () =>
           import('../gestion/enlaces/enlaces.module').then((m) => m.EnlacesModule),
       },
-      {
-        path: 'asociacion',
-        loadChildren: () =>
-          import('../gestion/asociacion/asociacion.module').then((m) => m.AsociacionModule),
-      },
       /* 
       {
         path: 'dashboard',

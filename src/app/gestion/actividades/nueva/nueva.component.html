@@ -70,6 +70,21 @@
                 <mat-checkbox class="example-margin" formControlName="mostrar">Mostrar en la web</mat-checkbox>
               </div>
             </div>
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Importe Socio</label>
+                <input type="number" class="form-control" formControlName="importeSocio" placeholder="0.00 €" (keypress)="decimalFilter($event)" />
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Importe No Socio</label>
+                <input type="number" class="form-control" formControlName="importeNoSocio" placeholder="0.00 €" (keypress)="decimalFilter($event)" />
+              </div>
+            </div>
+
             <div class="col-md-12">
               <div class="form-group">
                 <label>Descripción</label>

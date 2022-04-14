@@ -182,9 +182,10 @@ export class NuevoComponent implements OnInit, OnDestroy {
           this.form.get('titulo').disable();
           this.form.get('mostrar').disable();
   
-          this.ref.detectChanges();
+          
           this.form.reset();
           this.ngOnInit();
+          this.ref.detectChanges();
         });  
       }
      
