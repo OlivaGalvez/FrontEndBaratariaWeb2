@@ -4,6 +4,7 @@ import { Convenio } from 'src/app/models/Convenio';
 import { ConveniosService } from 'src/app/services/convenio.service';
 import { UploadService } from 'src/app/services/upload.service';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-convenios',
@@ -15,18 +16,14 @@ export class ConveniosComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   API_URL = `${environment.apiUrl}`;
-  list: Convenio [];
+  list: Observable<Convenio[]>;
 
   message: string;
 
   constructor(private ref: ChangeDetectorRef, public conveniosServices: ConveniosService, private uploadService: UploadService) {  }
 
   ngOnInit() {
-    const sb = this.conveniosServices.obtenerConvenios().subscribe(res => {
-      this.list = res;
-    });
-    this.subscriptions.push(sb);
-    this.ref.detectChanges();
+    this.list = this.conveniosServices.obtenerConvenios();
   }
 
   

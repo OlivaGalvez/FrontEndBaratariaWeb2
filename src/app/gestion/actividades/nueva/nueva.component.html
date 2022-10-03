@@ -134,7 +134,7 @@
                           </td>
                         <td>{{ item.tamanio }}</td>
                         <td>
-                          <div *ngIf="mostrarBotonesGeneral" class="text-center accion">
+                          <div *ngIf="mostrarBotonesGeneral" class="text-center accion btn-group">
                             <a title="Editar documento" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
                             (click)="editarDocumento(item.id)">
                               <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
@@ -180,7 +180,7 @@
                 <div class="col-12 text-center">
                   <div  [className]="mostrarImagen ? 'mostrarImagenArea' : 'ocultarImagenArea'">
                     <img id="imagen-subida" [src]="imagePath" class="img-responsive img-container" style="max-width: 100%;">
-                    <a  class="btn btn-danger btn-eliminar-img" (click)="reset(fileInput)"><i class="fa fa-trash"></i> </a>
+                    <a class="remove-image" (click)="reset(fileInput)" style="display: inline;">&#215;</a>
                   </div>
                 </div>
               </div>
@@ -202,10 +202,10 @@
       <div class="card card-custom gutter-b">
         <div class="card-header">
           <div class="card-title">
-            <h3 class="card-label">Enlaces</h3>
+            <h3 class="card-label">Enlaces <span class="small pl-2 font-italic">Posibilidad de añadir un solo enlace</span></h3>
           </div>
           <div class="card-toolbar">
-            <button *ngIf="mostrarBotonesGeneral" type="button" class="btn btn-primary" (click)="crearEnlace()">
+            <button *ngIf="mostrarAniadirEnlace" type="button" class="btn btn-primary" (click)="crearEnlace()">
               <i class="fa fa-plus"></i> Añadir</button>
           </div>
         </div>
@@ -227,7 +227,7 @@
                           <td>{{ item.nombre }}</td>
                           <td> <a href="{{ item.url }}" target="_blank">{{ item.url }}</a></td>
                           <td>
-                            <div *ngIf="mostrarBotonesGeneral" class="text-center accion">
+                            <div *ngIf="mostrarBotonesGeneral" class="text-center accion btn-group">
                               <a title="Edit enlace" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
                               (click)="editarEnlace(item.id)">
                                 <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"

@@ -5,6 +5,7 @@ import { Actividad } from 'src/app/models/Actividad';
 import { ActividadesService } from 'src/app/services/actividad.service';
 import { UploadService } from 'src/app/services/upload.service';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-actividades',
@@ -15,18 +16,14 @@ export class ActividadesComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   API_URL = `${environment.apiUrl}`;
-  list: Actividad [];
+  list: Observable<Actividad[]>;
 
   message: string;
 
   constructor(private ref: ChangeDetectorRef, public actividadesService: ActividadesService, private uploadService: UploadService) {  }
 
   ngOnInit() {
-    const sb = this.actividadesService.obtenerActividades().subscribe(res => {
-      this.list = res;
-    });
-    this.subscriptions.push(sb);
-    this.ref.detectChanges();
+    this.list = this.actividadesService.obtenerActividades();
   }
 
   

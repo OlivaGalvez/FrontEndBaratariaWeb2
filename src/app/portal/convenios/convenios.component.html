@@ -1,38 +1,35 @@
 <div class="row">
-    <div class="col-md-6" *ngFor="let convenio of list">
+    <div class="col-md-6" *ngFor="let convenio of list | async">
       <div class="card card-custom bg-gray-100 card-stretch gutter-b">
         <!-- Header -->
         <div class="card-header border-0 bg-barataria py-5  text-right">
-
-            
-  
-              <div class="col-md-4 order-2 order-md-1 text-center p-0" style="display: block;margin: auto;"> 
-                <div *ngIf="convenio.listEnlaces?.length > 0;then contieneEnlace else noContieneEnlace"></div>
-                <ng-template #contieneEnlace>
-                  <div class="p-2" *ngFor="let enlace of toArrayEnlaces(convenio.listEnlaces)">
-                    <a href="{{enlace.url}}" target="_blank">
-                      <img class="img-fluid img-thumbnail img-responsive" style="min-height: 100px !important;" alt="Logo" src={{convenio.imagenServidorBase64}} />
-                    </a>
-                  </div>
-                </ng-template>
-                <ng-template #noContieneEnlace>
+          <div class="col-md-4 order-2 order-md-1 text-center p-0" style="display: block;margin: auto;"> 
+            <div *ngIf="convenio.listEnlaces?.length > 0;then contieneEnlace else noContieneEnlace"></div>
+            <ng-template #contieneEnlace>
+              <div class="p-2" *ngFor="let enlace of toArrayEnlaces(convenio.listEnlaces)">
+                <a href="{{enlace.url}}" target="_blank">
                   <img class="img-fluid img-thumbnail img-responsive" style="min-height: 100px !important;" alt="Logo" src={{convenio.imagenServidorBase64}} />
-                </ng-template> 
+                </a>
               </div>
+            </ng-template>
+            <ng-template #noContieneEnlace>
+              <img class="img-fluid img-thumbnail img-responsive" style="min-height: 100px !important;" alt="Logo" src={{convenio.imagenServidorBase64}} />
+            </ng-template> 
+          </div>
           
-            <div class="col-md-8 order-1 order-md-2">
-                <div class="text-center mb-5 pt-10">
-                    <div *ngIf="convenio.listEnlaces?.length > 0;then contieneEnlace2 else noContieneEnlace2"></div>
-                    <ng-template #contieneEnlace2>
-                      <div class="p-2" *ngFor="let enlace of toArrayEnlaces(convenio.listEnlaces)">
-                        <a href="{{enlace.url}}" target="_blank" class="stretched-link text-white"><h2 >{{convenio.titulo}}</h2></a>
-                      </div>
-                    </ng-template>
-                    <ng-template #noContieneEnlace2>
-                      <h2 class="font-weight-bolder text-white mb-0">{{convenio.titulo}}</h2>
-                    </ng-template> 
+          <div class="col-md-8 order-1 order-md-2">
+            <div class="text-center mb-5 pt-10">
+              <div *ngIf="convenio.listEnlaces?.length > 0;then contieneEnlace2 else noContieneEnlace2"></div>
+              <ng-template #contieneEnlace2>
+                <div class="p-2" *ngFor="let enlace of toArrayEnlaces(convenio.listEnlaces)">
+                  <a href="{{enlace.url}}" target="_blank" class="stretched-link text-white"><h2 >{{convenio.titulo}}</h2></a>
                 </div>
+              </ng-template>
+              <ng-template #noContieneEnlace2>
+                <h2 class="font-weight-bolder text-white mb-0">{{convenio.titulo}}</h2>
+              </ng-template> 
             </div>
+          </div>
   
         </div>
         <!-- Body -->
