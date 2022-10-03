@@ -18,15 +18,15 @@
           </div>
           
           <div class="col-md-8 order-1 order-md-2">
-            <div class="text-center mb-5 pt-10">
+            <div class="text-center mb-5 pt-5">
               <div *ngIf="convenio.listEnlaces?.length > 0;then contieneEnlace2 else noContieneEnlace2"></div>
               <ng-template #contieneEnlace2>
                 <div class="p-2" *ngFor="let enlace of toArrayEnlaces(convenio.listEnlaces)">
-                  <a href="{{enlace.url}}" target="_blank" class="stretched-link text-white"><h2 >{{convenio.titulo}}</h2></a>
+                  <a href="{{enlace.url}}" target="_blank" class="stretched-link text-white"><h1 class="display-4">{{convenio.titulo}}</h1></a>
                 </div>
               </ng-template>
               <ng-template #noContieneEnlace2>
-                <h2 class="font-weight-bolder text-white mb-0">{{convenio.titulo}}</h2>
+                <h1 class="font-weight-bolder text-white mb-0">{{convenio.titulo}}</h1>
               </ng-template> 
             </div>
           </div>
@@ -40,7 +40,7 @@
           <div class="card-spacer mt-n25">
             <!--begin::Row-->
             <div class="row m-0">
-              <div class="col bg-white px-6 py-8 rounded-xl mr-7 mb-7" style="border: 3px solid #027762;">
+              <div class="col bg-white px-6 py-8 rounded-xl mb-7" style="border: 3px solid #027762;">
                 <p class="text-dark font-weight-bold font-size-h6">{{convenio.texto}}</p>
               </div>
             </div>
