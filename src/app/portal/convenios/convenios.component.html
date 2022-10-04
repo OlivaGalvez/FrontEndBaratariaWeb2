@@ -7,10 +7,10 @@
         <!-- Header -->
         <div class="card-header border-0 bg-barataria2 py-5  text-right">
           <div class="col-md-4 order-2 order-md-1 text-center p-0" style="display: block;margin: auto;"> 
-            <div *ngIf="convenio.listEnlaces?.length > 0;then contieneEnlace else noContieneEnlace"></div>
+            <div *ngIf="convenio.listDocumentos?.length > 0;then contieneEnlace else noContieneEnlace"></div>
             <ng-template #contieneEnlace>
-              <div class="p-2" *ngFor="let enlace of toArrayEnlaces(convenio.listEnlaces)">
-                <a href="{{enlace.url}}" target="_blank">
+              <div class="p-2" *ngFor="let documento of toArrayEnlaces(convenio.listDocumentos)">
+                <a (click)="download(documento.url, documento.nombre)" target="_blank" >
                   <img class="img-fluid img-thumbnail img-responsive" style="min-height: 100px !important;" alt="Logo" src={{convenio.imagenServidorBase64}} />
                 </a>
               </div>
@@ -22,14 +22,14 @@
           
           <div class="col-md-8 order-1 order-md-2">
             <div class="text-center mb-5 pt-5">
-              <div *ngIf="convenio.listEnlaces?.length > 0;then contieneEnlace2 else noContieneEnlace2"></div>
+              <div *ngIf="convenio.listDocumentos?.length > 0;then contieneEnlace2 else noContieneEnlace2"></div>
               <ng-template #contieneEnlace2>
-                <div class="p-2" *ngFor="let enlace of toArrayEnlaces(convenio.listEnlaces)">
-                  <a href="{{enlace.url}}" target="_blank" class="stretched-link text-white"><h1 class="display-4">{{convenio.titulo}}</h1></a>
+                <div class="p-2" *ngFor="let documento of toArrayEnlaces(convenio.listDocumentos)">
+                  <a (click)="download(documento.url, documento.nombre)" target="_blank"  class="stretched-link"><h1 class="display-4">{{convenio.titulo}}</h1></a>
                 </div>
               </ng-template>
               <ng-template #noContieneEnlace2>
-                <h1 class="font-weight-bolder text-white mb-0">{{convenio.titulo}}</h1>
+                <h1 class="font-weight-bolder mb-0">{{convenio.titulo}}</h1>
               </ng-template> 
             </div>
           </div>
@@ -48,9 +48,9 @@
               </div>
             </div>
             <!--end::Row-->
-            <div ngbDropdown *ngIf="convenio.listDocumentos?.length > 0" class="row">
-              <div *ngFor="let documento of toArrayDocumentos(convenio.listDocumentos)" class="col-12 px-4 py-2">
-                <a (click)="download(documento.url, documento.nombre)" target="_blank" class="g-color-gray-dark-v4"><i class="far fa-file mr-4"></i>{{documento.nombre}}</a>
+            <div ngbDropdown *ngIf="convenio.listEnlaces?.length > 0" class="row">
+              <div *ngFor="let enlace of toArrayDocumentos(convenio.listEnlaces)" class="col-12 px-4 py-2">
+                <a href="{{enlace.url}}" target="_blank" class="stretched-link "><i class="fas fa-globe"></i><span class="ml-2">{{enlace.nombre}}</span></a>
             </div>
             </div>
 

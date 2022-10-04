@@ -102,10 +102,10 @@
       <div class="card card-custom gutter-b">
         <div class="card-header">
           <div class="card-title">
-            <h3 class="card-label">Documentación</h3>
+            <h3 class="card-label">Documentación <span class="small pl-2 font-italic">Posibilidad de añadir un solo documento</span></h3>
           </div>
           <div class="card-toolbar">
-            <button *ngIf="mostrarBotonesGeneral" type="button" class="btn btn-primary" (click)="crearDocumentacion()">
+            <button *ngIf="mostrarAniadirDocumento" type="button" class="btn btn-primary" (click)="crearDocumentacion()">
               <i class="fa fa-plus"></i> Añadir</button>
           </div>
         </div>
@@ -202,10 +202,10 @@
       <div class="card card-custom gutter-b">
         <div class="card-header">
           <div class="card-title">
-            <h3 class="card-label">Enlaces <span class="small pl-2 font-italic">Posibilidad de añadir un solo enlace</span></h3>
+            <h3 class="card-label">Enlaces</h3>
           </div>
           <div class="card-toolbar">
-            <button *ngIf="mostrarAniadirEnlace" type="button" class="btn btn-primary" (click)="crearEnlace()">
+            <button *ngIf="mostrarBotonesGeneral" type="button" class="btn btn-primary" (click)="crearEnlace()">
               <i class="fa fa-plus"></i> Añadir</button>
           </div>
         </div>

@@ -32,7 +32,7 @@ export class NuevoComponent implements OnInit, OnDestroy {
   isAddMode: boolean;
   disabledCampos: boolean = true;
   mostrarBotonesGeneral: boolean = true;
-  mostrarAniadirEnlace : boolean = true;
+  mostrarAniadirDocumentacion : boolean = true;
   mostrarBotonEdit: boolean = true;
   mostrarBotonDelete: boolean = false;
 
@@ -62,7 +62,7 @@ export class NuevoComponent implements OnInit, OnDestroy {
     }
     else {
       this.mostrarBotonesGeneral = false;
-      this.mostrarAniadirEnlace = false;
+      this.mostrarAniadirDocumentacion = false;
     }
 
     this.form = this.formBuilder.group({
@@ -124,9 +124,9 @@ export class NuevoComponent implements OnInit, OnDestroy {
   editarForm ()
   {
     this.mostrarBotonesGeneral = true;
-    if (this.listEnlaces.length == 0)
+    if (this.listDocumentacion.length == 0)
     {
-      this.mostrarAniadirEnlace = true;
+      this.mostrarAniadirDocumentacion = true;
     }
     this.mostrarBotonEdit = false;
     this.mostrarBotonDelete = true;
@@ -239,6 +239,7 @@ export class NuevoComponent implements OnInit, OnDestroy {
 
     modalRef.result.then((result: Documento) => {
       if (result) {
+        this.mostrarAniadirDocumentacion = false;
         let index = this.listDocumentacion.findIndex(d => d.id === id);
         if (index > -1) this.listDocumentacion.splice(index, 1);
         this.subirDocAlta(result);
@@ -292,6 +293,7 @@ export class NuevoComponent implements OnInit, OnDestroy {
     const modalRef = this.modalService.open(EliminarDocumentacionModalComponent, { size: 'lg' });
     modalRef.componentInstance.id = id;
     modalRef.result.then((result) => {
+      this.mostrarAniadirDocumentacion = true;
       let index = this.listDocumentacion.findIndex(d => d.id === id); //find index in your array
       if (index > -1) this.listDocumentacion.splice(index, 1);//remove element from array
       this.ref.detectChanges();
@@ -376,7 +378,6 @@ export class NuevoComponent implements OnInit, OnDestroy {
 
     modalRef.result.then((result) => {
       if (result) {
-        this.mostrarAniadirEnlace = false;
         let index = this.listEnlaces.findIndex(d => d.id === id);
         if (index > -1) this.listEnlaces.splice(index, 1);
         this.listEnlaces.push(result);
@@ -392,7 +393,6 @@ export class NuevoComponent implements OnInit, OnDestroy {
     const modalRef = this.modalService.open(EliminarEnlaceModalComponent, { size: 'lg' });
     modalRef.componentInstance.id = id;
     modalRef.result.then((result) => {
-      this.mostrarAniadirEnlace = true;
       let index = this.listEnlaces.findIndex(d => d.id === id); //find index in your array
       if (index > -1) this.listEnlaces.splice(index, 1);//remove element from array
       this.ref.detectChanges();
