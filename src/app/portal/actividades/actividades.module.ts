@@ -6,6 +6,7 @@ import { NgApexchartsModule } from "ng-apexcharts";
 import { InlineSVGModule } from "ng-inline-svg";
 import { DropdownMenusModule } from "src/app/_metronic_portal/partials/content/dropdown-menus/dropdown-menus.module";
 import { ActividadesComponent } from "./actividades.component";
+import { CRUDTableModule } from 'src/app/_metronic_portal/shared/crud-table';
 
 @NgModule({
     declarations: [ActividadesComponent],
@@ -21,7 +22,8 @@ import { ActividadesComponent } from "./actividades.component";
       InlineSVGModule,
       NgApexchartsModule,
       NgbDropdownModule,
-      NgbModule
+      NgbModule,
+      CRUDTableModule,
     ],
   })
   export class ActividadesModule {}

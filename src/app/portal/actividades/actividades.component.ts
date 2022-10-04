@@ -6,6 +6,9 @@ import { ActividadesService } from 'src/app/services/actividad.service';
 import { UploadService } from 'src/app/services/upload.service';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import {
+  PaginatorState,
+} from 'src/app/_metronic_portal/shared/crud-table';
 
 @Component({
   selector: 'app-actividades',
@@ -13,6 +16,9 @@ import { Observable } from 'rxjs';
   styleUrls: ['./actividades.component.scss']
 })
 export class ActividadesComponent implements OnInit, OnDestroy {
+  paginator: PaginatorState;
+  isLoading: boolean;
+
   private subscriptions: Subscription[] = [];
 
   API_URL = `${environment.apiUrl}`;
@@ -23,7 +29,20 @@ export class ActividadesComponent implements OnInit, OnDestroy {
   constructor(private ref: ChangeDetectorRef, public actividadesService: ActividadesService, private uploadService: UploadService) {  }
 
   ngOnInit() {
+    /*this.actividadesService.fetch();
     this.list = this.actividadesService.obtenerActividades();
+    this.paginator = this.actividadesService.paginator;
+    this.actividadesService.fetch();*/
+    this.actividadesService.fetch();
+    const sb = this.actividadesService.isLoading$.subscribe(res => this.isLoading = res);
+    this.subscriptions.push(sb);
+    this.paginator = this.actividadesService.paginator;
+    this.actividadesService.fetch();
+  }
+
+   // pagination
+   paginate(paginator: PaginatorState) {
+    this.actividadesService.patchState({ paginator });
   }
 
   
