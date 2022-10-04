@@ -18,6 +18,7 @@ export class ConveniosComponent implements OnInit, OnDestroy {
   paginator: PaginatorState;
   isLoading: boolean;
   private subscriptions: Subscription[] = [];
+  list: Observable<Convenio[]>;
 
   API_URL = `${environment.apiUrl}`;
 
@@ -30,6 +31,7 @@ export class ConveniosComponent implements OnInit, OnDestroy {
     this.conveniosServices.fetch();
     const sb = this.conveniosServices.isLoading$.subscribe(res => this.isLoading = res);
     this.subscriptions.push(sb);
+    this.list = this.conveniosServices.obtenerConvenios();
     this.paginator = this.conveniosServices.paginator;
     this.conveniosServices.fetch();
   }

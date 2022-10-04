@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import * as moment from 'moment';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Actividad } from 'src/app/models/Actividad';
 import { ActividadesService } from 'src/app/services/actividad.service';
 import { UploadService } from 'src/app/services/upload.service';
@@ -19,6 +19,7 @@ export class ActividadesComponent implements OnInit, OnDestroy {
   isLoading: boolean;
 
   private subscriptions: Subscription[] = [];
+  list: Observable<Actividad[]>;
 
   API_URL = `${environment.apiUrl}`;
 
@@ -31,6 +32,7 @@ export class ActividadesComponent implements OnInit, OnDestroy {
     this.actividadesService.fetch();
     const sb = this.actividadesService.isLoading$.subscribe(res => this.isLoading = res);
     this.subscriptions.push(sb);
+    this.list = this.actividadesService.obtenerActividades();
     this.paginator = this.actividadesService.paginator;
     this.actividadesService.fetch();
   }
