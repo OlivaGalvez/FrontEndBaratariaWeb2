@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-md-6" *ngFor="let actividad of actividadesService.items$ | async">
-    <div class="card card-custom bg-gray-100 card-stretch gutter-b">
+    <div class="card card-custom bg-gray-100 card-stretch gutter-b br-card-barataria">
       <!-- Header -->
-      <div class="card-header border-0 bg-barataria py-5  text-right">
+      <div class="card-header border-0 bg-barataria2 py-5  text-right">
 
             <div class="col-md-4 order-2 order-md-1 text-center p-0" style="display: block;margin: auto;"> 
 
@@ -26,26 +26,26 @@
                 <div *ngIf="actividad.listEnlaces?.length > 0;then contieneEnlace2 else noContieneEnlace2"></div>
                 <ng-template #contieneEnlace2>
                   <div class="p-2" *ngFor="let enlace of toArrayEnlaces(actividad.listEnlaces)">
-                    <a href="{{enlace.url}}" target="_blank" class="stretched-link text-white"><h1 class="display-4">{{actividad.titulo}}</h1></a>
+                    <a href="{{enlace.url}}" target="_blank" class="stretched-link "><h1 class="display-4">{{actividad.titulo}}</h1></a>
                   </div>
                 </ng-template>
                 <ng-template #noContieneEnlace2>
-                  <h1 class="font-weight-bolder text-white mb-0 display-4">{{actividad.titulo}}</h1>
+                  <h1 class="font-weight-bolder mb-4 display-4">{{actividad.titulo}}</h1>
                 </ng-template> 
-                <p class="font-weight-bolder text-white">{{ convertDate(actividad) }}</p>
+                <p class="font-weight-bolder">{{ convertDate(actividad) }}</p>
               </div>
             </div>
 
       </div>
       <!-- Body -->
       <div class="card-body p-0 position-relative overflow-hidden">
-        <div id="kt_mixed_widget_1_chart" class="card-rounded-bottom bg-barataria" [style.height]="'50px'">
+        <div id="kt_mixed_widget_1_chart" class="card-rounded-bottom bg-barataria2" [style.height]="'50px'">
         </div>
         <!--begin::Stats-->
         <div class="card-spacer mt-n25">
           <!--begin::Row-->
           <div class="row m-0">
-              <div class="col bg-white px-6 py-8 rounded-xl mb-7" style="border: 3px solid #027762;">
+              <div class="col bg-white px-6 py-8 rounded-xl mb-7" style="border: 3px solid #D6CDA4;">
               <p class="text-dark font-weight-bold font-size-h6">{{actividad.texto}}</p>
             </div>
           </div>
@@ -63,4 +63,24 @@
 </div>
  
  <!-- end: Table -->
- <app-paginator class="d-flex justify-content-between align-items-center flex-wrap" [paginator]="paginator" [isLoading]="isLoading" (paginate)="paginate($event)"></app-paginator>
+ <!--<app-paginator class="d-flex justify-content-between align-items-center flex-wrap" [paginator]="paginator" [isLoading]="isLoading" (paginate)="paginate($event)">
+
+ </app-paginator>-->
+
+ <div class="row">
+    <div class="col-12 text-center py-2">
+      <div class="py-2 mr-3 text-center">
+        <ng-pagination
+          [collectionSize]="paginator.total"
+          [(page)]="paginator.page"
+          [maxSize]="4"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          [pageSize]="paginator.pageSize"
+          (pageChange)="pageChange($event)"
+        ></ng-pagination>
+      </div>
+    </div>
+ </div>
+
+ 

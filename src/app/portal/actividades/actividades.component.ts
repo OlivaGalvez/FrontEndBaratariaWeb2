@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { Actividad } from 'src/app/models/Actividad';
@@ -25,6 +25,7 @@ export class ActividadesComponent implements OnInit, OnDestroy {
   list: Observable<Actividad[]>;
 
   message: string;
+  @Output() paginate: EventEmitter<PaginatorState> = new EventEmitter();
 
   constructor(private ref: ChangeDetectorRef, public actividadesService: ActividadesService, private uploadService: UploadService) {  }
 
@@ -41,9 +42,17 @@ export class ActividadesComponent implements OnInit, OnDestroy {
   }
 
    // pagination
-   paginate(paginator: PaginatorState) {
+   paginate2(paginator: PaginatorState) {
     this.actividadesService.patchState({ paginator });
+    }
+
+    
+  pageChange(num: number) {
+    this.paginator.page = num;
+    this.paginate.emit(this.paginator);
+    this.paginate2(this.paginator);
   }
+
 
   
   download(url, original): void {
