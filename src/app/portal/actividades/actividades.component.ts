@@ -5,7 +5,6 @@ import { Actividad } from 'src/app/models/Actividad';
 import { ActividadesService } from 'src/app/services/actividad.service';
 import { UploadService } from 'src/app/services/upload.service';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
 import {
   PaginatorState,
 } from 'src/app/_metronic_portal/shared/crud-table';
@@ -22,7 +21,6 @@ export class ActividadesComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   API_URL = `${environment.apiUrl}`;
-  list: Observable<Actividad[]>;
 
   message: string;
   @Output() paginate: EventEmitter<PaginatorState> = new EventEmitter();
@@ -30,10 +28,6 @@ export class ActividadesComponent implements OnInit, OnDestroy {
   constructor(private ref: ChangeDetectorRef, public actividadesService: ActividadesService, private uploadService: UploadService) {  }
 
   ngOnInit() {
-    /*this.actividadesService.fetch();
-    this.list = this.actividadesService.obtenerActividades();
-    this.paginator = this.actividadesService.paginator;
-    this.actividadesService.fetch();*/
     this.actividadesService.fetch();
     const sb = this.actividadesService.isLoading$.subscribe(res => this.isLoading = res);
     this.subscriptions.push(sb);

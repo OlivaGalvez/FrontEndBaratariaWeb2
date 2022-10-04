@@ -6,6 +6,7 @@ import { NgApexchartsModule } from "ng-apexcharts";
 import { InlineSVGModule } from "ng-inline-svg";
 import { DropdownMenusModule } from "src/app/_metronic_portal/partials/content/dropdown-menus/dropdown-menus.module";
 import { ConveniosComponent } from "./convenios.component";
+import { CRUDTableModule } from 'src/app/_metronic_portal/shared/crud-table';
 
 @NgModule({
     declarations: [ConveniosComponent],
@@ -21,7 +22,8 @@ import { ConveniosComponent } from "./convenios.component";
       InlineSVGModule,
       NgApexchartsModule,
       NgbDropdownModule,
-      NgbModule
+      NgbModule,
+      CRUDTableModule
     ],
   })
   export class ConveniosModule {}

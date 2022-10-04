@@ -2,3 +2,16 @@ a:hover {
     color: #ebc71d !important;
     text-decoration: underline !important;
   }
+
+  
+  .barataria-image {
+    background-image: url("/assets/media/barataria/fondo-actividad.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    padding-block: 250px;
+    transform: translate3d(0px, -45.2856px, 0px);
+  }
+  

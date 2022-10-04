@@ -1,9 +1,11 @@
+<div class="barataria-image"></div>
+
 <div class="container">
   <div class="row">
-    <div class="col-md-6" *ngFor="let convenio of list | async">
+    <div class="col-md-6" *ngFor="let convenio of conveniosServices.items$ | async">
       <div class="card card-custom bg-gray-100 card-stretch gutter-b">
         <!-- Header -->
-        <div class="card-header border-0 bg-barataria py-5  text-right">
+        <div class="card-header border-0 bg-barataria2 py-5  text-right">
           <div class="col-md-4 order-2 order-md-1 text-center p-0" style="display: block;margin: auto;"> 
             <div *ngIf="convenio.listEnlaces?.length > 0;then contieneEnlace else noContieneEnlace"></div>
             <ng-template #contieneEnlace>
@@ -35,13 +37,13 @@
         </div>
         <!-- Body -->
         <div class="card-body p-0 position-relative overflow-hidden">
-          <div id="kt_mixed_widget_1_chart" class="card-rounded-bottom bg-barataria" [style.height]="'50px'">
+          <div id="kt_mixed_widget_1_chart" class="card-rounded-bottom bg-barataria2" [style.height]="'50px'">
           </div>
           <!--begin::Stats-->
           <div class="card-spacer mt-n25">
             <!--begin::Row-->
             <div class="row m-0">
-              <div class="col bg-white px-6 py-8 rounded-xl mb-7" style="border: 3px solid #027762;">
+              <div class="col bg-white px-6 py-8 rounded-xl mb-7" style="border: 3px solid #D6CDA4;">
                 <p class="text-dark font-weight-bold font-size-h6">{{convenio.texto}}</p>
               </div>
             </div>
@@ -58,6 +60,23 @@
       </div>
     </div>
 </div>
+
+<div class="row">
+  <div class="col-12 text-center py-2">
+    <div class="py-2 mr-3 text-center">
+      <ng-pagination
+        [collectionSize]="paginator.total"
+        [(page)]="paginator.page"
+        [maxSize]="4"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        [pageSize]="paginator.pageSize"
+        (pageChange)="pageChange($event)"
+      ></ng-pagination>
+    </div>
+  </div>
+</div>
+
 </div>
 
 
