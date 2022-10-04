@@ -51,6 +51,9 @@
             <div class="row m-0">
                 <div class="col bg-white px-6 py-8 rounded-xl mb-7" style="border: 3px solid #D6CDA4;">
                 <p class="text-dark font-weight-bold font-size-h6">{{actividad.texto}}</p>
+                <div class="col-12 text-right">
+                  <p class="small text-dark font-weight-bold mb-0 ">Socios: {{actividad.importeSocio}} €  |   No Socios: {{actividad.importeNoSocio}} €</p>
+                </div>
               </div>
             </div>
             <!--end::Row-->
@@ -66,7 +69,7 @@
     </div>
   </div>
 
-  <div class="row" *ngIf="(list | async).length > 10">
+  <div class="row" *ngIf="(list | async)?.length > 10">
       <div class="col-12 text-center py-2">
         <div class="py-2 mr-3 text-center">
           <ng-pagination
