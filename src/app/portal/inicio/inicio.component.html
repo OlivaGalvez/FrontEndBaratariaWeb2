@@ -71,7 +71,7 @@
     <h4>Últimos Convenios</h4>
     <div class="row">
         <div class="col-md-6" *ngFor="let convenio of conveniosServices.items$ | async; let i = index">
-        <div ngIf="i<3" class="card card-custom bg-gray-100 card-stretch gutter-b">
+        <div *ngIf="i<3" class="card card-custom bg-gray-100 card-stretch gutter-b">
             <!-- Header -->
             <div class="card-header border-0 bg-barataria2 py-5  text-right">
             <div class="col-md-4 order-2 order-md-1 text-center p-0" style="display: block;margin: auto;"> 
