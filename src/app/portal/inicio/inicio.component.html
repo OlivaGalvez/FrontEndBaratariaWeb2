@@ -2,7 +2,7 @@
 
     <h4>Últimas Actividades</h4>
     <div class="row" >
-        <div class="col-md-6 mb-4" *ngFor="let actividad of actividadesService.items$ | async; let i = index" style="padding-inline: 20px;">
+        <div class="col-md-4 mb-4" *ngFor="let actividad of actividadesService.items$ | async; let i = index" style="padding-inline: 20px;">
           <div *ngIf="i<3" class="card card-custom bg-gray-100 card-stretch gutter-b br-card-barataria">
             <!-- Header -->
             <div class="card-header border-0 bg-barataria2 py-5  text-right">
@@ -13,27 +13,27 @@
                     <ng-template #contieneDoc>
                       <div class="p-2" *ngFor="let documento of toArrayEnlaces(actividad.listDocumentos)">
                         <a (click)="download(documento.url, documento.nombre)" target="_blank" >
-                          <img class="img-fluid img-thumbnail img-responsive" style="min-height: 100px !important;" alt="Logo" src={{actividad.imagenServidorBase64}} />
+                          <img class="img-fluid img-thumbnail img-responsive" style="min-height: 70px !important;" alt="Logo" src={{actividad.imagenServidorBase64}} />
                         </a>
                       </div>
                     </ng-template>
                     <ng-template #noContieneDoc>
-                      <img class="img-fluid img-thumbnail img-responsive" style="min-height: 100px !important;" alt="Logo" src={{actividad.imagenServidorBase64}} />
+                      <img class="img-fluid img-thumbnail img-responsive" style="min-height: 70px !important;" alt="Logo" src={{actividad.imagenServidorBase64}} />
                     </ng-template> 
     
                   </div>
               
                   
                   <div class="col-md-8 order-1 order-md-2">
-                    <div class="text-center mb-5 pt-5">
+                    <div class="text-center mb-1 pt-1">
                       <div *ngIf="actividad.listDocumentos?.length > 0;then contieneDoc2 else noContieneDoc2"></div>
                       <ng-template #contieneDoc2>
                         <div class="p-2" *ngFor="let documento of toArrayEnlaces(actividad.listDocumentos)">
-                          <a (click)="download(documento.url, documento.nombre)" target="_blank" class="stretched-link "><h1 class="display-4">{{actividad.titulo}}</h1></a>
+                          <a (click)="download(documento.url, documento.nombre)" target="_blank" class="stretched-link "><h1 class="display-5">{{actividad.titulo}}</h1></a>
                         </div>
                       </ng-template>
                       <ng-template #noContieneDoc2>
-                        <h1 class="font-weight-bolder mb-4 display-4">{{actividad.titulo}}</h1>
+                        <h1 class="font-weight-bolder mb-4 display-5">{{actividad.titulo}}</h1>
                       </ng-template> 
                       <p class="font-weight-bolder">{{ convertDate(actividad) }}</p>
                     </div>
@@ -45,7 +45,7 @@
               <div id="kt_mixed_widget_1_chart" class="card-rounded-bottom bg-barataria2" [style.height]="'50px'">
               </div>
               <!--begin::Stats-->
-              <div class="card-spacer mt-n25">
+              <div class="card-spacer mt-n23">
                 <!--begin::Row-->
                 <div class="row m-0">
                     <div class="col bg-white px-6 py-8 rounded-xl mb-7" style="border: 3px solid #D6CDA4;">
@@ -70,7 +70,7 @@
 
     <h4>Últimos Convenios</h4>
     <div class="row">
-        <div class="col-md-6" *ngFor="let convenio of conveniosServices.items$ | async; let i = index">
+        <div class="col-md-4" *ngFor="let convenio of conveniosServices.items$ | async; let i = index">
         <div *ngIf="i<3" class="card card-custom bg-gray-100 card-stretch gutter-b">
             <!-- Header -->
             <div class="card-header border-0 bg-barataria2 py-5  text-right">
@@ -79,21 +79,21 @@
                 <ng-template #contieneEnlace>
                 <div class="p-2" *ngFor="let documento of toArrayEnlaces(convenio.listDocumentos)">
                     <a (click)="download(documento.url, documento.nombre)" target="_blank" >
-                    <img class="img-fluid img-thumbnail img-responsive" style="min-height: 100px !important;" alt="Logo" src={{convenio.imagenServidorBase64}} />
+                    <img class="img-fluid img-thumbnail img-responsive" style="min-height: 70px !important;" alt="Logo" src={{convenio.imagenServidorBase64}} />
                     </a>
                 </div>
                 </ng-template>
                 <ng-template #noContieneEnlace>
-                <img class="img-fluid img-thumbnail img-responsive" style="min-height: 100px !important;" alt="Logo" src={{convenio.imagenServidorBase64}} />
+                <img class="img-fluid img-thumbnail img-responsive" style="min-height: 70px !important;" alt="Logo" src={{convenio.imagenServidorBase64}} />
                 </ng-template> 
             </div>
             
             <div class="col-md-8 order-1 order-md-2">
-                <div class="text-center mb-5 pt-5">
+                <div class="text-center mb-1 pt-1">
                 <div *ngIf="convenio.listDocumentos?.length > 0;then contieneEnlace2 else noContieneEnlace2"></div>
                 <ng-template #contieneEnlace2>
                     <div class="p-2" *ngFor="let documento of toArrayEnlaces(convenio.listDocumentos)">
-                    <a (click)="download(documento.url, documento.nombre)" target="_blank"  class="stretched-link"><h1 class="display-4">{{convenio.titulo}}</h1></a>
+                    <a (click)="download(documento.url, documento.nombre)" target="_blank"  class="stretched-link"><h1 class="display-5">{{convenio.titulo}}</h1></a>
                     </div>
                 </ng-template>
                 <ng-template #noContieneEnlace2>
@@ -108,7 +108,7 @@
             <div id="kt_mixed_widget_1_chart" class="card-rounded-bottom bg-barataria2" [style.height]="'50px'">
             </div>
             <!--begin::Stats-->
-            <div class="card-spacer mt-n25">
+            <div class="card-spacer mt-n23">
                 <!--begin::Row-->
                 <div class="row m-0">
                 <div class="col bg-white px-6 py-8 rounded-xl mb-7" style="border: 3px solid #D6CDA4;">
