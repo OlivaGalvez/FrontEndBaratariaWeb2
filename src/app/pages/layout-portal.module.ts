@@ -22,6 +22,7 @@ import { SubheaderModule } from '../_metronic_portal/partials/layout/subheader/s
 import { AsideDynamicComponent } from './_layout-portal/components/aside-dynamic/aside-dynamic.component';
 import { HeaderMenuDynamicComponent } from './_layout-portal/components/header/header-menu-dynamic/header-menu-dynamic.component';
 
+
 @NgModule({
   declarations: [
     LayoutComponent,
@@ -35,6 +36,7 @@ import { HeaderMenuDynamicComponent } from './_layout-portal/components/header/h
     LanguageSelectorComponent,
     AsideDynamicComponent,
     HeaderMenuDynamicComponent,
+    
   ],
   imports: [
     CommonModule,

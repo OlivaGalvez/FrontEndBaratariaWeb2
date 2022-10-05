@@ -36,6 +36,10 @@ export class ConveniosComponent implements OnInit, OnDestroy {
     this.conveniosServices.fetch();
   }
 
+  filterConvenio(conv: Convenio) {
+    return conv.mostrar == true
+  }
+
     // pagination
     paginate2(paginator: PaginatorState) {
       this.conveniosServices.patchState({ paginator });

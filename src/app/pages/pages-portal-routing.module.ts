@@ -44,11 +44,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('../portal/inicio/inicio.module').then((m) => m.InicioModule),
       },
-      // {
-      //   path: '',
-      //   redirectTo: '/inicio',
-      //   pathMatch: 'full',
-      // },
+      {
+        path: '',
+        redirectTo: '/inicio',
+        pathMatch: 'full',
+      },
       {
         path: '**',
         redirectTo: 'error/404',

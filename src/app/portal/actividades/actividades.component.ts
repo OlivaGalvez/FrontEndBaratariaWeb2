@@ -37,6 +37,10 @@ export class ActividadesComponent implements OnInit, OnDestroy {
     this.actividadesService.fetch();
   }
 
+  filterActividad(act: Actividad) {
+    return act.mostrar == true
+  }
+
    // pagination
    paginate2(paginator: PaginatorState) {
     this.actividadesService.patchState({ paginator });

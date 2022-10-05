@@ -2,7 +2,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-6" *ngFor="let convenio of conveniosServices.items$ | async">
+    <div class="col-md-6" *ngFor="let convenio of conveniosServices.items$ | async | myfilterConvenio: filterConvenio">
       <div class="card card-custom bg-gray-100 card-stretch gutter-b">
         <!-- Header -->
         <div class="card-header border-0 bg-barataria2 py-5  text-right">

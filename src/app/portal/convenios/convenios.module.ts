@@ -7,9 +7,10 @@ import { InlineSVGModule } from "ng-inline-svg";
 import { DropdownMenusModule } from "src/app/_metronic_portal/partials/content/dropdown-menus/dropdown-menus.module";
 import { ConveniosComponent } from "./convenios.component";
 import { CRUDTableModule } from 'src/app/_metronic_portal/shared/crud-table';
+import { ConvenioPipe } from "../../pipes/convenio.pipe";
 
 @NgModule({
-    declarations: [ConveniosComponent],
+    declarations: [ConveniosComponent, ConvenioPipe],
     imports: [
       CommonModule,
       RouterModule.forChild([

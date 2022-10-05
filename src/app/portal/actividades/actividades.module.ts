@@ -7,9 +7,11 @@ import { InlineSVGModule } from "ng-inline-svg";
 import { DropdownMenusModule } from "src/app/_metronic_portal/partials/content/dropdown-menus/dropdown-menus.module";
 import { ActividadesComponent } from "./actividades.component";
 import { CRUDTableModule } from 'src/app/_metronic_portal/shared/crud-table';
+import { ActividadPipe } from "../../pipes/actividad.pipe";
+
 
 @NgModule({
-    declarations: [ActividadesComponent],
+    declarations: [ActividadesComponent, ActividadPipe],
     imports: [
       CommonModule,
       RouterModule.forChild([

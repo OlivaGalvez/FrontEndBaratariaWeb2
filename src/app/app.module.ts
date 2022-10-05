@@ -22,7 +22,6 @@ import { AuthGuard } from './auth/auth.guard';
 import { AuthService } from './auth/service/auth.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-
 @NgModule({
   declarations: [AppComponent],
   imports: [
