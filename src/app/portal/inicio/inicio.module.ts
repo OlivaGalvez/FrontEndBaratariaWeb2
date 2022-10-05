@@ -1,0 +1,29 @@
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { RouterModule } from "@angular/router";
+import { NgbDropdown, NgbDropdownModule, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgApexchartsModule } from "ng-apexcharts";
+import { InlineSVGModule } from "ng-inline-svg";
+import { DropdownMenusModule } from "src/app/_metronic_portal/partials/content/dropdown-menus/dropdown-menus.module";
+import { InicioComponent } from "./inicio.component";
+import { CRUDTableModule } from 'src/app/_metronic_portal/shared/crud-table';
+
+@NgModule({
+    declarations: [InicioComponent],
+    imports: [
+      CommonModule,
+      RouterModule.forChild([
+        {
+          path: '',
+          component: InicioComponent,
+        }
+      ]),
+      DropdownMenusModule,
+      InlineSVGModule,
+      NgApexchartsModule,
+      NgbDropdownModule,
+      NgbModule,
+      CRUDTableModule,
+    ],
+  })
+  export class InicioModule {}
