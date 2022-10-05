@@ -21,6 +21,7 @@ export class InicioComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
    listActividades: Observable<Actividad[]>;
+   listConvenios: Observable<Convenio[]>;
 
   API_URL = `${environment.apiUrl}`;
 
@@ -28,14 +29,15 @@ export class InicioComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.actividadesService.fetch();
-    const sb = this.actividadesService.isLoading$.subscribe(res => this.isLoading = res);
-    this.subscriptions.push(sb);
+    // this.actividadesService.fetch();
+    // const sb = this.actividadesService.isLoading$.subscribe(res => this.isLoading = res);
+    // this.subscriptions.push(sb);
     this.listActividades = this.actividadesService.obtenerActividades();
 
-    this.conveniosServices.fetch();
-    const sb2 = this.conveniosServices.isLoading$.subscribe(res => this.isLoading = res);
-    this.subscriptions.push(sb2);
+    // this.conveniosServices.fetch();
+    // const sb2 = this.conveniosServices.isLoading$.subscribe(res => this.isLoading = res);
+    // this.subscriptions.push(sb2);
+    this.listConvenios = this.conveniosServices.obtenerConvenios();
   }
 
   download(url, original): void {
