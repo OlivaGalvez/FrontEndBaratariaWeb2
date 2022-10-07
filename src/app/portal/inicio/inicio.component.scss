@@ -38,3 +38,38 @@ a:hover {
     background-color: #555;
     color: white;
   }
+
+  body {
+    background-color: #f5f7fa;
+  }
+  
+  
+  .fecha {
+    font-size: 11px;
+  }
+  
+  
+  .testimonial-card .card-body {
+    margin-top: 20px;
+  }
+  
+  
+  .testimonial-card .card-up {
+    height: 120px;
+    overflow: hidden;
+    // border-top-left-radius: .25rem;
+    // border-top-right-radius: .25rem;
+  }
+  
+  .aqua-gradient {
+    background: linear-gradient(40deg, #9dc09d, #d6cda4) !important;
+    // background: linear-gradient(40deg, #d6cda4, #027762) !important;
+  }
+  
+  .testimonial-card .avatar {
+    width: 120px;
+    margin-top: -95px;
+    overflow: hidden;
+    border: 5px solid #fff;
+    border-radius: 50%;
+  }

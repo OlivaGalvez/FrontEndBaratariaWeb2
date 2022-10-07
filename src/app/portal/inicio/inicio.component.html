@@ -2,112 +2,88 @@
 
     <h4>Últimas Actividades</h4>
     <div class="row" >
-        <div class="col-md-4 mb-4" *ngFor="let actividad of listActividades | async; let i = index" style="padding-inline: 20px;">
-          <div *ngIf="i<3" class="card card-custom bg-gray-100 card-stretch gutter-b br-card-barataria">
-            <!-- Header -->
-            <div class="card border-0 bg-barataria2 py-0  text-right">
-    
-    
-                    <div *ngIf="actividad.listDocumentos?.length > 0;then contieneDoc else noContieneDoc"></div>
+        <div class="col-md-4 mb-4" *ngFor="let actividad of listActividades | async; let i = index" style="padding-inline: 2px;">
+          
+
+          <div *ngIf="i<3" class="container">
+            <section class="mx-auto my-5" style="max-width: 29rem;">
+                
+              <div class="card testimonial-card mt-2 mb-3">
+                <div class="card-up aqua-gradient"></div>
+                <div *ngIf="actividad.listDocumentos?.length > 0;then contieneDoc else noContieneDoc"></div>
                     <ng-template #contieneDoc>
+                      <div class="avatar mx-auto white" *ngFor="let documento of toArrayEnlaces(actividad.listDocumentos)">
+                          <a (click)="download(documento.url, documento.nombre)" target="_blank" >
+                            <img class="rounded-circle img-fluid"  alt="Logo" src={{actividad.imagenServidorBase64}} />
+                          </a>
+                      </div>
                       <div class="p-2" *ngFor="let documento of toArrayEnlaces(actividad.listDocumentos)">
-                        <a (click)="download(documento.url, documento.nombre)" target="_blank" >
-                          <img class="card-img-top" style="height: 180px !important;max-height: 170px !important;" alt="Logo" src={{actividad.imagenServidorBase64}} />
-                        </a>
                       </div>
                     </ng-template>
                     <ng-template #noContieneDoc>
-                      <img class="card-img-top py-2" style="height: 180px !important;max-height: 170px !important;" alt="Logo" src={{actividad.imagenServidorBase64}} />
+                      <div class="avatar mx-auto white">
+                        <img src={{actividad.imagenServidorBase64}} class="rounded-circle img-fluid"
+                          alt="avatar">
+                      </div>
                     </ng-template> 
-    
+
+                
+                <div class="card-body text-center">
+                  <h4 class="card-title font-weight-bold">{{actividad.titulo}}</h4>
+                  <p class="fecha"><i class="fas fa-calendar"></i> {{ convertDate(actividad) }}</p>
+                  <hr>
+                </div>
+              </div>
               
-                  
-                  <div class="col-md-12 order-1 order-md-2">
-                    <div class="text-center mb-1 pt-1">
-                      <div *ngIf="actividad.listDocumentos?.length > 0;then contieneDoc2 else noContieneDoc2"></div>
-                      <ng-template #contieneDoc2>
-                        <div class="p-2" *ngFor="let documento of toArrayEnlaces(actividad.listDocumentos)">
-                          <a (click)="download(documento.url, documento.nombre)" target="_blank" class="stretched-link "><h1 class="display-5">{{actividad.titulo}}</h1></a>
-                        </div>
-                      </ng-template>
-                      <ng-template #noContieneDoc2>
-                        <h1 class="font-weight-bolder mb-4 display-5">{{actividad.titulo}}</h1>
-                      </ng-template> 
-                      <p class="font-weight-bolder">{{ convertDate(actividad) }}</p>
-                    </div>
-                  </div>
-    
-            </div>
-            <!-- Body -->
-            <div class="card-body p-0 position-relative overflow-hidden">
-              <!-- <div id="kt_mixed_widget_1_chart" class="card-rounded-bottom bg-barataria2" [style.height]="'50px'">
-              </div> -->
-              <!--begin::Stats-->
-              
-              <!--end::Stats-->
-            </div>
+            </section>
           </div>
+
+
         </div>
     </div>
 
     <h4>Últimos Convenios</h4>
     <div class="row">
         <div class="col-md-4" *ngFor="let convenio of listConvenios | async; let i = index">
-        <div *ngIf="i<3" class="card card-custom bg-gray-100 card-stretch gutter-b">
-            <!-- Header -->
-            <div class="card-header border-0 bg-barataria2 py-5  text-right">
-            <div class="col-md-4 order-2 order-md-1 text-center p-0" style="display: block;margin: auto;"> 
-                <div *ngIf="convenio.listDocumentos?.length > 0;then contieneEnlace else noContieneEnlace"></div>
-                <ng-template #contieneEnlace>
-                <div class="p-2" *ngFor="let documento of toArrayEnlaces(convenio.listDocumentos)">
-                    <a (click)="download(documento.url, documento.nombre)" target="_blank" >
-                    <img class="img-fluid img-thumbnail img-responsive" style="min-height: 70px !important;" alt="Logo" src={{convenio.imagenServidorBase64}} />
-                    </a>
-                </div>
-                </ng-template>
-                <ng-template #noContieneEnlace>
-                <img class="img-fluid img-thumbnail img-responsive" style="min-height: 70px !important;" alt="Logo" src={{convenio.imagenServidorBase64}} />
-                </ng-template> 
-            </div>
-            
-            <div class="col-md-8 order-1 order-md-2">
-                <div class="text-center mb-1 pt-1">
-                <div *ngIf="convenio.listDocumentos?.length > 0;then contieneEnlace2 else noContieneEnlace2"></div>
-                <ng-template #contieneEnlace2>
-                    <div class="p-2" *ngFor="let documento of toArrayEnlaces(convenio.listDocumentos)">
-                    <a (click)="download(documento.url, documento.nombre)" target="_blank"  class="stretched-link"><h1 class="display-5">{{convenio.titulo}}</h1></a>
+        
+
+
+        <div *ngIf="i<3" class="container">
+          <section class="mx-auto my-5" style="max-width: 29rem;">
+              
+            <div class="card testimonial-card mt-2 mb-3">
+              <div class="card-up aqua-gradient"></div>
+              <div *ngIf="convenio.listDocumentos?.length > 0;then contieneDoc else noContieneDoc"></div>
+                  <ng-template #contieneDoc>
+                    <div class="avatar mx-auto white" *ngFor="let documento of toArrayEnlaces(convenio.listDocumentos)">
+                        <a (click)="download(documento.url, documento.nombre)" target="_blank" >
+                          <img class="rounded-circle img-fluid"  alt="Logo" src={{convenio.imagenServidorBase64}} />
+                        </a>
                     </div>
-                </ng-template>
-                <ng-template #noContieneEnlace2>
-                    <h1 class="font-weight-bolder mb-0">{{convenio.titulo}}</h1>
-                </ng-template> 
-                </div>
-            </div>
-    
-            </div>
-            <!-- Body -->
-            <div class="card-body p-0 position-relative overflow-hidden">
-            <div id="kt_mixed_widget_1_chart" class="card-rounded-bottom bg-barataria2" [style.height]="'50px'">
-            </div>
-            <!--begin::Stats-->
-            <div class="card-spacer mt-n23">
-                <!--begin::Row-->
-                <div class="row m-0">
-                <div class="col bg-white px-6 py-8 rounded-xl mb-7" style="border: 3px solid #D6CDA4;">
-                    <p class="text-dark font-weight-bold font-size-h6">{{convenio.texto}}</p>
-                </div>
-                </div>
-                <!--end::Row-->
-                <div ngbDropdown *ngIf="convenio.listEnlaces?.length > 0" class="row">
+                    <div class="p-2" *ngFor="let documento of toArrayEnlaces(convenio.listDocumentos)">
+                    </div>
+                  </ng-template>
+                  <ng-template #noContieneDoc>
+                    <div class="avatar mx-auto white">
+                      <img src={{convenio.imagenServidorBase64}} class="rounded-circle img-fluid"
+                        alt="avatar">
+                    </div>
+                  </ng-template> 
+
+              
+              <div class="card-body text-center">
+                <h4 class="card-title font-weight-bold">{{convenio.titulo}}</h4>
                 <div *ngFor="let enlace of toArrayDocumentos(convenio.listEnlaces)" class="col-12 px-4 py-2">
                     <a href="{{enlace.url}}" target="_blank" class="stretched-link "><i class="fas fa-globe"></i><span class="ml-2">{{enlace.nombre}}</span></a>
                 </div>
-                </div>
-
+                <hr>
+              </div>
             </div>
-            <!--end::Stats-->
-            </div>
+            
+          </section>
         </div>
+
+
         </div>
     </div>
 
